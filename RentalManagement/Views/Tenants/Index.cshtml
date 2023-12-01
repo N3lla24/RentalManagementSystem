@@ -1,0 +1,83 @@
+﻿@model IEnumerable<RentalManagement.Models.Tenant>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenant_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenant_Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenant_PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenant_RoomNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenant_UnitNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenant_RentTot)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenant_RentPaid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenant_CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenant_UpdatedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenant_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenant_Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenant_PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenant_RoomNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenant_UnitNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenant_RentTot)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenant_RentPaid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenant_CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenant_UpdatedAt)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TenantId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TenantId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TenantId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
