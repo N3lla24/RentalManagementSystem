@@ -7,7 +7,9 @@ namespace RentalManagement.Models
     {
         [Key]
         public int FAQId { get; set; }
+        [Required(ErrorMessage = "Email Address is required.")]
         public string FAQ_Email { get; set; }
+        [StringLength(300, MinimumLength = 10, ErrorMessage = "Query must be more than 10 characters & maximum of 300 characters.")]
         public string FAQ_Content { get; set; }
         [DataType(DataType.Date)]
         public DateTime FAQ_Date{ get; set; }

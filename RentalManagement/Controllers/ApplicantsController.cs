@@ -56,7 +56,7 @@ namespace RentalManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ApplicationId,Applicants_Name,Applicants_Email,Applicants_PhoneNumber,Applicants_Address,Applicant_CreatedAt,Applicant_UpdatedAt")] Applicants applicants)
+        public async Task<IActionResult> Create([Bind("ApplicationId,Applicants_FirstName,Applicants_MiddleName,Applicants_LastName,Applicants_Email,Applicants_PhoneNumber,Applicants_Address,Applicant_CreatedAt,Applicant_UpdatedAt")] Applicants applicants)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace RentalManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ApplicationId,Applicants_Name,Applicants_Email,Applicants_PhoneNumber,Applicants_Address,Applicant_CreatedAt,Applicant_UpdatedAt")] Applicants applicants)
+        public async Task<IActionResult> Edit(int id, [Bind("ApplicationId,Applicants_FirstName,Applicants_MiddleName,Applicants_LastName,Applicants_Email,Applicants_PhoneNumber,Applicants_Address,Applicant_CreatedAt,Applicant_UpdatedAt")] Applicants applicants)
         {
             if (id != applicants.ApplicationId)
             {

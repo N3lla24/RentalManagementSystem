@@ -7,7 +7,9 @@ namespace RentalManagement.Models
     {
         [Key]
         public int RentPaymentId { get; set; }
+        [Required(ErrorMessage = "Payment Method is required.")]
         public string RentPayment_Method { get; set; }
+        [Required(ErrorMessage = "Payment Amount is required.")]
         public decimal RentPayment_Amount { get; set; }
         [DataType(DataType.Date)]
         public DateTime RentPayment_Date { get; set; }

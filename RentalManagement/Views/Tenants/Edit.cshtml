@@ -14,9 +14,19 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="TenantId" />
             <div class="form-group">
-                <label asp-for="Tenant_Name" class="control-label"></label>
-                <input asp-for="Tenant_Name" class="form-control" />
-                <span asp-validation-for="Tenant_Name" class="text-danger"></span>
+                <label asp-for="Tenant_FirstName" class="control-label"></label>
+                <input asp-for="Tenant_FirstName" class="form-control" />
+                <span asp-validation-for="Tenant_FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tenant_MiddleName" class="control-label"></label>
+                <input asp-for="Tenant_MiddleName" class="form-control" />
+                <span asp-validation-for="Tenant_MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tenant_LastName" class="control-label"></label>
+                <input asp-for="Tenant_LastName" class="form-control" />
+                <span asp-validation-for="Tenant_LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Tenant_Email" class="control-label"></label>

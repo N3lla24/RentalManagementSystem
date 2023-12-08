@@ -19,7 +19,9 @@ namespace RentalManagement.Models
                 context.Tenant.AddRange(
                     new Tenant
                     {
-                        Tenant_Name = "Ronel N. Delig",
+                        Tenant_FirstName = "Ronel",
+                        Tenant_MiddleName = "Napoles",
+                        Tenant_LastName = "Delig",
                         Tenant_Email = "ronel@gmail.com",
                         Tenant_PhoneNumber = "09392719001",
                         Tenant_RoomNumber = 101,
@@ -31,7 +33,9 @@ namespace RentalManagement.Models
                     },
                     new Tenant
                     {
-                        Tenant_Name = "Omar Yusof Pila",
+                        Tenant_FirstName = "Omar Yusof",
+                        Tenant_MiddleName = "",
+                        Tenant_LastName = "Pila",
                         Tenant_Email = "omar@gmail.com",
                         Tenant_PhoneNumber = "09724926591",
                         Tenant_RoomNumber = 102,
@@ -43,7 +47,9 @@ namespace RentalManagement.Models
                     },
                     new Tenant
                     {
-                        Tenant_Name = "Jayla Monares",
+                        Tenant_FirstName = "Jayka",
+                        Tenant_MiddleName = "",
+                        Tenant_LastName = "Monares",
                         Tenant_Email = "jayla@gmail.com",
                         Tenant_PhoneNumber = "09328502810",
                         Tenant_RoomNumber = 103,
@@ -55,7 +61,9 @@ namespace RentalManagement.Models
                     },
                     new Tenant
                     {
-                        Tenant_Name = "Yancy Salas",
+                        Tenant_FirstName = "Yancy",
+                        Tenant_MiddleName = "",
+                        Tenant_LastName = "Salas",
                         Tenant_Email = "yancy@gmail.com",
                         Tenant_PhoneNumber = "09475291721",
                         Tenant_RoomNumber = 104,

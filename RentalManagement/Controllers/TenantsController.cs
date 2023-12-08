@@ -56,7 +56,7 @@ namespace RentalManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TenantId,Tenant_Name,Tenant_Email,Tenant_PhoneNumber,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_RentTot,Tenant_RentPaid,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
+        public async Task<IActionResult> Create([Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName,Tenant_Email,Tenant_PhoneNumber,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_RentTot,Tenant_RentPaid,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace RentalManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TenantId,Tenant_Name,Tenant_Email,Tenant_PhoneNumber,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_RentTot,Tenant_RentPaid,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
+        public async Task<IActionResult> Edit(int id, [Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName,Tenant_Email,Tenant_PhoneNumber,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_RentTot,Tenant_RentPaid,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
         {
             if (id != tenant.TenantId)
             {

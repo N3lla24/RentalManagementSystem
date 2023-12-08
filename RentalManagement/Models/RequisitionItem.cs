@@ -8,8 +8,9 @@ namespace RentalManagement.Models
         [Key]
         [ForeignKey("Requisition")]
         public int RequistitionId { get; set; }
+        public string Requistition_Type{ get; set; }
         public string Requistition_Item { get; set; }
-        public decimal Requistition_Quantity { get; set; }
+        public int Requistition_Quantity { get; set; }
         public string Requistition_Units { get; set; }
 
 

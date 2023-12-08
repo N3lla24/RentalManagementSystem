@@ -7,6 +7,7 @@ namespace RentalManagement.Models
     {
         [Key]
         public int RequistitionId { get; set; }
+        [StringLength(300, MinimumLength = 10, ErrorMessage = "Requisition Description must be more than 10 characters & maximum of 300 characters.")]
         public string Requistition_Remarks { get; set; }
         [DataType(DataType.Date)]
         public DateTime Requistition_Date { get; set; }

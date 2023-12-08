@@ -7,12 +7,13 @@ namespace RentalManagement.Models
     {
         [Key]
         public int InventoryId { get; set; }
-        public string Inventory_Name { get; set; }
-        public decimal Inventory_Quantity { get; set; }
-        public string Inventory_Unit { get; set; }
+        [Required(ErrorMessage = "Email Address is required.")]
+        public string Inventory_ItemName { get; set; }
+        public int? Inventory_ItemQuantity { get; set; }
+        public string? Inventory_ItemUnit { get; set; }
         [DataType(DataType.Date)]
-        public DateTime Supplier_CreatedAt { get; set; }
+        public DateTime Inventory_CreatedAt { get; set; }
         [DataType(DataType.Date)]
-        public DateTime Supplier_UpdatedAt { get; set; }
+        public DateTime? Inventory_UpdatedAt { get; set; }
     }
 }
