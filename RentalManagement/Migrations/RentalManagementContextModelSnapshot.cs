@@ -30,14 +30,14 @@ namespace RentalManagement.Migrations
                     b.Property<DateTime>("Application_CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Application_RoomNumber")
+                    b.Property<int>("Application_RoomNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("Application_Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Application_UnitNumber")
+                    b.Property<int>("Application_UnitNumber")
                         .HasColumnType("int");
 
                     b.HasKey("ApplicationId");
@@ -369,7 +369,10 @@ namespace RentalManagement.Migrations
             modelBuilder.Entity("RentalManagement.Models.RequisitionItem", b =>
                 {
                     b.Property<int>("Req_Item_ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Req_Item_ID"), 1L, 1);
 
                     b.Property<string>("Req_Item_Name")
                         .IsRequired()
@@ -382,7 +385,12 @@ namespace RentalManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RequisitionId")
+                        .HasColumnType("int");
+
                     b.HasKey("Req_Item_ID");
+
+                    b.HasIndex("RequisitionId");
 
                     b.ToTable("RequisitionItem");
                 });
@@ -390,13 +398,21 @@ namespace RentalManagement.Migrations
             modelBuilder.Entity("RentalManagement.Models.RequisitionService", b =>
                 {
                     b.Property<int>("Req_Serv_ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Req_Serv_ID"), 1L, 1);
 
                     b.Property<string>("Req_Serv_Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RequisitionId")
+                        .HasColumnType("int");
+
                     b.HasKey("Req_Serv_ID");
+
+                    b.HasIndex("RequisitionId");
 
                     b.ToTable("RequisitionService");
                 });
@@ -579,7 +595,7 @@ namespace RentalManagement.Migrations
                 {
                     b.HasOne("RentalManagement.Models.Requisition", "Requisition")
                         .WithMany()
-                        .HasForeignKey("Req_Item_ID")
+                        .HasForeignKey("RequisitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -590,7 +606,7 @@ namespace RentalManagement.Migrations
                 {
                     b.HasOne("RentalManagement.Models.Requisition", "Requisition")
                         .WithMany()
-                        .HasForeignKey("Req_Serv_ID")
+                        .HasForeignKey("RequisitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

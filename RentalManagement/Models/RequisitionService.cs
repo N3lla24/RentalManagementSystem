@@ -6,13 +6,17 @@ namespace RentalManagement.Models
     public class RequisitionService
     {
         [Key]
-        [ForeignKey("Requisition")]
         public int Req_Serv_ID { get; set; }
 
-        [Required(ErrorMessage = "Name is required.")]
+
+        [Required(ErrorMessage = "Name is Required.")]
         public string Req_Serv_Name { get; set; }
 
 
+
+        [ForeignKey("Requisition")]
+        public int RequisitionId { get; set; }
         public virtual Requisition? Requisition { get; set; }
+        
     }
 }

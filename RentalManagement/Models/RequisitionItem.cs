@@ -6,7 +6,6 @@ namespace RentalManagement.Models
     public class RequisitionItem
     {
         [Key]
-        [ForeignKey("Requisition")]
         public int Req_Item_ID { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]
@@ -21,7 +20,9 @@ namespace RentalManagement.Models
         public string Req_Item_Units { get; set; }
 
 
-
+        [ForeignKey("Requisition")]
+        public int RequisitionId { get; set; }
         public virtual Requisition? Requisition { get; set; }
+
     }
 }
