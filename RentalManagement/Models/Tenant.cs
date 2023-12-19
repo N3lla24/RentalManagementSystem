@@ -45,7 +45,7 @@ namespace RentalManagement.Models
         public DateTime Tenant_CreatedAt { get; set; } = DateTime.Now;
 
 
-        [DataType(DataType.Date)]
+
         public DateTime? Tenant_UpdatedAt { get; set; }
     }
 }

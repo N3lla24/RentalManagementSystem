@@ -29,7 +29,7 @@ namespace RentalManagement.Models
         public DateTime Supplier_CreatedAt { get; set; } = DateTime.Now;
 
 
-        [DataType(DataType.Date)]
+
         public DateTime? Supplier_UpdatedAt { get; set; }
     }
 }
