@@ -7,13 +7,21 @@ namespace RentalManagement.Models
     {
         [Key]
         [ForeignKey("Requisition")]
-        public int RequistitionId { get; set; }
-        public string Requistition_Type{ get; set; }
-        public string Requistition_Item { get; set; }
-        public int Requistition_Quantity { get; set; }
-        public string Requistition_Units { get; set; }
+        public int Req_Item_ID { get; set; }
+
+        [Required(ErrorMessage = "Name is required.")]
+        public string Req_Item_Name { get; set; }
 
 
-        public virtual Requisition Requisition { get; set; }
+        [Required(ErrorMessage = "Item Quantity is required.")]
+        public int Req_Item_Quantity { get; set; }
+
+
+        [Required(ErrorMessage = "Measurement Unit is required.")]
+        public string Req_Item_Units { get; set; }
+
+
+
+        public virtual Requisition? Requisition { get; set; }
     }
 }

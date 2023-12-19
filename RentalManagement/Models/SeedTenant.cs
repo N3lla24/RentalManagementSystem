@@ -26,10 +26,9 @@ namespace RentalManagement.Models
                         Tenant_PhoneNumber = "09392719001",
                         Tenant_RoomNumber = 101,
                         Tenant_UnitNumber = 02,
-                        Tenant_RentTot = Convert.ToDecimal(121000.00),
-                        Tenant_RentPaid = Convert.ToDecimal(0.00),
-                        Tenant_CreatedAt = DateTime.Today,
-                        Tenant_UpdatedAt = DateTime.Today,
+                        Tenant_TotPay = Convert.ToDecimal(121000.00),
+                        Tenant_CreatedAt = DateTime.Now,
+                        Tenant_UpdatedAt = DateTime.Now,
                     },
                     new Tenant
                     {
@@ -40,10 +39,9 @@ namespace RentalManagement.Models
                         Tenant_PhoneNumber = "09724926591",
                         Tenant_RoomNumber = 102,
                         Tenant_UnitNumber = 03,
-                        Tenant_RentTot = Convert.ToDecimal(151000.00),
-                        Tenant_RentPaid = Convert.ToDecimal(1000.00),
-                        Tenant_CreatedAt = DateTime.Today,
-                        Tenant_UpdatedAt = DateTime.Today,
+                        Tenant_TotPay = Convert.ToDecimal(151000.00),
+                        Tenant_CreatedAt = DateTime.Now,
+                        Tenant_UpdatedAt = DateTime.Now,
                     },
                     new Tenant
                     {
@@ -54,10 +52,9 @@ namespace RentalManagement.Models
                         Tenant_PhoneNumber = "09328502810",
                         Tenant_RoomNumber = 103,
                         Tenant_UnitNumber = 04,
-                        Tenant_RentTot = Convert.ToDecimal(101000.00),
-                        Tenant_RentPaid = Convert.ToDecimal(2000.00),
-                        Tenant_CreatedAt = DateTime.Today,
-                        Tenant_UpdatedAt = DateTime.Today,
+                        Tenant_TotPay = Convert.ToDecimal(101000.00),
+                        Tenant_CreatedAt = DateTime.Now,
+                        Tenant_UpdatedAt = DateTime.Now,
                     },
                     new Tenant
                     {
@@ -68,10 +65,9 @@ namespace RentalManagement.Models
                         Tenant_PhoneNumber = "09475291721",
                         Tenant_RoomNumber = 104,
                         Tenant_UnitNumber = 06,
-                        Tenant_RentTot = Convert.ToDecimal(191000.00),
-                        Tenant_RentPaid = Convert.ToDecimal(1500.00),
-                        Tenant_CreatedAt = DateTime.Today,
-                        Tenant_UpdatedAt = DateTime.Today,
+                        Tenant_TotPay = Convert.ToDecimal(191000.00),
+                        Tenant_CreatedAt = DateTime.Now,
+                        Tenant_UpdatedAt = DateTime.Now,
                     }
                 );
                 context.SaveChanges();

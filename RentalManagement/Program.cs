@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using RentalManagement.Data;
 using RentalManagement.Models;
 
@@ -11,12 +10,15 @@ builder.Services.AddDbContext<RentalManagementContext>(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-
+//Seeding Tenants, Suppliers, and Applicants
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
     SeedTenant.Initialize(services);
+    SeedSuppliers.Initialize(services);
+    SeedApplicants.Initialize(services);
+    SeedApplicantForms.Initialize(services);
 }
 
 // Configure the HTTP request pipeline.

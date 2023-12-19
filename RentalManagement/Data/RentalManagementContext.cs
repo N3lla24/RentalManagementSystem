@@ -28,11 +28,13 @@ namespace RentalManagement.Data
 
         public DbSet<RentalManagement.Models.Feedback> Feedback { get; set; }
 
-        public DbSet<RentalManagement.Models.RentPayment> RentPayment { get; set; }
+        public DbSet<RentalManagement.Models.PaymentDetail> PaymentDetail { get; set; }
 
         public DbSet<RentalManagement.Models.Requisition> Requisition { get; set; }
 
         public DbSet<RentalManagement.Models.RequisitionItem> RequisitionItem { get; set; }
+
+        public DbSet<RentalManagement.Models.RequisitionService> RequisitionService { get; set; }
 
         public DbSet<RentalManagement.Models.PurchaseOrder> PurchaseOrder { get; set; }
 
