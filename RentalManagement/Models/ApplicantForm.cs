@@ -17,10 +17,10 @@ namespace RentalManagement.Models
         public string Application_Status { get; set; }
 
 
-        public int? Application_RoomNumber { get; set; }
+        public int Application_RoomNumber { get; set; }
 
 
-        public int? Application_UnitNumber { get; set; }
+        public int Application_UnitNumber { get; set; }
 
 
 
