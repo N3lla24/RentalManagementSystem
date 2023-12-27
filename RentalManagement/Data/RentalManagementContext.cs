@@ -30,6 +30,8 @@ namespace RentalManagement.Data
 
         public DbSet<RentalManagement.Models.PaymentDetail> PaymentDetail { get; set; }
 
+        public DbSet<RentalManagement.Models.Invoice> Invoice { get; set; }
+
         public DbSet<RentalManagement.Models.Requisition> Requisition { get; set; }
 
         public DbSet<RentalManagement.Models.RequisitionItem> RequisitionItem { get; set; }

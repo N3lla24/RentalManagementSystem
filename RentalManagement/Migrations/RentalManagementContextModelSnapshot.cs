@@ -179,6 +179,40 @@ namespace RentalManagement.Migrations
                     b.ToTable("Inventory");
                 });
 
+            modelBuilder.Entity("RentalManagement.Models.Invoice", b =>
+                {
+                    b.Property<int>("Inv_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Inv_ID"), 1L, 1);
+
+                    b.Property<DateTime>("Inv_CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Inv_Method")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Inv_Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Pay_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Inv_ID");
+
+                    b.HasIndex("Pay_ID");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Invoice");
+                });
+
             modelBuilder.Entity("RentalManagement.Models.PaymentDetail", b =>
                 {
                     b.Property<int>("Pay_ID")
@@ -208,16 +242,8 @@ namespace RentalManagement.Migrations
                     b.Property<decimal>("Pay_InternetFee")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Pay_Method")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Pay_RentPrice")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Pay_Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Pay_TapwaterFee")
                         .HasColumnType("decimal(18,2)");
@@ -225,12 +251,7 @@ namespace RentalManagement.Migrations
                     b.Property<decimal>("Pay_WaterFee")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
-
                     b.HasKey("Pay_ID");
-
-                    b.HasIndex("TenantId");
 
                     b.ToTable("PaymentDetail");
                 });
@@ -337,14 +358,6 @@ namespace RentalManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequisitionId"), 1L, 1);
 
-                    b.Property<DateTime>("Requisition_DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Requisition_Remarks")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
                     b.Property<string>("Requisition_Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -374,12 +387,20 @@ namespace RentalManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Req_Item_ID"), 1L, 1);
 
+                    b.Property<DateTime>("Req_Item_DueDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Req_Item_Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Req_Item_Quantity")
                         .HasColumnType("int");
+
+                    b.Property<string>("Req_Item_Remarks")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Req_Item_Units")
                         .IsRequired()
@@ -403,9 +424,17 @@ namespace RentalManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Req_Serv_ID"), 1L, 1);
 
+                    b.Property<DateTime>("Req_Serv_DueDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Req_Serv_Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Req_Serv_Remarks")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("RequisitionId")
                         .HasColumnType("int");
@@ -532,13 +561,21 @@ namespace RentalManagement.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("RentalManagement.Models.PaymentDetail", b =>
+            modelBuilder.Entity("RentalManagement.Models.Invoice", b =>
                 {
+                    b.HasOne("RentalManagement.Models.PaymentDetail", "PaymentDetail")
+                        .WithMany()
+                        .HasForeignKey("Pay_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RentalManagement.Models.Tenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("PaymentDetail");
 
                     b.Navigation("Tenant");
                 });
