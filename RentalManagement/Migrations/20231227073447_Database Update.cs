@@ -47,6 +47,28 @@ namespace RentalManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PaymentDetail",
+                columns: table => new
+                {
+                    Pay_ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Pay_DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Pay_RentPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_TapwaterFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_ElectricityFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_WaterFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_GasFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_GarbageFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_AirconFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_InternetFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentDetail", x => x.Pay_ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Supplier",
                 columns: table => new
                 {
@@ -104,7 +126,7 @@ namespace RentalManagement.Migrations
                         column: x => x.ApplicationId,
                         principalTable: "Applicants",
                         principalColumn: "ApplicationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,7 +148,7 @@ namespace RentalManagement.Migrations
                         column: x => x.ApplicationId,
                         principalTable: "Applicants",
                         principalColumn: "ApplicationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -149,38 +171,35 @@ namespace RentalManagement.Migrations
                         column: x => x.TenantId,
                         principalTable: "Tenant",
                         principalColumn: "TenantId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PaymentDetail",
+                name: "Invoice",
                 columns: table => new
                 {
-                    Pay_ID = table.Column<int>(type: "int", nullable: false)
+                    Inv_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Pay_DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Pay_Method = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Pay_Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Pay_RentPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_TapwaterFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_ElectricityFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_WaterFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_GasFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_GarbageFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_AirconFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_InternetFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TenantId = table.Column<int>(type: "int", nullable: false)
+                    Inv_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Inv_Method = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Inv_Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TenantId = table.Column<int>(type: "int", nullable: false),
+                    Pay_ID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PaymentDetail", x => x.Pay_ID);
+                    table.PrimaryKey("PK_Invoice", x => x.Inv_ID);
                     table.ForeignKey(
-                        name: "FK_PaymentDetail_Tenant_TenantId",
+                        name: "FK_Invoice_PaymentDetail_Pay_ID",
+                        column: x => x.Pay_ID,
+                        principalTable: "PaymentDetail",
+                        principalColumn: "Pay_ID");
+                    table.ForeignKey(
+                        name: "FK_Invoice_Tenant_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenant",
                         principalColumn: "TenantId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,9 +210,7 @@ namespace RentalManagement.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Requisition_Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Requistition_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Requisition_Remarks = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Requisition_Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Requisition_DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TenantId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -204,7 +221,7 @@ namespace RentalManagement.Migrations
                         column: x => x.TenantId,
                         principalTable: "Tenant",
                         principalColumn: "TenantId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -245,6 +262,8 @@ namespace RentalManagement.Migrations
                     Req_Item_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Req_Item_Quantity = table.Column<int>(type: "int", nullable: false),
                     Req_Item_Units = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Req_Item_Remarks = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Req_Item_DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RequisitionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -265,6 +284,8 @@ namespace RentalManagement.Migrations
                     Req_Serv_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Req_Serv_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Req_Serv_Remarks = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Req_Serv_DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RequisitionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -318,7 +339,7 @@ namespace RentalManagement.Migrations
                         column: x => x.PurchaseId,
                         principalTable: "PurchaseOrder",
                         principalColumn: "PurchaseOrderId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -332,8 +353,13 @@ namespace RentalManagement.Migrations
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PaymentDetail_TenantId",
-                table: "PaymentDetail",
+                name: "IX_Invoice_Pay_ID",
+                table: "Invoice",
+                column: "Pay_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoice_TenantId",
+                table: "Invoice",
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
@@ -382,7 +408,7 @@ namespace RentalManagement.Migrations
                 name: "Inventory");
 
             migrationBuilder.DropTable(
-                name: "PaymentDetail");
+                name: "Invoice");
 
             migrationBuilder.DropTable(
                 name: "PurchaseItem");
@@ -398,6 +424,9 @@ namespace RentalManagement.Migrations
 
             migrationBuilder.DropTable(
                 name: "Applicants");
+
+            migrationBuilder.DropTable(
+                name: "PaymentDetail");
 
             migrationBuilder.DropTable(
                 name: "PurchaseOrder");

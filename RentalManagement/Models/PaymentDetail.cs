@@ -13,13 +13,6 @@ namespace RentalManagement.Models
         public DateTime Pay_DueDate { get; set; }
 
 
-        [Required(ErrorMessage = "Payment Method is required.")]
-        public string Pay_Method { get; set; }
-
-
-        [Required(ErrorMessage = "Payment Status is required.")]
-        public string Pay_Status { get; set; }
-
 
         [Required(ErrorMessage = "Complete Payment Details")]
         public decimal Pay_RentPrice { get; set; }
@@ -43,13 +36,6 @@ namespace RentalManagement.Models
 
 
         public DateTime Pay_CreatedAt { get; set; } = DateTime.Now;
-
-
-        [ForeignKey("Tenants")]
-        public int TenantId { get; set; }
-
-
-        public virtual Tenant? Tenant { get; set; }
 
     }
 }
