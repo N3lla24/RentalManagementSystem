@@ -25,24 +25,8 @@ namespace RentalManagement.Models
         public decimal Pay_RentPrice { get; set; }
 
 
-
         [Required(ErrorMessage = "Complete Payment Details")]
-        public decimal Pay_TapwaterFee { get; set; }
-
-
-
-        [Required(ErrorMessage = "Complete Payment Details")]
-        public decimal Pay_ElectricityFee { get; set; }
-
-
-
-        [Required(ErrorMessage = "Complete Payment Details")]
-        public decimal Pay_WaterFee { get; set; }
-
-
-
-        [Required(ErrorMessage = "Complete Payment Details")]
-        public decimal Pay_GasFee { get; set; }
+        public decimal Pay_UtilityFee { get; set; }
 
 
         [Required(ErrorMessage = "Complete Payment Details")]
