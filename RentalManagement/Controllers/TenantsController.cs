@@ -51,6 +51,9 @@ namespace RentalManagement.Controllers
             return View();
         }
 
+        // GET: Tenant/Dashboard
+        public IActionResult UserDashboard() { return View(); }
+
         // POST: Tenants/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

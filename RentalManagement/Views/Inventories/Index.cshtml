@@ -1,0 +1,59 @@
+﻿@model IEnumerable<RentalManagement.Models.Inventory>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory_ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory_ItemQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory_ItemUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory_CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory_UpdatedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventory_ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventory_ItemQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventory_ItemUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventory_CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventory_UpdatedAt)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.InventoryId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.InventoryId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.InventoryId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

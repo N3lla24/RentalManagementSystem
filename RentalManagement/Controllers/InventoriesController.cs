@@ -56,7 +56,7 @@ namespace RentalManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("InventoryId,Inventory_Name,Inventory_Quantity,Inventory_Unit,Supplier_CreatedAt,Supplier_UpdatedAt")] Inventory inventory)
+        public async Task<IActionResult> Create([Bind("InventoryId,Inventory_ItemName,Inventory_ItemQuantity,Inventory_ItemUnit,Inventory_CreatedAt,Inventory_UpdatedAt")] Inventory inventory)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace RentalManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("InventoryId,Inventory_Name,Inventory_Quantity,Inventory_Unit,Supplier_CreatedAt,Supplier_UpdatedAt")] Inventory inventory)
+        public async Task<IActionResult> Edit(int id, [Bind("InventoryId,Inventory_ItemName,Inventory_ItemQuantity,Inventory_ItemUnit,Inventory_CreatedAt,Inventory_UpdatedAt")] Inventory inventory)
         {
             if (id != inventory.InventoryId)
             {

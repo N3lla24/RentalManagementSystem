@@ -230,13 +230,7 @@ namespace RentalManagement.Migrations
                     b.Property<DateTime>("Pay_DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Pay_ElectricityFee")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("Pay_GarbageFee")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Pay_GasFee")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Pay_InternetFee")
@@ -244,6 +238,10 @@ namespace RentalManagement.Migrations
 
                     b.Property<decimal>("Pay_RentPrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Pay_Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Pay_TapwaterFee")
                         .HasColumnType("decimal(18,2)");
