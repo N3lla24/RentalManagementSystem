@@ -26,7 +26,7 @@ namespace RentalManagement.Models
 
 
 
-        public DateTime Supplier_CreatedAt { get; set; } = DateTime.Now;
+        public DateTime Supplier_CreatedAt { get; set; }
 
 
 

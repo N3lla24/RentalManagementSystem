@@ -34,7 +34,7 @@ namespace RentalManagement.Models
 
 
 
-        public DateTime Applicant_CreatedAt { get; set; } = DateTime.Now;
+        public DateTime Applicant_CreatedAt { get; set; }
 
 
 

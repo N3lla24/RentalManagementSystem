@@ -42,7 +42,7 @@ namespace RentalManagement.Models
 
 
 
-        public DateTime Tenant_CreatedAt { get; set; } = DateTime.Now;
+        public DateTime Tenant_CreatedAt { get; set; }
 
 
 

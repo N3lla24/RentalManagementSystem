@@ -17,7 +17,7 @@ namespace RentalManagement.Models
         public string FAQ_Content { get; set; }
 
 
-        public DateTime FAQ_CreatedAt{ get; set; } = DateTime.Now;
+        public DateTime FAQ_CreatedAt{ get; set; }
 
 
 

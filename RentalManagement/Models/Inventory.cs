@@ -20,7 +20,7 @@ namespace RentalManagement.Models
 
 
 
-        public DateTime Inventory_CreatedAt { get; set; } = DateTime.Now;
+        public DateTime Inventory_CreatedAt { get; set; }
 
 
 

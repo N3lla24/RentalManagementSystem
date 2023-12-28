@@ -34,8 +34,16 @@ namespace RentalManagement.Models
         public decimal Pay_InternetFee { get; set; }
 
 
+        [Required(ErrorMessage = "Complete Payment Details")]
+        public decimal Pay_RefrigeratorFee { get; set; }
 
-        public DateTime Pay_CreatedAt { get; set; } = DateTime.Now;
+
+        [Required(ErrorMessage = "Complete Payment Details")]
+        public decimal Pay_WashingFee { get; set; }
+
+
+
+        public DateTime Pay_CreatedAt { get; set; }
 
     }
 }

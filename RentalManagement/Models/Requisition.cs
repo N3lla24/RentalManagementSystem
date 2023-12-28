@@ -13,7 +13,7 @@ namespace RentalManagement.Models
         public string Requisition_Type { get; set; }
 
 
-        public DateTime Requistition_CreatedAt { get; set; } = DateTime.Now;
+        public DateTime Requistition_CreatedAt { get; set; }
 
 
         [Required(ErrorMessage = "Requisition Status is required.")]

@@ -42,6 +42,8 @@ namespace RentalManagement.Data
 
         public DbSet<RentalManagement.Models.PurchaseItem> PurchaseItem { get; set; }
 
+        public DbSet<RentalManagement.Models.PurchaseService> PurchaseService { get; set; }
+
         public DbSet<RentalManagement.Models.ReceivingMemo> ReceivingMemo { get; set; }
 
 

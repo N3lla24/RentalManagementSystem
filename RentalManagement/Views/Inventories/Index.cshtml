@@ -1,31 +1,31 @@
 ﻿@model IEnumerable<RentalManagement.Models.Inventory>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Inventory List";
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add New Item</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Inventory_ItemName)
+                Item Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Inventory_ItemQuantity)
+                Item Quantity
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Inventory_ItemUnit)
+                Quantity Unit
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Inventory_CreatedAt)
+                Date Added
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Inventory_UpdatedAt)
+                Date Edited
             </th>
             <th></th>
         </tr>
@@ -49,9 +49,9 @@
                 @Html.DisplayFor(modelItem => item.Inventory_UpdatedAt)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.InventoryId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.InventoryId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.InventoryId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.InventoryId">Edit Item</a> |
+                <a asp-action="Details" asp-route-id="@item.InventoryId">View Item Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.InventoryId">Delete Item</a>
             </td>
         </tr>
 }

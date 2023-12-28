@@ -12,8 +12,8 @@ using RentalManagement.Data;
 namespace RentalManagement.Migrations
 {
     [DbContext(typeof(RentalManagementContext))]
-    [Migration("20231227150410_Database Changes")]
-    partial class DatabaseChanges
+    [Migration("20231228154337_Database Creation")]
+    partial class DatabaseCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -251,25 +251,29 @@ namespace RentalManagement.Migrations
 
             modelBuilder.Entity("RentalManagement.Models.PurchaseItem", b =>
                 {
-                    b.Property<int>("PurchaseId")
+                    b.Property<int>("PurchaseItem_Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Purchase_ItemName")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseItem_Id"), 1L, 1);
+
+                    b.Property<string>("PurchaseItem_Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Purchase_Quantity")
+                    b.Property<int>("PurchaseItem_Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("Purchase_Type")
+                    b.Property<string>("PurchaseItem_Unit")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Purchase_Units")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PurchaseOrderId")
+                        .HasColumnType("int");
 
-                    b.HasKey("PurchaseId");
+                    b.HasKey("PurchaseItem_Id");
+
+                    b.HasIndex("PurchaseOrderId");
 
                     b.ToTable("PurchaseItem");
                 });
@@ -311,6 +315,28 @@ namespace RentalManagement.Migrations
                     b.HasIndex("SuppliersId1");
 
                     b.ToTable("PurchaseOrder");
+                });
+
+            modelBuilder.Entity("RentalManagement.Models.PurchaseService", b =>
+                {
+                    b.Property<int>("PurchaseServ_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseServ_Id"), 1L, 1);
+
+                    b.Property<int>("PurchaseOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PurchaseServ_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PurchaseServ_Id");
+
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.ToTable("PurchaseService");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.ReceivingMemo", b =>
@@ -577,7 +603,7 @@ namespace RentalManagement.Migrations
                 {
                     b.HasOne("RentalManagement.Models.PurchaseOrder", "PurchaseOrder")
                         .WithMany()
-                        .HasForeignKey("PurchaseId")
+                        .HasForeignKey("PurchaseOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -597,6 +623,17 @@ namespace RentalManagement.Migrations
                     b.Navigation("Requisition");
 
                     b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("RentalManagement.Models.PurchaseService", b =>
+                {
+                    b.HasOne("RentalManagement.Models.PurchaseOrder", "PurchaseOrder")
+                        .WithMany()
+                        .HasForeignKey("PurchaseOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PurchaseOrder");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.ReceivingMemo", b =>

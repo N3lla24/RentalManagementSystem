@@ -1,7 +1,7 @@
 ﻿@model RentalManagement.Models.Inventory
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Item";
 }
 
 <h1>Edit</h1>
@@ -14,30 +14,25 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="InventoryId" />
             <div class="form-group">
-                <label asp-for="Inventory_ItemName" class="control-label"></label>
+                <label asp-for="Inventory_ItemName" class="control-label">Item Name</label>
                 <input asp-for="Inventory_ItemName" class="form-control" />
                 <span asp-validation-for="Inventory_ItemName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Inventory_ItemQuantity" class="control-label"></label>
+                <label asp-for="Inventory_ItemQuantity" class="control-label">Item Quantity</label>
                 <input asp-for="Inventory_ItemQuantity" class="form-control" />
                 <span asp-validation-for="Inventory_ItemQuantity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Inventory_ItemUnit" class="control-label"></label>
+                <label asp-for="Inventory_ItemUnit" class="control-label">Quantity Unit</label>
                 <input asp-for="Inventory_ItemUnit" class="form-control" />
                 <span asp-validation-for="Inventory_ItemUnit" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Inventory_CreatedAt" class="control-label"></label>
-                <input asp-for="Inventory_CreatedAt" class="form-control" />
-                <span asp-validation-for="Inventory_CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Inventory_UpdatedAt" class="control-label"></label>
-                <input asp-for="Inventory_UpdatedAt" class="form-control" />
+                <label asp-for="Inventory_UpdatedAt" class="control-label">Date Edited</label>
+                <input type="datetime" asp-for="Inventory_UpdatedAt" class="form-control" value="@DateTime.Now" disabled />
                 <span asp-validation-for="Inventory_UpdatedAt" class="text-danger"></span>
-            </div>
+            </div><br />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

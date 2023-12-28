@@ -11,7 +11,7 @@ namespace RentalManagement.Models
         public int ApplicationId { get; set; }
 
 
-        public DateTime Application_CreatedAt { get; set; } = DateTime.Now;
+        public DateTime Application_CreatedAt { get; set; }
 
 
         public string Application_Status { get; set; }

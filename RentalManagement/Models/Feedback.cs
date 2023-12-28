@@ -18,7 +18,7 @@ namespace RentalManagement.Models
         public string? Feedback_Content { get; set; }
 
 
-        public DateTime? Feedback_CreatedAt { get; set; } = DateTime.Now;
+        public DateTime? Feedback_CreatedAt { get; set; }
 
 
         public DateTime? Feedback_UpdatedAt { get; set; }

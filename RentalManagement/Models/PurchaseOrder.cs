@@ -11,12 +11,11 @@ namespace RentalManagement.Models
         [Required(ErrorMessage = "Purchase Status is required.")]
         public string PurchaseOrder_Status { get; set; }
 
+        [Required(ErrorMessage = "Purchase Type is required.")]
+        public string PurchaseOrder_Type { get; set; }
 
 
-        public DateTime PurchaseOrder_ReceivedDate{ get; set; }
-
-
-        public DateTime PurchaseOrder_CreatedAt { get; set; } = DateTime.Now;
+        public DateTime PurchaseOrder_CreatedAt { get; set; }
 
 
 

@@ -3,22 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentalManagement.Models
 {
-    public class PurchaseItem
+    public class PurchaseService
     {
         [Key]
-        public int PurchaseItem_Id { get; set; }
+        public int PurchaseServ_Id { get; set; }
 
 
         [Required(ErrorMessage = "Purchase Item Name is required.")]
-        public string PurchaseItem_Name { get; set; }
-
-
-        [Required(ErrorMessage = "Purchase Item Quantity is required.")]
-        public int PurchaseItem_Quantity { get; set; }
-
-
-        [Required(ErrorMessage = "Purchase Item Unit is required.")]
-        public string PurchaseItem_Unit { get; set; }
+        public string PurchaseServ_Name { get; set; }
 
 
 
