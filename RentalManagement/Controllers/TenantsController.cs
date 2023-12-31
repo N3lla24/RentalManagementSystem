@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentalManagement.Data;
 using RentalManagement.Models;
+using RentalManagement.Services;
 
 namespace RentalManagement.Controllers
 {
@@ -25,6 +26,11 @@ namespace RentalManagement.Controllers
               return _context.Tenant != null ? 
                           View(await _context.Tenant.ToListAsync()) :
                           Problem("Entity set 'RentalManagementContext.Tenant'  is null.");
+        }
+
+        public IActionResult NavToLogin()
+        {
+            return RedirectToAction("Index", "Login");
         }
 
         // GET: Tenants/Details/5
@@ -59,13 +65,26 @@ namespace RentalManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName,Tenant_Email,Tenant_PhoneNumber,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_RentTot,Tenant_RentPaid,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
+        public async Task<IActionResult> Create([Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName, Tenant_UserName, Tenant_Email,Tenant_PhoneNumber, Tenant_Password, Tenant_RoomNumber,Tenant_UnitNumber,Tenant_RentTot,Tenant_RentPaid,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tenant);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                Tenant existingUser = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_Email == tenant.Tenant_Email && q.Tenant_PhoneNumber == tenant.Tenant_PhoneNumber);
+
+                if(existingUser == null)
+                {
+                    ViewData["ExistedUser"] = null;
+                    string HashPass = Hashing.HashPass(tenant.Tenant_Password);
+                    tenant.Tenant_Password = HashPass;
+
+                    /*_context.Update(tenant);*/
+                    await _context.SaveChangesAsync();
+                    ViewData["Title"] = "Successfull";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                ViewData["ExistedUser"] = "Account already exists.";
+                return View(existingUser);
             }
             return View(tenant);
         }
@@ -157,6 +176,31 @@ namespace RentalManagement.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        //GET REGISTER
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        //Register Tenant (Complete Info)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("TenantId, Tenant_UserName, Tenant_Email,Tenant_PhoneNumber, Tenant_Password")] Tenant tenant)
+        {
+            if (ModelState.IsValid)
+            {
+                Tenant existingUser = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_Email == tenant.Tenant_Email && q.Tenant_PhoneNumber == tenant.Tenant_PhoneNumber);
+                if (existingUser != null)
+                {
+                    ViewData["Title"] = "Successfull";
+                }
+                return View(tenant);
+            }
+            return View(tenant);
+        }
+
+
 
         private bool TenantExists(int id)
         {

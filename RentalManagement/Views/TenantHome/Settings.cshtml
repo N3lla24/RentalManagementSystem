@@ -1,6 +1,8 @@
-﻿﻿
+﻿@model RentalManagement.Models.Tenant;
+
 @{
     Layout = null;
+
 }
 
 <!DOCTYPE html>
@@ -16,92 +18,41 @@
     <script src="home.js"></script>
 </head>
 
-<body id="bodyCont">
-
+<body id="bodyCont" style="background-color:#FEEAD1">
     <section id="header">
         <div class="navbar">
-            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+
+            <a asp-action="Logout" style="margin-top:12px" id="Logout">Logout</a>
             <div class="dropdown nbItem">
                 <button class="dropbtn">
                     <i class="fas fa-sign-in-alt"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a href="@Url.Action("Index", "Login")">Tenant Sign In</a>
-                    <a href="@Url.Action("AdminSignIn", "Account")">Admin Sign In</a>
+                    <a href="@Url.Action("Index", "TenantHome")">Home</a>
+                    <a href="@Url.Action("Notifications", "TenantHome")">Notifications</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="logoHead" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(images/condo.svg);">
-        <div class="imgCont">
-            <img src="images/logo.svg" alt="">
-        </div>
-    </section>
+    <div>
+    </div>
 
-    <section id="application">
-        <button value="Application" onclick="location.href='@Url.Action("Create", "Applicants")'" style="cursor: pointer" >Send Application</button>
-    </section>
 
-    <section id="ssCont">
-        <div class="slideshow-container">
-            <div class="mySlides fade">
-                <div class="numbertext">1 / 5</div>
-                <img src="images/1.svg" style="width:100%">
-                <div class="text">Room # 1</div>
-            </div>
-            <div class="mySlides fade">
-                <div class="numbertext">2 / 5</div>
-                <img src="images/2.svg" style="width:100%">
-                <div class="text">Room # 2</div>
-            </div>
-            <div class="mySlides fade">
-                <div class="numbertext">3 / 5</div>
-                <img src="images/3.svg" style="width:100%">
-                <div class="text">Room # 3</div>
-            </div>
-            <div class="mySlides fade">
-                <div class="numbertext">4 / 5</div>
-                <img src="images/4.svg" style="width:100%">
-                <div class="text">Room # 4</div>
-            </div>
-            <div class="mySlides fade">
-                <div class="numbertext">5 / 5</div>
-                <img src="images/5.svg" style="width:100%">
-                <div class="text">Room # 5</div>
-            </div>
 
-            <a class="prev" onclick="plusSlides(-1)">❮</a>
-            <a class="next" onclick="plusSlides(1)">❯</a>
-        </div>
-        <br>
-        <div style="text-align:center">
-            <span class="dot" onclick="currentSlide(1)"></span>
-            <span class="dot" onclick="currentSlide(2)"></span>
-            <span class="dot" onclick="currentSlide(3)"></span>
-            <span class="dot" onclick="currentSlide(4)"></span>
-            <span class="dot" onclick="currentSlide(5)"></span>
-        </div>
 
-    </section>
+
+
+
+
+
 
     <section id="detailsCont">
-        <p>Lorem ipsum dolor sit amet. Ut aliquid quibusdam et consequatur fugit aut maiores aliquid ut galisum iste a assumenda officiis vel excepturi excepturi. A facere galisum qui voluptates quasi non neque optio aut totam cumque aut voluptatem reiciendis. Est saepe sunt est architecto voluptatem et dignissimos omnis in autem corporis et itaque voluptatum ut enim dolorum. Qui voluptatem ullam a natus adipisci et galisum dolore. Quo quidem facilis ut animi cupiditate ut accusamus corrupti ut impedit ullam. </p>
+        <p>STIL ON WORKS</p>
         <br>
         <p>Est dolores recusandae qui harum mollitia vel dolore placeat cum animi odio qui repellat tenetur non laborum sunt et illo maiores. Vel officiis consequuntur ea explicabo facilis rem nisi optio. Sit consequatur quasi sed laudantium numquam vel error explicabo qui nostrum quae. Quo exercitationem dolores et fuga autem et autem harum. Et neque magnam qui vitae voluptatem qui facilis doloremque. Et veritatis ipsum aut corporis Quis est laborum error non veritatis animi qui autem repudiandae. Aut alias mollitia qui dolor quis eos perspiciatis nulla. Et nihil enim eum incidunt nemo aut beatae magnam qui exercitationem quaerat. Eos mollitia quia ad illum dolores ab nisi magni et neque quia in voluptates quis est placeat dolor et consectetur quaerat. </p>
         <br>
         <p>Et fugit deserunt ab vero dolor qui porro provident qui repellat placeat aut commodi cupiditate ab minus repellendus. Et ipsa minima non rerum iure et ullam commodi hic architecto iste aut vero accusantium et dolore temporibus aut quam velit. Ad adipisci minus eos ipsam praesentium ut magni amet est omnis natus ut molestiae omnis quo alias quaerat qui quisquam odio. Aut enim aliquid in perspiciatis voluptate non impedit sunt. Est repellat vitae et rerum voluptatibus sit dolorum eveniet. Quo voluptatem fuga et quia iure sed voluptatem recusandae et porro iusto est veniam dolor vel consequatur exercitationem. Qui quaerat quae qui dolorem nihil sed harum ratione sed adipisci autem sit quasi nobis ab repellat similique et provident impedit! </p>
-    </section>
-
-    <section id="mapCont">
-        <h3>Apartment Location:</h3>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7849.9466164071855!2d123.95334364366202!3d10.34401926361364!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a9983c02be749d%3A0xac497e175a8ececb!2sPaknaan%2C%20Mandaue%20City%2C%20Cebu!5e0!3m2!1sen!2sph!4v1703886585194!5m2!1sen!2sph" width="1000" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </section>
-
-    <section id="buttonCont">
-        <button>Apartment Details</button>
-        <button>Tenant Feedbacks</button>
-        <button>Frequently Asked Questions</button>
     </section>
 
     <section id="backTopCont">
@@ -166,35 +117,6 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        let slideIndex = 1;
-        showSlides(slideIndex);
-
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
-
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
-        }
-
-        function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("mySlides");
-            let dots = document.getElementsByClassName("dot");
-            if (n > slides.length) { slideIndex = 1 }
-            if (n < 1) { slideIndex = slides.length }
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex - 1].style.display = "block";
-            dots[slideIndex - 1].className += " active";
-        }
-    </script>
 
 </body>
 </html>

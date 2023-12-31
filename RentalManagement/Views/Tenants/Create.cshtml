@@ -1,78 +1,63 @@
-﻿@model RentalManagement.Models.Tenant
+﻿@model RentalManagement.Models.Tenant;
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Login.cshtml";
 }
 
-<h1>Create</h1>
 
-<h4>Tenant</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<h1 style="text-align: center; padding: 30px">Tenant Account Registration</h1>
+<container class="d-flex align-content-center">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <fieldset style="margin-left:215px; width: 180%">
             <div class="form-group">
-                <label asp-for="Tenant_FirstName" class="control-label"></label>
-                <input asp-for="Tenant_FirstName" class="form-control" />
-                <span asp-validation-for="Tenant_FirstName" class="text-danger"></span>
+                <label asp-for="Tenant_Email" class="form-label mt-4">Email address</label>
+                <input asp-for="Tenant_Email" type="email" class="form-control"  placeholder="Enter email (e.g. email@example.com)">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <div>
+                    <span asp-validation-for="Tenant_Email" class="text-danger"></span>
+                </div>
+                
             </div>
             <div class="form-group">
-                <label asp-for="Tenant_MiddleName" class="control-label"></label>
-                <input asp-for="Tenant_MiddleName" class="form-control" />
-                <span asp-validation-for="Tenant_MiddleName" class="text-danger"></span>
+                <label asp-for="Tenant_PhoneNumber" class="form-label mt-4">Phone Number</label>
+                <input asp-for="Tenant_PhoneNumber" type="text" class="form-control"  placeholder="(e.g. 09XXXXXXXXX)">
+                <div>
+                    <span asp-validation-for="Tenant_PhoneNumber" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="Tenant_LastName" class="control-label"></label>
-                <input asp-for="Tenant_LastName" class="form-control" />
-                <span asp-validation-for="Tenant_LastName" class="text-danger"></span>
+                <label asp-for="Tenant_UserName" class="form-label mt-4">User Name</label>
+                <input asp-for="Tenant_UserName" type="text" class="form-control" placeholder="Enter email (e.g. email@example.com)">
+                <div>
+                    <span asp-validation-for="Tenant_UserName" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="Tenant_Email" class="control-label"></label>
-                <input asp-for="Tenant_Email" class="form-control" />
-                <span asp-validation-for="Tenant_Email" class="text-danger"></span>
+                <label asp-for="Tenant_Password" class="form-label mt-4">Password</label>
+                <input asp-for="Tenant_Password" type="password" class="form-control" placeholder="Password" autocomplete="off">
+                <small class="form-text text-muted">We'll never share your password with anyone else.</small>
+                <div>
+                    <span asp-validation-for="Tenant_Password" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Tenant_PhoneNumber" class="control-label"></label>
-                <input asp-for="Tenant_PhoneNumber" class="form-control" />
-                <span asp-validation-for="Tenant_PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tenant_RoomNumber" class="control-label"></label>
-                <input asp-for="Tenant_RoomNumber" class="form-control" />
-                <span asp-validation-for="Tenant_RoomNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tenant_UnitNumber" class="control-label"></label>
-                <input asp-for="Tenant_UnitNumber" class="form-control" />
-                <span asp-validation-for="Tenant_UnitNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tenant_TotPay" class="control-label"></label>
-                <input asp-for="Tenant_TotPay" class="form-control" />
-                <span asp-validation-for="Tenant_TotPay" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tenant_CreatedAt" class="control-label"></label>
-                <input asp-for="Tenant_CreatedAt" class="form-control" />
-                <span asp-validation-for="Tenant_CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tenant_UpdatedAt" class="control-label"></label>
-                <input asp-for="Tenant_UpdatedAt" class="form-control" />
-                <span asp-validation-for="Tenant_UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+            <div style ="margin-top:50px">
+                <a asp-action="NavToLogin">Back to Login</a>
+            </div>
+            
+        </fieldset>
+    </form>
+</container>
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

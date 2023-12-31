@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -16,10 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\lib\img\group-1.png" />
-    <None Include="wwwroot\lib\img\line-1.svg" />
-    <None Include="wwwroot\lib\img\logosolo-svg-1.png" />
-    <None Include="wwwroot\lib\img\user-circle-1.svg" />
+    <None Include="wwwroot\images\group-1.png" />
+    <None Include="wwwroot\images\line-1.svg" />
+    <None Include="wwwroot\images\logosolo-svg-1.png" />
+    <None Include="wwwroot\images\user-circle-1.svg" />
   </ItemGroup>
 
   <ItemGroup>
