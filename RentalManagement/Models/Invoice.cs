@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using System.Drawing;
 
 namespace RentalManagement.Models
 {
@@ -19,6 +19,8 @@ namespace RentalManagement.Models
         [Required(ErrorMessage = "Payment Status is required.")]
         public string Inv_Status { get; set; }
 
+        [Required(ErrorMessage = "Payment Status is required.")]
+        public byte[] Inv_ProofPayment { get; set; }
 
         [ForeignKey("Tenants")]
         public int TenantId { get; set; }

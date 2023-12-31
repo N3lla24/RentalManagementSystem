@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RentalManagement.Migrations
 {
-    public partial class DatabaseCreation : Migration
+    public partial class DatabaseCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,6 +58,8 @@ namespace RentalManagement.Migrations
                     Pay_GarbageFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Pay_AirconFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Pay_InternetFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_RefrigeratorFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_WashingFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Pay_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -92,8 +94,10 @@ namespace RentalManagement.Migrations
                     Tenant_FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tenant_MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Tenant_LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tenant_UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Tenant_Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tenant_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tenant_Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tenant_RoomNumber = table.Column<int>(type: "int", nullable: false),
                     Tenant_UnitNumber = table.Column<int>(type: "int", nullable: false),
                     Tenant_TotPay = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
@@ -123,8 +127,7 @@ namespace RentalManagement.Migrations
                         column: x => x.ApplicationId,
                         principalTable: "Applicants",
                         principalColumn: "ApplicationId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -146,8 +149,7 @@ namespace RentalManagement.Migrations
                         column: x => x.ApplicationId,
                         principalTable: "Applicants",
                         principalColumn: "ApplicationId",
-                        onDelete: ReferentialAction.Cascade, 
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,8 +172,7 @@ namespace RentalManagement.Migrations
                         column: x => x.TenantId,
                         principalTable: "Tenant",
                         principalColumn: "TenantId",
-                        onDelete: ReferentialAction.Cascade, 
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -183,6 +184,7 @@ namespace RentalManagement.Migrations
                     Inv_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Inv_Method = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Inv_Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Inv_ProofPayment = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     TenantId = table.Column<int>(type: "int", nullable: false),
                     Pay_ID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -199,8 +201,7 @@ namespace RentalManagement.Migrations
                         column: x => x.TenantId,
                         principalTable: "Tenant",
                         principalColumn: "TenantId",
-                        onDelete: ReferentialAction.Cascade, 
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -222,8 +223,7 @@ namespace RentalManagement.Migrations
                         column: x => x.TenantId,
                         principalTable: "Tenant",
                         principalColumn: "TenantId",
-                        onDelete: ReferentialAction.Cascade, 
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -233,7 +233,7 @@ namespace RentalManagement.Migrations
                     PurchaseOrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PurchaseOrder_Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PurchaseOrder_ReceivedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PurchaseOrder_Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PurchaseOrder_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SuppliersId = table.Column<int>(type: "int", nullable: false),
                     SuppliersId1 = table.Column<int>(type: "int", nullable: true),
@@ -247,9 +247,7 @@ namespace RentalManagement.Migrations
                         name: "FK_PurchaseOrder_Requisition_RequisitionId",
                         column: x => x.RequisitionId,
                         principalTable: "Requisition",
-                        principalColumn: "RequisitionId",
-                        onDelete: ReferentialAction.Cascade, 
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PurchaseOrder_Supplier_SuppliersId1",
                         column: x => x.SuppliersId1,
@@ -278,8 +276,7 @@ namespace RentalManagement.Migrations
                         column: x => x.RequisitionId,
                         principalTable: "Requisition",
                         principalColumn: "RequisitionId",
-                        onDelete: ReferentialAction.Cascade, 
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -301,8 +298,7 @@ namespace RentalManagement.Migrations
                         column: x => x.RequisitionId,
                         principalTable: "Requisition",
                         principalColumn: "RequisitionId",
-                        onDelete: ReferentialAction.Cascade, 
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -324,8 +320,7 @@ namespace RentalManagement.Migrations
                         column: x => x.PurchaseOrderId,
                         principalTable: "PurchaseOrder",
                         principalColumn: "PurchaseOrderId",
-                        onDelete: ReferentialAction.Cascade, 
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -345,8 +340,7 @@ namespace RentalManagement.Migrations
                         column: x => x.PurchaseOrderId,
                         principalTable: "PurchaseOrder",
                         principalColumn: "PurchaseOrderId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -368,8 +362,7 @@ namespace RentalManagement.Migrations
                         column: x => x.PurchaseId,
                         principalTable: "PurchaseOrder",
                         principalColumn: "PurchaseOrderId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

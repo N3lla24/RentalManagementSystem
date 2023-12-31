@@ -42,7 +42,7 @@ namespace RentalManagement.Migrations
 
                     b.HasKey("ApplicationId");
 
-                    b.ToTable("ApplicantForm", (string)null);
+                    b.ToTable("ApplicantForm");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.Applicants", b =>
@@ -84,7 +84,7 @@ namespace RentalManagement.Migrations
 
                     b.HasKey("ApplicationId");
 
-                    b.ToTable("Applicants", (string)null);
+                    b.ToTable("Applicants");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.FAQ", b =>
@@ -114,7 +114,7 @@ namespace RentalManagement.Migrations
 
                     b.HasIndex("ApplicationId");
 
-                    b.ToTable("FAQ", (string)null);
+                    b.ToTable("FAQ");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.Feedback", b =>
@@ -146,7 +146,7 @@ namespace RentalManagement.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Feedback", (string)null);
+                    b.ToTable("Feedback");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.Inventory", b =>
@@ -176,7 +176,7 @@ namespace RentalManagement.Migrations
 
                     b.HasKey("InventoryId");
 
-                    b.ToTable("Inventory", (string)null);
+                    b.ToTable("Inventory");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.Invoice", b =>
@@ -194,6 +194,10 @@ namespace RentalManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("Inv_ProofPayment")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Inv_Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -210,7 +214,7 @@ namespace RentalManagement.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Invoice", (string)null);
+                    b.ToTable("Invoice");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.PaymentDetail", b =>
@@ -250,7 +254,7 @@ namespace RentalManagement.Migrations
 
                     b.HasKey("Pay_ID");
 
-                    b.ToTable("PaymentDetail", (string)null);
+                    b.ToTable("PaymentDetail");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.PurchaseItem", b =>
@@ -279,7 +283,7 @@ namespace RentalManagement.Migrations
 
                     b.HasIndex("PurchaseOrderId");
 
-                    b.ToTable("PurchaseItem", (string)null);
+                    b.ToTable("PurchaseItem");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.PurchaseOrder", b =>
@@ -319,7 +323,7 @@ namespace RentalManagement.Migrations
 
                     b.HasIndex("SuppliersId1");
 
-                    b.ToTable("PurchaseOrder", (string)null);
+                    b.ToTable("PurchaseOrder");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.PurchaseService", b =>
@@ -341,7 +345,7 @@ namespace RentalManagement.Migrations
 
                     b.HasIndex("PurchaseOrderId");
 
-                    b.ToTable("PurchaseService", (string)null);
+                    b.ToTable("PurchaseService");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.ReceivingMemo", b =>
@@ -371,7 +375,7 @@ namespace RentalManagement.Migrations
 
                     b.HasIndex("PurchaseId");
 
-                    b.ToTable("ReceivingMemo", (string)null);
+                    b.ToTable("ReceivingMemo");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.Requisition", b =>
@@ -400,7 +404,7 @@ namespace RentalManagement.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Requisition", (string)null);
+                    b.ToTable("Requisition");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.RequisitionItem", b =>
@@ -437,7 +441,7 @@ namespace RentalManagement.Migrations
 
                     b.HasIndex("RequisitionId");
 
-                    b.ToTable("RequisitionItem", (string)null);
+                    b.ToTable("RequisitionItem");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.RequisitionService", b =>
@@ -467,7 +471,7 @@ namespace RentalManagement.Migrations
 
                     b.HasIndex("RequisitionId");
 
-                    b.ToTable("RequisitionService", (string)null);
+                    b.ToTable("RequisitionService");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.Supplier", b =>
@@ -502,7 +506,7 @@ namespace RentalManagement.Migrations
 
                     b.HasKey("SuppliersId");
 
-                    b.ToTable("Supplier", (string)null);
+                    b.ToTable("Supplier");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.Tenant", b =>
@@ -558,7 +562,7 @@ namespace RentalManagement.Migrations
 
                     b.HasKey("TenantId");
 
-                    b.ToTable("Tenant", (string)null);
+                    b.ToTable("Tenant");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.ApplicantForm", b =>

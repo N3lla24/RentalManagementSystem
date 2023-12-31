@@ -12,8 +12,8 @@ using RentalManagement.Data;
 namespace RentalManagement.Migrations
 {
     [DbContext(typeof(RentalManagementContext))]
-    [Migration("20231229074831_Tenant Username Add")]
-    partial class TenantUsernameAdd
+    [Migration("20231231044223_Database Create")]
+    partial class DatabaseCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -195,6 +195,10 @@ namespace RentalManagement.Migrations
                     b.Property<string>("Inv_Method")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Inv_ProofPayment")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Inv_Status")
                         .IsRequired()
