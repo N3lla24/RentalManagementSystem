@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
 
 namespace RentalManagement.Models
 {
@@ -8,18 +9,17 @@ namespace RentalManagement.Models
         [Key]
         public int TenantId { get; set; }
 
-
-        [Required(ErrorMessage = "First Name is required.")]
+        [StringLength(50, MinimumLength = 8)]
         public string Tenant_FirstName { get; set; }
 
-
+        [StringLength(50, MinimumLength = 8)]
         public string? Tenant_MiddleName { get; set; }
 
-
-        [Required(ErrorMessage = "Last Name is required.")]
+        [StringLength(50, MinimumLength = 8)]
         public string Tenant_LastName { get; set; }
 
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "Username characters must be <br/> more than 8 and maximum of 50 characters.")]
+
+        [StringLength(50, MinimumLength = 8, ErrorMessage = "Username characters must be <br/> more than 5 and maximum of 50 characters.")]
         public string Tenant_UserName { get; set; }
 
 
@@ -38,22 +38,18 @@ namespace RentalManagement.Models
         public string Tenant_Password { get; set; }
 
 
-        [Required(ErrorMessage = "Tenant Room Number is required.")]
         public int Tenant_RoomNumber { get; set; }
 
 
-        [Required(ErrorMessage = "Tenant Unit Number is required.")]
         public int Tenant_UnitNumber { get; set; }
 
 
-        public decimal? Tenant_TotPay { get; set; }
-
-
-
+         
         public DateTime Tenant_CreatedAt { get; set; }
 
 
 
         public DateTime? Tenant_UpdatedAt { get; set; }
+
     }
 }

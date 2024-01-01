@@ -15,6 +15,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
+    SeedAdmin.Initialize(services);
     SeedTenant.Initialize(services);
     SeedSuppliers.Initialize(services);
     SeedApplicants.Initialize(services);

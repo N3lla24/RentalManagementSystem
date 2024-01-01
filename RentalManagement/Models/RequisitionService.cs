@@ -9,6 +9,7 @@ namespace RentalManagement.Models
         public int Req_Serv_ID { get; set; }
 
 
+        [StringLength(300, MinimumLength = 2, ErrorMessage = "Username characters must be <br/> more than 2 and maximum of 300 characters.")]
         [Required(ErrorMessage = "Name is Required.")]
         public string Req_Serv_Name { get; set; }
 

@@ -14,7 +14,7 @@ namespace RentalManagement.Models
         public string Feedback_Email { get; set; }
 
 
-        [StringLength(100, MinimumLength = 10, ErrorMessage = "Feedback Comment must be more than 10 characters & maximum of 100 characters.")]
+        [StringLength(300, MinimumLength = 5, ErrorMessage = "Feedback Comment must be more than 5 characters & maximum of 300 characters.")]
         public string? Feedback_Content { get; set; }
 
 
