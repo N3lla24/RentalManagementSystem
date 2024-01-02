@@ -7,14 +7,14 @@ namespace RentalManagement.Models
         [Key]
         public int ApplicationId { get; set; }
 
-
+        [StringLength(100, MinimumLength = 8)]
         [Required(ErrorMessage = "First Name is required.")]
         public string Applicants_FirstName { get; set; }
 
-
+        [StringLength(100, MinimumLength = 8)]
         public string? Applicants_MiddleName { get; set; }
 
-
+        [StringLength(100, MinimumLength = 8)]
         [Required(ErrorMessage = "Last Name is required.")]
         public string Applicants_LastName { get; set; }
 

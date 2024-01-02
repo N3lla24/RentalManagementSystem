@@ -12,8 +12,8 @@ using RentalManagement.Data;
 namespace RentalManagement.Migrations
 {
     [DbContext(typeof(RentalManagementContext))]
-    [Migration("20231231044223_Database Create")]
-    partial class DatabaseCreate
+    [Migration("20240101151736_Database Creation")]
+    partial class DatabaseCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,28 @@ namespace RentalManagement.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("RentalManagement.Models.Admin", b =>
+                {
+                    b.Property<int>("AdminId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AdminId"), 1L, 1);
+
+                    b.Property<string>("Admin_Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Admin_UserName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("AdminId");
+
+                    b.ToTable("Admin");
+                });
 
             modelBuilder.Entity("RentalManagement.Models.ApplicantForm", b =>
                 {
@@ -71,14 +93,17 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("Applicants_FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Applicants_LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Applicants_MiddleName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Applicants_PhoneNumber")
                         .IsRequired()
@@ -128,8 +153,8 @@ namespace RentalManagement.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FeedbackId"), 1L, 1);
 
                     b.Property<string>("Feedback_Content")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<DateTime?>("Feedback_CreatedAt")
                         .HasColumnType("datetime2");
@@ -164,7 +189,8 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("Inventory_ItemName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("Inventory_ItemQuantity")
                         .HasColumnType("int");
@@ -194,7 +220,8 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("Inv_Method")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<byte[]>("Inv_ProofPayment")
                         .IsRequired()
@@ -202,7 +229,8 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("Inv_Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Pay_ID")
                         .HasColumnType("int");
@@ -269,14 +297,16 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("PurchaseItem_Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("PurchaseItem_Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("PurchaseItem_Unit")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PurchaseOrderId")
                         .HasColumnType("int");
@@ -301,11 +331,13 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("PurchaseOrder_Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PurchaseOrder_Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("RequisitionId")
                         .HasColumnType("int");
@@ -341,7 +373,8 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("PurchaseServ_Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("PurchaseServ_Id");
 
@@ -371,7 +404,8 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("RM_Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("RMId");
 
@@ -390,11 +424,13 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("Requisition_Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Requisition_Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("Requistition_CreatedAt")
                         .HasColumnType("datetime2");
@@ -422,7 +458,8 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("Req_Item_Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("Req_Item_Quantity")
                         .HasColumnType("int");
@@ -434,7 +471,8 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("Req_Item_Units")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("RequisitionId")
                         .HasColumnType("int");
@@ -459,7 +497,8 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("Req_Serv_Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Req_Serv_Remarks")
                         .IsRequired()
@@ -474,6 +513,42 @@ namespace RentalManagement.Migrations
                     b.HasIndex("RequisitionId");
 
                     b.ToTable("RequisitionService");
+                });
+
+            modelBuilder.Entity("RentalManagement.Models.Room", b =>
+                {
+                    b.Property<int>("RoomId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"), 1L, 1);
+
+                    b.Property<int>("Pay_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Room_Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Room_Num")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Room_Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Room_Status")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoomId");
+
+                    b.HasIndex("Pay_ID");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Room");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.Supplier", b =>
@@ -500,7 +575,8 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("Suppliers_Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Suppliers_PhoneNumber")
                         .IsRequired()
@@ -528,14 +604,17 @@ namespace RentalManagement.Migrations
 
                     b.Property<string>("Tenant_FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Tenant_LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Tenant_MiddleName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Tenant_Password")
                         .IsRequired()
@@ -547,9 +626,6 @@ namespace RentalManagement.Migrations
 
                     b.Property<int>("Tenant_RoomNumber")
                         .HasColumnType("int");
-
-                    b.Property<decimal?>("Tenant_TotPay")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Tenant_UnitNumber")
                         .HasColumnType("int");
@@ -698,6 +774,25 @@ namespace RentalManagement.Migrations
                         .IsRequired();
 
                     b.Navigation("Requisition");
+                });
+
+            modelBuilder.Entity("RentalManagement.Models.Room", b =>
+                {
+                    b.HasOne("RentalManagement.Models.PaymentDetail", "PaymentDetail")
+                        .WithMany()
+                        .HasForeignKey("Pay_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RentalManagement.Models.Tenant", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PaymentDetail");
+
+                    b.Navigation("Tenant");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,6 +8,8 @@ namespace RentalManagement.Models
         [Key]
         public int Req_Item_ID { get; set; }
 
+
+        [StringLength(300, MinimumLength = 2, ErrorMessage = "Username characters must be <br/> more than 2 and maximum of 300 characters.")]
         [Required(ErrorMessage = "Name is required.")]
         public string Req_Item_Name { get; set; }
 
@@ -16,6 +18,7 @@ namespace RentalManagement.Models
         public int Req_Item_Quantity { get; set; }
 
 
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Requisition Description must be more than 2 characters")]
         [Required(ErrorMessage = "Measurement Unit is required.")]
         public string Req_Item_Units { get; set; }
 

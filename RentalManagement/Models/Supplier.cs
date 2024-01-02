@@ -8,7 +8,7 @@ namespace RentalManagement.Models
         [Key]
         public int SuppliersId { get; set; }
 
-
+        [StringLength(200, MinimumLength = 2, ErrorMessage = "Invalid Name")]
         [Required(ErrorMessage = "Supplier Name is required.")]
         public string Suppliers_Name { get; set; }
 
