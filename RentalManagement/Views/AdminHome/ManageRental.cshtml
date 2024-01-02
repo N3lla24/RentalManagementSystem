@@ -1,0 +1,221 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Kerwin's Apartment</title>
+    <link rel="icon" type="image/x-icon" href="~/images/logo2.svg">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/home.css">
+</head>
+
+<body id="bodyCont">
+
+    <section id="header">
+        <div class="navbar">
+            <a asp-action="Logout" style="margin-top:12px" id="Logout">Logout</a>
+            <div class="dropdown nbItem">
+                <button class="dropbtn">
+                    <i class="fas fa-tools"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="@Url.Action("Notifications", "AdminHome")">Notifications</a>
+                    <a href="@Url.Action("Settings", "AdminHome")">Account Settings</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="rfDetailsModal" class="details-modal" style="display: none; border-radius:5px; background-color: aliceblue; padding: 20px; width: 700px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; overflow: auto;">
+        <div class="firstCol">
+            <p>Image is here</p>
+        </div>
+        <button class="details-button" onclick="closeTenantDetails()">Close</button>
+    </div>
+
+
+    <section id="mrContent">
+        <div id="container">
+            <div id="column1">
+                <button class="button" onclick="showRFList()">Requestion Forms</button>
+                <button class="button" onclick="showTenantDetails()">Tenant List</button>
+                <button class="button" onclick="showRoomDetails()">Rental Room Details</button>
+                <button class="button" onclick="showAnalyticsDashboard()">Reports and Analytics</button>
+                <button class="button" onclick="showFeedbackTable()">Feedback and Suggestions</button>
+                <button class="button" onclick="showTenantApplications()">Rental Applications</button>
+            </div>
+            <div id="column2">
+                <div id="rfList" class="details-showcase">
+                    <div class="rfSearch"><input type="search" placeholder="Search requesitions" /><i class="fas fa-search"></i></div>
+                    <table id="rfTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>Requisition ID</th>
+                                <th>Requisition Type</th>
+                                <th>Requested Item/Service</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- RF data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="tenantDetails" class="details-showcase">
+                    <!-- Content for tenant Details Modal -->
+                </div>
+                <div id="roomDetails" class="details-showcase">
+                    <!-- Content for Room Details Modal -->
+                </div>
+                <div id="analyticsDashboard" class="details-showcase">
+                    <!-- Content for Analytics Dashboard Modal -->
+                </div>
+                <div id="feedbackTable" class="details-showcase">
+                    <!-- Content for Feedback Table Modal -->
+                </div>
+                <div id="tenantApplications" class="details-showcase">
+                    <!-- Content for Tenant Applications Modal -->
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <section id="backTopCont">
+        <a href="#">
+            <div class="backTop">
+                <p>Back to Top&nbsp;&nbsp;<i class="fa-solid fa-arrow-up"></i></p>
+            </div>
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-columns">
+            <div class="column" id="col">
+                <img src="~/images/logo.svg" alt="">
+                <h2>Kerwin's Apartment</h2>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column">
+                <h4>About</h4>
+                <p>About us</p>
+                <p>Rental Information</p>
+                <p>Rent Rates and Policies</p>
+                <p>Terms and Condition</p>
+                <p>Community Information</p>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column" id="col">
+                <h4>Contact us</h4>
+                <p>+63 9123456789</p>
+                <p>kerwin.rental@kerwin.com.ph</p>
+                <p>Paknaan, Mandaue City, Cebu 6014</p>
+                <p>Kerwin's Apartment</p><br>
+                <h4>Follow us</h4>
+                <a href="https://www.facebook.com/">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com/">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.pinterest.com/">
+                    <i class="fa-brands fa-pinterest"></i>
+                </a>
+                <a href="https://www.youtube.com/">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+
+
+    </footer>
+
+    <footer id="foot2">
+        <div class="footCont">
+            <div class="footCont2">
+                <div class="column2">
+                    <p>Web Application developed by <b>DPMS 2023</b></p>
+                    <p>Delig • Pila • Monares • Salas</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/js/tenantlist.js"></script>
+
+    <script>
+
+        function showTenantDetails() {
+            // Hide other modals
+            hideModalsExcept('tenantDetails');
+
+            // Logic to populate and display Room Details modal
+            document.getElementById('tenantDetails').style.display = 'block';
+        }
+
+
+        function showRoomDetails() {
+            // Hide other modals
+            hideModalsExcept('roomDetails');
+
+            // Logic to populate and display Room Details modal
+            document.getElementById('roomDetails').style.display = 'block';
+        }
+
+        function showAnalyticsDashboard() {
+            // Hide other modals
+            hideModalsExcept('analyticsDashboard');
+
+            // Logic to populate and display Analytics Dashboard modal
+            document.getElementById('analyticsDashboard').style.display = 'block';
+        }
+
+        function showFeedbackTable() {
+            // Hide other modals
+            hideModalsExcept('feedbackTable');
+
+            // Logic to populate and display Feedback Table modal
+            document.getElementById('feedbackTable').style.display = 'block';
+        }
+
+        function showTenantApplications() {
+            // Hide other modals
+            hideModalsExcept('tenantApplications');
+
+            // Logic to populate and display Tenant Applications modal
+            document.getElementById('tenantApplications').style.display = 'block';
+        }
+
+        function hideModalsExcept(selectedModalId) {
+            // Get an array of all modal IDs
+            var modalIds = ['rfList', 'tenantDetails', 'roomDetails', 'analyticsDashboard', 'feedbackTable', 'tenantApplications'];
+
+
+            // Loop through the modal IDs
+            for (var i = 0; i < modalIds.length; i++) {
+                var modalId = modalIds[i];
+
+                // Check if the current modal is the selected one
+                if (modalId !== selectedModalId) {
+                    // Hide the modal
+                    var modal = document.getElementById(modalId);
+                    modal.style.display = 'none';
+                }
+            }
+        }
+
+
+    </script>
+
+</body>
+</html>
