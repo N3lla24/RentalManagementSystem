@@ -22,10 +22,16 @@
                 @Html.DisplayNameFor(model => model.Tenant_LastName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Tenant_UserName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Tenant_Email)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tenant_PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenant_Password)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tenant_RoomNumber)
@@ -55,10 +61,16 @@
                 @Html.DisplayFor(modelItem => item.Tenant_LastName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Tenant_UserName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Tenant_Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Tenant_PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenant_Password)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Tenant_RoomNumber)

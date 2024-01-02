@@ -8,7 +8,7 @@ namespace RentalManagement.Models
         [Key]
         public int InventoryId { get; set; }
 
-        [StringLength(300, MinimumLength = 2, ErrorMessage = "Username characters must be <br/> more than 2 and maximum of 300 characters.")]
+        [StringLength(300, MinimumLength = 2, ErrorMessage = "Username characters must be more than 2 and maximum of 300 characters.")]
         [Required(ErrorMessage = "Inventory Item Name is required.")]
         public string Inventory_ItemName { get; set; }
 

@@ -28,11 +28,6 @@ namespace RentalManagement.Controllers
                           Problem("Entity set 'RentalManagementContext.Tenant'  is null.");
         }
 
-        public IActionResult NavToLogin()
-        {
-            return RedirectToAction("Index", "Login");
-        }
-
         // GET: Tenants/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -57,36 +52,45 @@ namespace RentalManagement.Controllers
             return View();
         }
 
-        // GET: Tenant/Dashboard
-        public IActionResult UserDashboard() { return View(); }
-
         // POST: Tenants/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName, Tenant_UserName, Tenant_Email,Tenant_PhoneNumber, Tenant_Password, Tenant_RoomNumber,Tenant_UnitNumber,Tenant_RentTot,Tenant_RentPaid,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
+        public async Task<IActionResult> Create([Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName,Tenant_UserName,Tenant_Email,Tenant_PhoneNumber,Tenant_Password,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
         {
-            if (ModelState.IsValid)
+
+            Tenant existingTenant = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_Email == tenant.Tenant_Email && q.Tenant_PhoneNumber == tenant.Tenant_PhoneNumber);
+
+
+            if (existingTenant == null) { ViewData["UserNotFound"] = "Not Found"; return View(tenant); }
+
+            if (existingTenant.Tenant_UserName != "N/A" && existingTenant.Tenant_Password != "N/A") 
             {
-                Tenant existingUser = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_Email == tenant.Tenant_Email && q.Tenant_PhoneNumber == tenant.Tenant_PhoneNumber);
-
-                if(existingUser == null)
-                {
-                    ViewData["ExistedUser"] = null;
-                    string HashPass = Hashing.HashPass(tenant.Tenant_Password);
-                    tenant.Tenant_Password = HashPass;
-
-                    /*_context.Update(tenant);*/
-                    await _context.SaveChangesAsync();
-                    ViewData["Title"] = "Successfull";
-                    return RedirectToAction(nameof(Index));
-                }
-
-                ViewData["ExistedUser"] = "Account already exists.";
-                return View(existingUser);
+                ViewData["ExistingUser"] = "Existing";
+                return View(tenant); 
             }
-            return View(tenant);
+
+            ViewData["ExistingUser"] = null;
+            existingTenant.Tenant_UserName = tenant.Tenant_UserName;
+            existingTenant.Tenant_Password = Hashing.HashPass(tenant.Tenant_Password);
+            try
+            {
+                _context.Update(existingTenant);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TenantExists(existingTenant.TenantId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Tenants/Edit/5
@@ -110,7 +114,7 @@ namespace RentalManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName,Tenant_Email,Tenant_PhoneNumber,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_RentTot,Tenant_RentPaid,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
+        public async Task<IActionResult> Edit(int id, [Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName,Tenant_UserName,Tenant_Email,Tenant_PhoneNumber,Tenant_Password,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
         {
             if (id != tenant.TenantId)
             {
@@ -176,30 +180,6 @@ namespace RentalManagement.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        //GET REGISTER
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        //Register Tenant (Complete Info)
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("TenantId, Tenant_UserName, Tenant_Email,Tenant_PhoneNumber, Tenant_Password")] Tenant tenant)
-        {
-            if (ModelState.IsValid)
-            {
-                Tenant existingUser = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_Email == tenant.Tenant_Email && q.Tenant_PhoneNumber == tenant.Tenant_PhoneNumber);
-                if (existingUser != null)
-                {
-                    ViewData["Title"] = "Successfull";
-                }
-                return View(tenant);
-            }
-            return View(tenant);
-        }
-
 
 
         private bool TenantExists(int id)

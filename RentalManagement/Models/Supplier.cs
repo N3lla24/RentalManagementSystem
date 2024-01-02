@@ -12,11 +12,11 @@ namespace RentalManagement.Models
         [Required(ErrorMessage = "Supplier Name is required.")]
         public string Suppliers_Name { get; set; }
 
-        [RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-z]{2,}$")]
+        [RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-z]{2,}$", ErrorMessage = "Please enter a valid email address")]
         [Required(ErrorMessage = "Supplier Email Address is required.")]
         public string Suppliers_Email { get; set; }
 
-        [RegularExpression(@"^09\d{9}$")]
+        [RegularExpression(@"^09\d{9}$", ErrorMessage = "Please enter Philippine phone number format")]
         [Required(ErrorMessage = "Supplier Phone Number is required.")]
         public string Suppliers_PhoneNumber { get; set; }
 

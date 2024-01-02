@@ -15,14 +15,21 @@ namespace RentalManagement.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var id = HttpContext.Session.GetInt32("accountid");
+
+            if(id is null) { return RedirectToAction("Index", "Login"); }
+
+            return _context.Tenant != null ?
+                          View(await _context.Tenant
+                          .FirstOrDefaultAsync(m => m.TenantId == id)) :
+                          Problem("Entity set 'RentalManagementContext.Tenant'  is null.");
         }
 
         //Get Account Details for Settings
         public async Task<IActionResult> Settings(int? id)
-        {
+        {/*
             if (id == null || _context.Tenant == null)
             {
                 return NotFound();
@@ -33,23 +40,30 @@ namespace RentalManagement.Controllers
             if (tenant == null)
             {
                 return NotFound();
-            }
+            }*/
 
-            return View(tenant);
+            return View();
         }
 
         //Get Account Notifications
         public async Task<IActionResult> Notifications(int? id)
         {
-            return _context.Tenant != null ?
+            /*return _context.Tenant != null ?
                          View(await _context.Tenant.ToListAsync()) :
-                         Problem("No Notifications Yet");
+                         Problem("No Notifications Yet");*/
+            return View();
+
         }
 
         public IActionResult Logout()
         {
-            /*HttpContext.Session.Remove("accountlogin");*/ //for logging out
+            HttpContext.Session.Remove("accountid"); //for logging out
             return RedirectToAction("Index", "Login");
+        }
+
+        private bool TenantExists(int id)
+        {
+            return (_context.Tenant?.Any(e => e.TenantId == id)).GetValueOrDefault();
         }
     }
 }

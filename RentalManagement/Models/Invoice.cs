@@ -11,11 +11,11 @@ namespace RentalManagement.Models
 
         public DateTime Inv_CreatedAt { get; set; } = DateTime.Now;
 
-        [StringLength(200, MinimumLength = 2, ErrorMessage = "Username characters must be <br/> more than 2 and maximum of 200 characters.")]
+        [StringLength(200, MinimumLength = 2, ErrorMessage = "Username characters must be more than 2 and maximum of 200 characters.")]
         [Required(ErrorMessage = "Payment Method is required.")]
         public string Inv_Method { get; set; }
 
-        [StringLength(200, MinimumLength = 2, ErrorMessage = "Username characters must be <br/> more than 2 and maximum of 200 characters.")]
+        [StringLength(200, MinimumLength = 2, ErrorMessage = "Username characters must be more than 2 and maximum of 200 characters.")]
         [Required(ErrorMessage = "Payment Status is required.")]
         public string Inv_Status { get; set; }
 

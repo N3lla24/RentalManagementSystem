@@ -9,32 +9,35 @@ namespace RentalManagement.Models
         [Key]
         public int TenantId { get; set; }
 
-        [StringLength(50, MinimumLength = 8)]
+        [StringLength(50, MinimumLength = 1)]
         public string Tenant_FirstName { get; set; }
 
-        [StringLength(50, MinimumLength = 8)]
+        [StringLength(50, MinimumLength = 1)]
         public string? Tenant_MiddleName { get; set; }
 
-        [StringLength(50, MinimumLength = 8)]
+        [StringLength(50, MinimumLength = 1)]
         public string Tenant_LastName { get; set; }
 
 
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "Username characters must be <br/> more than 5 and maximum of 50 characters.")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Username characters must be more than 5 and maximum of 50 characters.")]
         public string Tenant_UserName { get; set; }
 
 
-        [RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-z]{2,}$", ErrorMessage = "Please enter a valid email address")]
+        
         [Required(ErrorMessage = "Tenant Email Address is required.")]
+        [RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-z]{2,}$", ErrorMessage = "Please enter a valid email address")]
         public string Tenant_Email { get; set; }
 
 
-        [RegularExpression(@"^09\d{9}$", ErrorMessage = "Please enter Philippine phone number format")]
+        
         [Required(ErrorMessage = "Tenant Phone Number is required.")]
+        [RegularExpression(@"^09\d{9}$", ErrorMessage = "Please enter Philippine phone number format")]
         public string Tenant_PhoneNumber { get; set; }
 
 
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&/,.-])[A-Za-z\d@$!%*?&/,.-]{8,30}$", ErrorMessage = "Password must have: <br/> * 8 minimum char long <br/> * Atleast 1 Uppercase Character <br/> * Atleast 1 Special Character <br/> * Atleast 1 Numerical Character")]
+        
         [Required(ErrorMessage = "Password is required.")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&/,.-])[A-Za-z\d@$!%*?&/,.-]{8,30}$", ErrorMessage = "Password must have: * 8 minimum char long * Atleast 1 Uppercase Character * Atleast 1 Special Character * Atleast 1 Numerical Character")]
         public string Tenant_Password { get; set; }
 
 
