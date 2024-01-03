@@ -23,33 +23,31 @@ namespace RentalManagement.Controllers
 
         public IActionResult RegisterAccount()
         {
-            return RedirectToAction("Register", "Tenants");
+            return RedirectToAction("Create", "Tenants");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginUser([Bind("Tenant_UserName,Tenant_Password")] Tenant tenant)
+        public async Task<IActionResult> UserLogin(Tenant tenant)
         {
-            return RedirectToAction("Index", "TenantHome");
-            /*if (tenant.Tenant_Password != null)
+            /*return RedirectToAction("Index", "TenantHome");*/
+            if (tenant.Tenant_Password != null && tenant.Tenant_UserName != null)
             {
                 string hashpass = Hashing.HashPass(tenant.Tenant_Password);
-                Tenant tenantregister = await _context.Tenant.SingleOrDefaultAsync(q => q.Tenant_UserName == tenant.Tenant_UserName && q.Tenant_Password == tenant.Tenant_Password); //Add Login Bootstrap in view
-                if (tenantregister != null)
+                Tenant loginuser = await _context.Tenant.SingleOrDefaultAsync(q => q.Tenant_UserName == tenant.Tenant_UserName && q.Tenant_Password == hashpass);
+                if (loginuser != null)
                 {
                     ViewData["LoginErrorMessage"] = null;
 
-                    string accountlogin = "Tenant " + tenantregister.TenantId + ": " + tenantregister.Tenant_UserName;
-                    HttpContext.Session.SetString("accountlogin", accountlogin);
+                    HttpContext.Session.SetInt32("accountid", loginuser.TenantId);
 
-                    //if login success redirect to homepage for the user
                     return RedirectToAction("Index", "TenantHome");
                 }
-                ViewData["LoginErrorMessage"] = "Incorrect Usernae or Password";
-                return View(Index);
+                ViewData["LoginErrorMessage"] = "Incorrect Username or Password";
+                return View(tenant);
             }
-            ViewData["LoginErrorMessage"] = "Incorrect Usernae or Password";
-            return View(Index);*/
+            ViewData["LoginErrorMessage"] = "Incorrect Username or Password";
+            return View(tenant);
         }
     }
 }
