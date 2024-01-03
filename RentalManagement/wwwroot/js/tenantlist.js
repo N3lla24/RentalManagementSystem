@@ -12,16 +12,12 @@ document.addEventListener('click', function (event) {
 });
 
 function hideModalsExcept(selectedModalId) {
-    // Get an array of all modal IDs
     var modalIds = ['rfList', 'tenantDetails', 'roomDetails', 'analyticsDashboard', 'feedbackTable', 'tenantApplications'];
 
-    // Loop through the modal IDs
     for (var i = 0; i < modalIds.length; i++) {
         var modalId = modalIds[i];
 
-        // Check if the current modal is the selected one
         if (modalId !== selectedModalId) {
-            // Hide the modal
             var modal = document.getElementById(modalId);
             modal.style.display = 'none';
         }
