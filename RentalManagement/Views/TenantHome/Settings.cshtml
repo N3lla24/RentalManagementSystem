@@ -1,7 +1,7 @@
 ﻿@model RentalManagement.Models.Tenant;
 
 @{
-    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+    Layout = null;
 
 }
 
@@ -38,22 +38,59 @@
     <div>
     </div>
 
-
-
-
-
-
-
-
-
-
-    <section id="detailsCont">
-        <p>STIL ON WORKS</p>
-        <br>
-        <p>Est dolores recusandae qui harum mollitia vel dolore placeat cum animi odio qui repellat tenetur non laborum sunt et illo maiores. Vel officiis consequuntur ea explicabo facilis rem nisi optio. Sit consequatur quasi sed laudantium numquam vel error explicabo qui nostrum quae. Quo exercitationem dolores et fuga autem et autem harum. Et neque magnam qui vitae voluptatem qui facilis doloremque. Et veritatis ipsum aut corporis Quis est laborum error non veritatis animi qui autem repudiandae. Aut alias mollitia qui dolor quis eos perspiciatis nulla. Et nihil enim eum incidunt nemo aut beatae magnam qui exercitationem quaerat. Eos mollitia quia ad illum dolores ab nisi magni et neque quia in voluptates quis est placeat dolor et consectetur quaerat. </p>
-        <br>
-        <p>Et fugit deserunt ab vero dolor qui porro provident qui repellat placeat aut commodi cupiditate ab minus repellendus. Et ipsa minima non rerum iure et ullam commodi hic architecto iste aut vero accusantium et dolore temporibus aut quam velit. Ad adipisci minus eos ipsam praesentium ut magni amet est omnis natus ut molestiae omnis quo alias quaerat qui quisquam odio. Aut enim aliquid in perspiciatis voluptate non impedit sunt. Est repellat vitae et rerum voluptatibus sit dolorum eveniet. Quo voluptatem fuga et quia iure sed voluptatem recusandae et porro iusto est veniam dolor vel consequatur exercitationem. Qui quaerat quae qui dolorem nihil sed harum ratione sed adipisci autem sit quasi nobis ab repellat similique et provident impedit! </p>
-    </section>
+    <h4>Tenant</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="TenantId" />
+                <div class="form-group">
+                    <label asp-for="Tenant_FirstName" class="control-label">First Name</label>
+                    <input asp-for="Tenant_FirstName" class="form-control" />
+                    <span asp-validation-for="Tenant_FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tenant_MiddleName" class="control-label">Middle Name</label>
+                    <input asp-for="Tenant_MiddleName" class="form-control" />
+                    <span asp-validation-for="Tenant_MiddleName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tenant_LastName" class="control-label">Last Name</label>
+                    <input asp-for="Tenant_LastName" class="form-control" />
+                    <span asp-validation-for="Tenant_LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tenant_UserName" class="control-label">User Name</label>
+                    <input asp-for="Tenant_UserName" class="form-control" />
+                    <span asp-validation-for="Tenant_UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tenant_Email" class="control-label">Email Address</label>
+                    <input asp-for="Tenant_Email" class="form-control" />
+                    <span asp-validation-for="Tenant_Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tenant_PhoneNumber" class="control-label">Phonenumber</label>
+                    <input asp-for="Tenant_PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Tenant_PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tenant_Password" class="control-label">Change Password</label>
+                    <input asp-for="Tenant_Password" type="password" class="form-control" value="" autocomplete="off"/>
+                    <span asp-validation-for="Tenant_Password" class="text-danger"></span>
+                </div>
+                <div class="form-group" hidden>
+                    <label asp-for="Tenant_UpdatedAt" class="control-label"></label>
+                    <input asp-for="Tenant_UpdatedAt" class="form-control" value="@DateTime.Now" />
+                    <span asp-validation-for="Tenant_UpdatedAt" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
 
     <section id="backTopCont">
         <a href="#">
@@ -118,5 +155,13 @@
         </div>
     </footer>
 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
 </body>
 </html>

@@ -17,32 +17,30 @@ namespace RentalManagement.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var id = HttpContext.Session.GetInt32("accountid");
 
-            if(id is null) { return RedirectToAction("Index", "Login"); }
+            if(GetId() is null) { return RedirectToAction("Index", "Login"); }
 
             return _context.Tenant != null ?
                           View(await _context.Tenant
-                          .FirstOrDefaultAsync(m => m.TenantId == id)) :
+                          .FirstOrDefaultAsync(m => m.TenantId == GetId())) :
                           Problem("Entity set 'RentalManagementContext.Tenant'  is null.");
         }
 
         //Get Account Details for Settings
-        public async Task<IActionResult> Settings(int? id)
-        {/*
-            if (id == null || _context.Tenant == null)
+        public async Task<IActionResult> Settings()
+        {
+
+            if (GetId() == null || _context.Tenant == null)
             {
-                return NotFound();
+                return  RedirectToAction("Index", "TenantHome");
             }
 
-            var tenant = await _context.Tenant
-                .FirstOrDefaultAsync(m => m.TenantId == id);
+            var tenant = await _context.Tenant.FindAsync(GetId());
             if (tenant == null)
             {
-                return NotFound();
-            }*/
-
-            return View();
+                return RedirectToAction("Index", "TenantHome");
+            }
+            return View(tenant);
         }
 
         //Get Account Notifications
@@ -61,9 +59,16 @@ namespace RentalManagement.Controllers
             return RedirectToAction("Index", "Login");
         }
 
-        private bool TenantExists(int id)
+        private bool TenantExists()
         {
-            return (_context.Tenant?.Any(e => e.TenantId == id)).GetValueOrDefault();
+            return (_context.Tenant?.Any(e => e.TenantId == GetId())).GetValueOrDefault();
+        }
+
+        private int? GetId()
+        {
+            var id = HttpContext.Session.GetInt32("accountid");
+            if (id is not null) { return id; }
+            return null;
         }
     }
 }

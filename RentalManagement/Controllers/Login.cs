@@ -28,7 +28,7 @@ namespace RentalManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserLogin(Tenant tenant)
+        public async Task<IActionResult> Index(Tenant tenant)
         {
             /*return RedirectToAction("Index", "TenantHome");*/
             if (tenant.Tenant_Password != null && tenant.Tenant_UserName != null)
