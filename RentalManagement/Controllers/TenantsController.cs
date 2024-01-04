@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentalManagement.Data;
@@ -59,9 +60,7 @@ namespace RentalManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName,Tenant_UserName,Tenant_Email,Tenant_PhoneNumber,Tenant_Password,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
         {
-
             Tenant existingTenant = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_Email == tenant.Tenant_Email && q.Tenant_PhoneNumber == tenant.Tenant_PhoneNumber);
-
 
             if (existingTenant == null) { ViewData["UserNotFound"] = "Not Found"; return View(tenant); }
 
@@ -83,14 +82,17 @@ namespace RentalManagement.Controllers
             {
                 if (!TenantExists(existingTenant.TenantId))
                 {
-                    return NotFound();
+                    ViewData["UserNotFound"] = "Not Found"; 
+                    return View(tenant);
                 }
                 else
                 {
                     throw;
                 }
             }
-            return RedirectToAction(nameof(Index));
+            ViewData["Successful"] = "Successful Registration";
+            return View();
+            return RedirectToAction("Index", "Login");
         }
 
         // GET: Tenants/Edit/5
@@ -180,7 +182,6 @@ namespace RentalManagement.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
 
         private bool TenantExists(int id)
         {

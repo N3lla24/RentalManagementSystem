@@ -151,6 +151,56 @@
         </div>
     </div>
 
+    <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TenantId" />
+            <div class="form-group">
+                <label asp-for="Tenant_FirstName" class="control-label">First Name</label>
+                <input asp-for="Tenant_FirstName" class="form-control" />
+                <span asp-validation-for="Tenant_FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tenant_MiddleName" class="control-label">Middle Name</label>
+                <input asp-for="Tenant_MiddleName" class="form-control" />
+                <span asp-validation-for="Tenant_MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tenant_LastName" class="control-label">Last Name</label>
+                <input asp-for="Tenant_LastName" class="form-control" />
+                <span asp-validation-for="Tenant_LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tenant_UserName" class="control-label">User Name</label>
+                <input asp-for="Tenant_UserName" class="form-control" />
+                <span asp-validation-for="Tenant_UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tenant_Email" class="control-label">Email Address</label>
+                <input asp-for="Tenant_Email" class="form-control" />
+                <span asp-validation-for="Tenant_Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tenant_PhoneNumber" class="control-label">Phonenumber</label>
+                <input asp-for="Tenant_PhoneNumber" class="form-control" />
+                <span asp-validation-for="Tenant_PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tenant_Password" class="control-label">Change Password</label>
+                <input asp-for="Tenant_Password" type="password" class="form-control" value="" autocomplete="off" />
+                <span asp-validation-for="Tenant_Password" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="Tenant_UpdatedAt" class="control-label"></label>
+                <input asp-for="Tenant_UpdatedAt" class="form-control" value="@DateTime.Now" />
+                <span asp-validation-for="Tenant_UpdatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save Changes" class="btn btn-primary" style="padding:10px; margin-block: 10px;  margin-left: 10px" />
+            </div>
+        </form>
+    </section>
+
     <section id="backTopCont">
         <a href="#">
             <div class="backTop">
