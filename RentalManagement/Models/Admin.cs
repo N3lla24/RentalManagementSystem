@@ -7,9 +7,14 @@ namespace RentalManagement.Models
         [Key]
         public int AdminId { get; set; }
 
+
+        [Required(ErrorMessage = "User Name is required.")]
+        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Username must only contain: Alphabet letters, Numeric Numbers, _ and - Symbols")]
         [StringLength(50, MinimumLength = 8, ErrorMessage = "Username characters must be more than 8 and maximum of 50 characters.")]
         public string Admin_UserName { get; set; }
 
+
+        [Required(ErrorMessage = "Password is required.")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&/,.-])[A-Za-z\d@$!%*?&/,.-]{8,30}$", ErrorMessage = "Password must have: * 8 minimum char long * Atleast 1 Uppercase Character * Atleast 1 Special Character * Atleast 1 Numerical Character")]
         public string Admin_Password { get; set; }
 

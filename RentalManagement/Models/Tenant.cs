@@ -9,12 +9,18 @@ namespace RentalManagement.Models
         [Key]
         public int TenantId { get; set; }
 
+
+        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Input Valid Name")]
         [StringLength(50, MinimumLength = 1)]
         public string Tenant_FirstName { get; set; }
 
+
+        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Input Valid Name")]
         [StringLength(50, MinimumLength = 1)]
         public string? Tenant_MiddleName { get; set; }
 
+
+        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Input Valid Name")]
         [StringLength(50, MinimumLength = 1)]
         public string Tenant_LastName { get; set; }
 

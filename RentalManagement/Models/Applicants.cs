@@ -7,13 +7,19 @@ namespace RentalManagement.Models
         [Key]
         public int ApplicationId { get; set; }
 
+
+        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Input Valid Name")]
         [StringLength(100, MinimumLength = 8)]
         [Required(ErrorMessage = "First Name is required.")]
         public string Applicants_FirstName { get; set; }
 
+
+        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Input Valid Name")]
         [StringLength(100, MinimumLength = 8)]
         public string? Applicants_MiddleName { get; set; }
 
+
+        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Input Valid Name")]
         [StringLength(100, MinimumLength = 8)]
         [Required(ErrorMessage = "Last Name is required.")]
         public string Applicants_LastName { get; set; }
