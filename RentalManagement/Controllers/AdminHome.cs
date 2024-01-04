@@ -16,7 +16,7 @@ namespace RentalManagement.Controllers
 
         public IActionResult Logout()
         {
-            /*HttpContext.Session.Remove("accountlogin");*/ //for logging out
+            HttpContext.Session.Remove("AdminID");
             return RedirectToAction("Index", "Home");
         }
     }

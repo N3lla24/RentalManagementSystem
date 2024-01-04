@@ -1,0 +1,358 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Spartan', sans-serif;
+}
+
+body {
+    background-color: #FEEAD1;
+}
+
+#header {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #65451F;
+    text-align: center;
+}
+
+    .navbar a {
+        float: right;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+.nbItem, .dropdown.nbItem {
+    min-width: 5%;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+    .dropdown.nbItem button {
+        width: 100%;
+    }
+
+.dropdown {
+    float: right;
+    overflow: hidden;
+}
+
+    .dropdown .dropbtn {
+        font-size: 16px;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 14px 16px;
+        background-color: inherit;
+        font-family: inherit;
+        margin: 0;
+    }
+
+
+.navbar .nbItem {
+    transition: 0.3s ease;
+}
+
+    .navbar .nbItem:hover {
+        background-color: #705028;
+    }
+
+.navbar i {
+    font-size: 20px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: aliceblue;
+    width: 10%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    .dropdown-content a {
+        transition: 0.3s ease;
+    }
+
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+        .dropdown-content a:hover {
+            background-color: rgb(197, 202, 206);
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+footer {
+    background-color: #65451F;
+    color: aliceblue;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-columns {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.column {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+    text-align: left;
+}
+
+    .column h4 {
+        margin-bottom: 10px;
+    }
+
+    .column p {
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .column i {
+        color: aliceblue;
+        margin-right: 10px;
+        font-size: 20px;
+        transition: 0.3s ease;
+    }
+
+a {
+    text-decoration: none;
+}
+
+.column i:hover {
+    color: rgb(255, 255, 183);
+}
+
+.colBorder {
+    width: 2px;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0), #ffffff 50%, rgba(255, 255, 255, 0));
+    margin-right: 20px;
+}
+
+.column img {
+    width: 80%;
+}
+
+.column h2 {
+    max-width: 80%;
+    text-align: center;
+    margin-top: 10px;
+    text-shadow: 1px 1px 1px black;
+}
+
+#foot2 {
+    background-color: #422c10;
+}
+
+.footCont {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.column2 p {
+    margin-bottom: 5px;
+}
+
+/* start here */
+
+.manageRentalContainer {
+    width: 1300px;
+    height: 500px;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 10px;
+}
+
+.mrcLanding {
+    display: flex;
+    height: 100%;
+}
+
+.mrButtonChoices {
+    width: 20%;
+    padding: 10px;
+    height: 100%;
+}
+
+.tenantDisplay,
+.reqDisplay,
+.roomDisplay,
+.reportsDisplay,
+.feedDisplay,
+.appDisplay {
+    width: 80%;
+    padding: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
+    background-color: #FFF9F2;
+    height: 300px;
+    height: 100%;
+}
+
+.mrButtonChoices button {
+    width: 100%;
+    height: 15.5%;
+    margin-bottom: 7.5px;
+    border: none;
+    background-color: #8F6C41;
+    color: aliceblue;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+    .mrButtonChoices button:hover {
+        background-color: #a78459;
+        border-left: solid #503514 5px;
+    }
+
+.tenantSearch, .reqSearch,
+.roomSearch, .reportsSearch,
+.feedSearch, .appSearch {
+    margin-bottom: 10px;
+}
+
+
+.tenantDisplay .tenantSearch input[type=search],
+.reqDisplay .reqSearch input[type=search],
+.roomDisplay .roomSearch input[type=search],
+.reportsDisplay .reportsSearch input[type=search],
+.feedDisplay .feedSearch input[type=search],
+.appDisplay .appSearch input[type=search] {
+    width: 95%;
+    height: 30px;
+    border: solid black 1px;
+    border-radius: 5px 0 0 5px;
+    padding: 5px;
+}
+
+.tenantDisplay .tenantSearch i,
+.reqDisplay .reqSearch i,
+.roomDisplay .roomSearch i,
+.reportsDisplay .reportsSearch i,
+.feedDisplay .feedSearch i,
+.appDisplay .appSearch i {
+    width: 5%;
+    height: 30px;
+    text-align: center;
+    background-color: #65451F;
+    padding: 5px;
+    color: aliceblue;
+    border-radius: 0 5px 5px 0;
+    transition: 0.3s ease;
+}
+
+    .tenantDisplay .tenantSearch i:hover,
+    .reqDisplay .reqSearch i:hover,
+    .roomDisplay .roomSearch i:hover,
+    .reportsDisplay .reportsSearch i:hover,
+    .feedDisplay .feedSearch i:hover,
+    .appDisplay .appSearch i:hover {
+        background-color: #8b6536;
+    }
+
+.mrcLanding #tenantTable,
+.mrcLanding #reqTable,
+.mrcLanding #roomTable,
+.mrcLanding #reportsTable,
+.mrcLanding #feedTable,
+.mrcLanding #appTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .mrcLanding #tenantTable th, .mrcLanding #tenantTable td,
+    .mrcLanding #reqTable th, .mrcLanding #reqTable td,
+    .mrcLanding #roomTable th, .mrcLanding #roomTable td,
+    .mrcLanding #reportsTable th, .mrcLanding #reportsTable td,
+    .mrcLanding #feedTable th, .mrcLanding #feedTable td,
+    .mrcLanding #appTable th, .mrcLanding #appTable td {
+        border: 1px solid black;
+        padding: 8px;
+    }
+
+    .mrcLanding #tenantTable th,
+    .mrcLanding #reqTable th,
+    .mrcLanding #roomTable th,
+    .mrcLanding #reportsTable th,
+    .mrcLanding #feedTable th,
+    .mrcLanding #appTable th {
+        font-size: 13px;
+    }
+
+        .mrcLanding #tenantTable th:nth-child(1),
+        .mrcLanding #reqTable th:nth-child(1),
+        .mrcLanding #roomTable th:nth-child(1),
+        .mrcLanding #reportsTable th:nth-child(1),
+        .mrcLanding #feedTable th:nth-child(1),
+        .mrcLanding #appTable th:nth-child(1),
+        .mrcLanding #tenantTable th:nth-child(4),
+        .mrcLanding #reqTable th:nth-child(4),
+        .mrcLanding #roomTable th:nth-child(4),
+        .mrcLanding #reportsTable th:nth-child(4),
+        .mrcLanding #feedTable th:nth-child(4),
+        .mrcLanding #appTable th:nth-child(4) {
+            width: 10%;
+        }
+
+        .mrcLanding #tenantTable th:nth-child(2),
+        .mrcLanding #reqTable th:nth-child(2),
+        .mrcLanding #roomTable th:nth-child(2),
+        .mrcLanding #reportsTable th:nth-child(2),
+        .mrcLanding #feedTable th:nth-child(2),
+        .mrcLanding #appTable th:nth-child(2),
+        .mrcLanding #tenantTable th:nth-child(3),
+        .mrcLanding #reqTable th:nth-child(3),
+        .mrcLanding #roomTable th:nth-child(3),
+        .mrcLanding #reportsTable th:nth-child(3),
+        .mrcLanding #feedTable th:nth-child(3),
+        .mrcLanding #appTable th:nth-child(3) {
+            width: 35%;
+        }
+
+
+#popUpModal {
+    display: none;
+    background-color: red;
+    padding: 10px;
+}
+
+.scrollableDiv {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.mrButtonChoices button.active {
+    background-color: #a78459;
+    border-left: solid #503514 5px;
+}
+
+
+/*start in reports*/
+#chartContainer1 {
+    width: 80%;
+    margin: auto;
+}

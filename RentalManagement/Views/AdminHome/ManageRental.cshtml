@@ -4,15 +4,18 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Kerwin's Apartment</title>
-    <link rel="icon" type="image/x-icon" href="~/images/logo2.svg">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/css/home.css">
-</head>
+        <title>Kerwin's Apartment</title>
+        <link rel="icon" type="image/x-icon" href="~/images/logo2.svg">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="~/css/home.css">
+        <link rel="stylesheet" href="~/css/mrDesign.css">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
 
 <body id="bodyCont">
 
@@ -31,59 +34,281 @@
         </div>
     </section>
 
-    <div id="rfDetailsModal" class="details-modal" style="display: none; border-radius:5px; background-color: aliceblue; padding: 20px; width: 700px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; overflow: auto;">
-        <div class="firstCol">
-            <p>Image is here</p>
-        </div>
-        <button class="details-button" onclick="closeTenantDetails()">Close</button>
-    </div>
-
-
-    <section id="mrContent">
-        <div id="container">
-            <div id="column1">
-                <button class="button" onclick="showRFList()">Requestion Forms</button>
-                <button class="button" onclick="showTenantDetails()">Tenant List</button>
-                <button class="button" onclick="showRoomDetails()">Rental Room Details</button>
-                <button class="button" onclick="showAnalyticsDashboard()">Reports and Analytics</button>
-                <button class="button" onclick="showFeedbackTable()">Feedback and Suggestions</button>
-                <button class="button" onclick="showTenantApplications()">Rental Applications</button>
+    <section class="manageRentalContainer">
+        <div class="popUpModal" id="popUpModal">
+            <div class="pmCol1">
+                <img id="tenantImage" src="" alt="Tenant Image">
             </div>
-            <div id="column2">
-                <div id="rfList" class="details-showcase">
-                    <div class="rfSearch"><input type="search" placeholder="Search requesitions" /><i class="fas fa-search"></i></div>
-                    <table id="rfTable" class="table">
-                        <thead>
+            <div class="pmCol2">
+                <div class="infoColumn">
+                    <button id="editButton">Edit</button>
+                    <button id="closeButton">Close</button>
+                    <div id="editModal" style="display: none;">
+                        <!-- Editable fields -->
+                        <input type="file" id="tenantImageInput" accept="image/*">
+                        <input type="text" id="firstNameInput" placeholder="First Name">
+                        <input type="text" id="middleNameInput" placeholder="Middle Name">
+                        <input type="text" id="lastNameInput" placeholder="Last Name">
+                        <input type="text" id="phoneNumberInput" placeholder="Phone Number">
+                        <!-- Edit buttons -->
+                        <button id="discardButton">Discard</button>
+                        <button id="updateButton">Update</button>
+                    </div>
+                </div>
+                <div class="historyColumn">
+                    <div class="scrollableDiv" id="paymentHistory">
+                        <!-- Content for payment history -->
+                        <!-- Use AJAX or similar to load payment history dynamically based on tenantId -->
+                    </div>
+                    <div class="scrollableDiv" id="requisitionHistory">
+                        <!-- Content for requisition history -->
+                        <!-- Use AJAX or similar to load requisition history dynamically based on tenantId -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popUpModal" id="popUpModal">
+            <div class="pmCol2">
+                <div class="reqInfor">
+                    <h3>Requisition Form - </h3> <!--requisiton id-->
+                    <p>Requester: </p>
+                    <p>Requested Item or Service: </p>
+                    <p>Requested Date: </p>
+                    <p>Document: </p>
+                </div>
+                <div class="infoColumn">
+                    <button id="approveButton">Approve</button>
+                    <button id="rejectButton">Reject</button>
+                </div>
+            </div>
+        </div>
+        <div class="popUpModal" id="popUpModal">
+            <div class="pmCol1">
+                <img id="roomImage" src="" alt="Room Image">
+            </div>
+            <div class="pmCol2">
+                <div class="infoColumn">
+                    <button id="editButton">Edit</button>
+                    <button id="closeButton">Close</button>
+                    <div id="editModal" style="display: none;">
+                        <!-- Editable fields -->
+                        <input type="text" id="roomNameInput" placeholder="Room Name">
+                        <!-- Edit buttons -->
+                        <button id="discardButton">Discard</button>
+                        <button id="updateButton">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popUpModal" id="popUpModal">
+            <div class="pmCol2">
+                <div class="feedInfor">
+                    <h3>Tenant Feedback - </h3> <!--requisiton id-->
+                    <p>Sender: </p>
+                    <p>Requested Item or Service: </p>
+                    <p>Requested Date: </p>
+                    <p>Document: </p>
+                </div>
+                <div class="infoColumn">
+                    <button id="ackButton">Acknowledge</button>
+                </div>
+            </div>
+        </div>
+        <div class="popUpModal" id="popUpModal">
+            <div class="pmCol1">
+                <img id="appImage" src="" alt="Applicant Image">
+            </div>
+            <div class="pmCol2">
+                <div class="appInfor">
+                    <h3>Tenant Applicant - </h3> <!--requisiton id-->
+                    <p>Sender: </p>
+                    <p>Requested Item or Service: </p>
+                    <p>Requested Date: </p>
+                    <p>Document: </p>
+                </div>
+                <div class="infoColumn">
+                    <button id="approveButton">Approve</button>
+                    <button id="rejectButton">Reject</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="mrcLanding">
+            <div class="mrButtonChoices">
+                <button class="displayButton" data-target="tenantDisplay">Tenant List</button>
+                <button class="displayButton" data-target="reqDisplay">Requisition Forms</button>
+                <button class="displayButton" data-target="roomDisplay">Rental Room Details</button>
+                <button class="displayButton" data-target="reportsDisplay">Reports & Analytics</button>
+                <button class="displayButton" data-target="feedDisplay">Feedback & Suggestions</button>
+                <button class="displayButton" data-target="appDisplay">Rental Applications</button>
+            </div>
+            <div class="tenantDisplay">
+                <div class="tenantSearch">
+                    <input type="search" placeholder="Search tenants" /><i class="fas fa-search"></i>
+                </div>
+                <table id="tenantTable" class="table">
+                    <thead>
+                        <tr>
+                            <th>Tenant ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--
+                        @* @foreach (var tenant in Model)
+                        {
                             <tr>
-                                <th>Requisition ID</th>
-                                <th>Requisition Type</th>
-                                <th>Requested Item/Service</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- RF data will be populated here -->
-                        </tbody>
-                    </table>
-                </div>
-                <div id="tenantDetails" class="details-showcase">
-                    <!-- Content for tenant Details Modal -->
-                </div>
-                <div id="roomDetails" class="details-showcase">
-                    <!-- Content for Room Details Modal -->
-                </div>
-                <div id="analyticsDashboard" class="details-showcase">
-                    <!-- Content for Analytics Dashboard Modal -->
-                </div>
-                <div id="feedbackTable" class="details-showcase">
-                    <!-- Content for Feedback Table Modal -->
-                </div>
-                <div id="tenantApplications" class="details-showcase">
-                    <!-- Content for Tenant Applications Modal -->
-                </div>
+                                            <td>@tenant.TenantID</td>
+                                            <td>@tenant.FirstName</td>
+                                            <td>@tenant.LastName</td>
+                                            <td>
+                                                <button class="actionButton" data-tenant-id="@tenant.TenantID">Details</button>
+                                            </td>
+                                        </tr>
+                        } *@
+                         -->
+                    </tbody>
+                </table>
             </div>
-        </div>
 
+            <div class="reqDisplay">
+                <div class="reqSearch">
+                    <input type="search" placeholder="Search requisition" /><i class="fas fa-search"></i>
+                </div>
+                <table id="reqTable" class="table">
+                    <thead>
+                        <tr>
+                            <th>Requistion ID</th>
+                            <th>Requisted Item or Service</th>
+                            <th>Requisition Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @* <!--
+                        @foreach (var requisiton in Model)
+                        {
+                        <tr>
+                        <td>@requisition.RequisitionID</td>
+                        <td>@requisition.RequisitionItem</td>
+                        <td>@requisition.RequisitionType</td>
+                        <td>
+                        <button class="actionButton" data-req-id="@requisition.RequisitonID">Details</button>
+                        </td>
+                        </tr>
+                        }
+                        --> *@
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="roomDisplay">
+                <div class="roomSearch">
+                    <input type="search" placeholder="Search rooms" /><i class="fas fa-search"></i>
+                </div>
+                <table id="roomTable" class="table">
+                    <thead>
+                        <tr>
+                            <th>Room ID</th>
+                            <th>Room Details</th>
+                            <th>Room Capacity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*  <!--
+                        @foreach (var room in Model)
+                        {
+                        <tr>
+                        <td>@room.roomID</td>
+                        <td>@room.roomDetails</td>
+                        <td>@room.roomCap</td>
+                        <td>
+                        <button class="actionButton" data-req-id="@room.roomID">Details</button>
+                        </td>
+                        </tr>
+                        }
+                        --> *@
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="reportsDisplay">
+                <div class="reportDashboard">
+                    <div id="chartContainer1">
+
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="feedDisplay">
+                <div class="feedSearch">
+                    <input type="search" placeholder="Search feedbacks and suggestions" /><i class="fas fa-search"></i>
+                </div>
+                <table id="feedTable" class="table">
+                    <thead>
+                        <tr>
+                            <th>Feedback ID</th>
+                            <th>Feedback Sender</th>
+                            <th>Feedback Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @* <!--
+                        @foreach (var feedback in Model)
+                        {
+                        <tr>
+                        <td>@feedback.FeedbackID</td>
+                        <td>@feedback.FeedbackSender</td>
+                        <td>@feedback.FeedbackType</td>
+                        <td>
+                        <button class="actionButton" data-req-id="@feedback.FeedbackID">Details</button>
+                        </td>
+                        </tr>
+                        }
+                        --> *@
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="appDisplay">
+                <div class="appSearch">
+                    <input type="search" placeholder="Search applications" /><i class="fas fa-search"></i>
+                </div>
+                <table id="appTable" class="table">
+                    <thead>
+                        <tr>
+                            <th>Application ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*  <!--
+                        @foreach (var application in Model)
+                        {
+                        <tr>
+                        <td>@application.ApplicationID</td>
+                        <td>@application.ApplicationFName</td>
+                        <td>@application.ApplicationLName</td>
+                        <td>
+                        <button class="actionButton" data-tenant-id="@application.ApplicationID">Details</button>
+                        </td>
+                        </tr>
+                        }
+                        --> *@
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
     </section>
 
 
@@ -152,56 +377,28 @@
     </footer>
 
     <script src="~/js/tenantlist.js"></script>
-
+    <script src="~/js/tenantDisplay.js"></script>
+    <script src="~/js/manageRental.js"></script>
     <script>
+        var chartData = {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'Monthly Sales',
+                data: [50, 75, 120, 100, 150],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
 
-        function showTenantDetails() {
-            hideModalsExcept('tenantDetails');
+        // Get the canvas element within the specified div
+        var ctx = document.getElementById('chartContainer1').getContext('2d');
 
-            document.getElementById('tenantDetails').style.display = 'block';
-        }
-
-
-        function showRoomDetails() {
-            hideModalsExcept('roomDetails');
-
-            document.getElementById('roomDetails').style.display = 'block';
-        }
-
-        function showAnalyticsDashboard() {
-            hideModalsExcept('analyticsDashboard');
-
-            document.getElementById('analyticsDashboard').style.display = 'block';
-        }
-
-        function showFeedbackTable() {
-            hideModalsExcept('feedbackTable');
-
-            document.getElementById('feedbackTable').style.display = 'block';
-        }
-
-        function showTenantApplications() {
-            hideModalsExcept('tenantApplications');
-
-            document.getElementById('tenantApplications').style.display = 'block';
-        }
-
-        function hideModalsExcept(selectedModalId) {
-            var modalIds = ['rfList', 'tenantDetails', 'roomDetails', 'analyticsDashboard', 'feedbackTable', 'tenantApplications'];
-
-
-            for (var i = 0; i < modalIds.length; i++) {
-                var modalId = modalIds[i];
-
-                if (modalId !== selectedModalId) {
-                    // Hide the modal
-                    var modal = document.getElementById(modalId);
-                    modal.style.display = 'none';
-                }
-            }
-        }
-
-
+        // Create a bar chart
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: chartData
+        });
     </script>
 
 </body>
