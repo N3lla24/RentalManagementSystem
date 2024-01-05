@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RentalManagement.Migrations
 {
-    public partial class DatabaseCreation : Migration
+    public partial class DatabaseCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,6 +35,9 @@ namespace RentalManagement.Migrations
                     Applicants_Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Applicants_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Applicants_Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Application_RoomNumber = table.Column<int>(type: "int", nullable: false),
+                    Application_UnitNumber = table.Column<int>(type: "int", nullable: false),
+                    Application_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Applicant_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Applicant_UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -58,27 +61,6 @@ namespace RentalManagement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Inventory", x => x.InventoryId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PaymentDetail",
-                columns: table => new
-                {
-                    Pay_ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Pay_DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Pay_RentPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_UtilityFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_GarbageFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_AirconFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_InternetFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_RefrigeratorFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_WashingFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Pay_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PaymentDetail", x => x.Pay_ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,25 +105,19 @@ namespace RentalManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicantForm",
+                name: "Unit",
                 columns: table => new
                 {
-                    ApplicationId = table.Column<int>(type: "int", nullable: false),
-                    Application_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Application_Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Application_RoomNumber = table.Column<int>(type: "int", nullable: false),
-                    Application_UnitNumber = table.Column<int>(type: "int", nullable: false)
+                    UnitId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Unit_Num = table.Column<int>(type: "int", nullable: false),
+                    Unit_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Unit_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Unit_UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicantForm", x => x.ApplicationId);
-                    table.ForeignKey(
-                        name: "FK_ApplicantForm_Applicants_ApplicationId",
-                        column: x => x.ApplicationId,
-                        principalTable: "Applicants",
-                        principalColumn: "ApplicationId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Unit", x => x.UnitId);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,7 +129,7 @@ namespace RentalManagement.Migrations
                     FAQ_Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FAQ_Content = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     FAQ_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApplicationId = table.Column<int>(type: "int", nullable: false)
+                    ApplicationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -163,8 +139,7 @@ namespace RentalManagement.Migrations
                         column: x => x.ApplicationId,
                         principalTable: "Applicants",
                         principalColumn: "ApplicationId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,7 +152,7 @@ namespace RentalManagement.Migrations
                     Feedback_Content = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     Feedback_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Feedback_UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TenantId = table.Column<int>(type: "int", nullable: false)
+                    TenantId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -187,8 +162,58 @@ namespace RentalManagement.Migrations
                         column: x => x.TenantId,
                         principalTable: "Tenant",
                         principalColumn: "TenantId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaymentDetail",
+                columns: table => new
+                {
+                    Pay_ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Pay_DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Pay_RentPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_UtilityFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_GarbageFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_AirconFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_InternetFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_RefrigeratorFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_WashingFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Pay_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Pay_UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TenantId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentDetail", x => x.Pay_ID);
+                    table.ForeignKey(
+                        name: "FK_PaymentDetail_Tenant_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenant",
+                        principalColumn: "TenantId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Requisition",
+                columns: table => new
+                {
+                    RequisitionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Requisition_Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Requistition_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Requisition_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TenantId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Requisition", x => x.RequisitionId);
+                    table.ForeignKey(
+                        name: "FK_Requisition_Tenant_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenant",
+                        principalColumn: "TenantId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -201,8 +226,8 @@ namespace RentalManagement.Migrations
                     Inv_Method = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Inv_Status = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Inv_ProofPayment = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    TenantId = table.Column<int>(type: "int", nullable: false),
-                    Pay_ID = table.Column<int>(type: "int", nullable: false)
+                    TenantId = table.Column<int>(type: "int", nullable: true),
+                    Pay_ID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -211,38 +236,13 @@ namespace RentalManagement.Migrations
                         name: "FK_Invoice_PaymentDetail_Pay_ID",
                         column: x => x.Pay_ID,
                         principalTable: "PaymentDetail",
-                        principalColumn: "Pay_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Pay_ID");
                     table.ForeignKey(
                         name: "FK_Invoice_Tenant_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenant",
-                        principalColumn: "TenantId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Requisition",
-                columns: table => new
-                {
-                    RequisitionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Requisition_Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Requistition_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Requisition_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    TenantId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Requisition", x => x.RequisitionId);
-                    table.ForeignKey(
-                        name: "FK_Requisition_Tenant_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Tenant",
-                        principalColumn: "TenantId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        principalColumn: "TenantId", 
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -252,11 +252,14 @@ namespace RentalManagement.Migrations
                     RoomId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Room_Num = table.Column<int>(type: "int", nullable: false),
-                    Room_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Room_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Room_Capacity = table.Column<int>(type: "int", nullable: false),
                     Room_Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TenantId = table.Column<int>(type: "int", nullable: false),
-                    Pay_ID = table.Column<int>(type: "int", nullable: false)
+                    Room_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Room_UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TenantId = table.Column<int>(type: "int", nullable: true),
+                    Pay_ID = table.Column<int>(type: "int", nullable: true),
+                    UnitId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -265,15 +268,19 @@ namespace RentalManagement.Migrations
                         name: "FK_Room_PaymentDetail_Pay_ID",
                         column: x => x.Pay_ID,
                         principalTable: "PaymentDetail",
-                        principalColumn: "Pay_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Pay_ID");
                     table.ForeignKey(
                         name: "FK_Room_Tenant_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenant",
                         principalColumn: "TenantId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Room_Unit_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Unit",
+                        principalColumn: "UnitId", 
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -285,9 +292,9 @@ namespace RentalManagement.Migrations
                     PurchaseOrder_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PurchaseOrder_Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PurchaseOrder_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SuppliersId = table.Column<int>(type: "int", nullable: false),
+                    SuppliersId = table.Column<int>(type: "int", nullable: true),
                     SuppliersId1 = table.Column<int>(type: "int", nullable: true),
-                    RequistitionId = table.Column<int>(type: "int", nullable: false),
+                    RequistitionId = table.Column<int>(type: "int", nullable: true),
                     RequisitionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -297,14 +304,14 @@ namespace RentalManagement.Migrations
                         name: "FK_PurchaseOrder_Requisition_RequisitionId",
                         column: x => x.RequisitionId,
                         principalTable: "Requisition",
-                        principalColumn: "RequisitionId");
+                        principalColumn: "RequisitionId"
+                        , onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PurchaseOrder_Supplier_SuppliersId1",
                         column: x => x.SuppliersId1,
                         principalTable: "Supplier",
                         principalColumn: "SuppliersId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -318,7 +325,7 @@ namespace RentalManagement.Migrations
                     Req_Item_Units = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Req_Item_Remarks = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Req_Item_DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RequisitionId = table.Column<int>(type: "int", nullable: false)
+                    RequisitionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -328,8 +335,7 @@ namespace RentalManagement.Migrations
                         column: x => x.RequisitionId,
                         principalTable: "Requisition",
                         principalColumn: "RequisitionId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -341,7 +347,7 @@ namespace RentalManagement.Migrations
                     Req_Serv_Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Req_Serv_Remarks = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Req_Serv_DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RequisitionId = table.Column<int>(type: "int", nullable: false)
+                    RequisitionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -351,8 +357,7 @@ namespace RentalManagement.Migrations
                         column: x => x.RequisitionId,
                         principalTable: "Requisition",
                         principalColumn: "RequisitionId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -364,7 +369,7 @@ namespace RentalManagement.Migrations
                     PurchaseItem_Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     PurchaseItem_Quantity = table.Column<int>(type: "int", nullable: false),
                     PurchaseItem_Unit = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    PurchaseOrderId = table.Column<int>(type: "int", nullable: false)
+                    PurchaseOrderId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -374,8 +379,7 @@ namespace RentalManagement.Migrations
                         column: x => x.PurchaseOrderId,
                         principalTable: "PurchaseOrder",
                         principalColumn: "PurchaseOrderId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -385,7 +389,7 @@ namespace RentalManagement.Migrations
                     PurchaseServ_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PurchaseServ_Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    PurchaseOrderId = table.Column<int>(type: "int", nullable: false)
+                    PurchaseOrderId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -395,8 +399,7 @@ namespace RentalManagement.Migrations
                         column: x => x.PurchaseOrderId,
                         principalTable: "PurchaseOrder",
                         principalColumn: "PurchaseOrderId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -408,7 +411,7 @@ namespace RentalManagement.Migrations
                     RM_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RM_Remarks = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     RM_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    PurchaseId = table.Column<int>(type: "int", nullable: false)
+                    PurchaseId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -418,8 +421,7 @@ namespace RentalManagement.Migrations
                         column: x => x.PurchaseId,
                         principalTable: "PurchaseOrder",
                         principalColumn: "PurchaseOrderId",
-                        onDelete: ReferentialAction.Cascade,
-                        onUpdate: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -440,6 +442,11 @@ namespace RentalManagement.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_TenantId",
                 table: "Invoice",
+                column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentDetail_TenantId",
+                table: "PaymentDetail",
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
@@ -491,15 +498,17 @@ namespace RentalManagement.Migrations
                 name: "IX_Room_TenantId",
                 table: "Room",
                 column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Room_UnitId",
+                table: "Room",
+                column: "UnitId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Admin");
-
-            migrationBuilder.DropTable(
-                name: "ApplicantForm");
 
             migrationBuilder.DropTable(
                 name: "FAQ");
@@ -539,6 +548,9 @@ namespace RentalManagement.Migrations
 
             migrationBuilder.DropTable(
                 name: "PaymentDetail");
+
+            migrationBuilder.DropTable(
+                name: "Unit");
 
             migrationBuilder.DropTable(
                 name: "Requisition");

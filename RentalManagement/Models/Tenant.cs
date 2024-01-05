@@ -10,18 +10,18 @@ namespace RentalManagement.Models
         public int TenantId { get; set; }
 
 
-        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Input Valid Name")]
-        [StringLength(50, MinimumLength = 1)]
+        [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$", ErrorMessage = "Input Valid Name")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Input Valid Name")]
         public string Tenant_FirstName { get; set; }
 
 
-        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Input Valid Name")]
-        [StringLength(50, MinimumLength = 1)]
+        [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$", ErrorMessage = "Input Valid Name")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Input Valid Name")]
         public string? Tenant_MiddleName { get; set; }
 
 
-        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Input Valid Name")]
-        [StringLength(50, MinimumLength = 1)]
+        [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$", ErrorMessage = "Input Valid Name")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Input Valid Name")]
         public string Tenant_LastName { get; set; }
 
         [Required(ErrorMessage = "User Name is required.")]

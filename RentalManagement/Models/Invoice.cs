@@ -24,13 +24,13 @@ namespace RentalManagement.Models
 
 
         [ForeignKey("Tenants")]
-        public int TenantId { get; set; }
+        public int? TenantId { get; set; }
 
         public virtual Tenant? Tenant { get; set; }
 
 
         [ForeignKey("PaymentDetail")]
-        public int Pay_ID { get; set; }
+        public int? Pay_ID { get; set; }
 
         public virtual PaymentDetail? PaymentDetail { get; set; }
     }

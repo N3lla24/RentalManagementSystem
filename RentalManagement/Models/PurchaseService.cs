@@ -17,9 +17,9 @@ namespace RentalManagement.Models
 
 
         [ForeignKey("PurchaseOrder")]
-        public int PurchaseOrderId { get; set; }
+        public int? PurchaseOrderId { get; set; }
 
 
-        public virtual PurchaseOrder PurchaseOrder { get; set; }
+        public virtual PurchaseOrder? PurchaseOrder { get; set; }
     }
 }

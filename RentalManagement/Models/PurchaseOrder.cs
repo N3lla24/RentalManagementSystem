@@ -23,14 +23,14 @@ namespace RentalManagement.Models
 
 
         [ForeignKey("Suppliers")]
-        public int SuppliersId { get; set; }
+        public int? SuppliersId { get; set; }
 
 
         public virtual Supplier? Supplier { get; set; }
 
 
         [ForeignKey("Requsition")]
-        public int RequistitionId { get; set; }
+        public int? RequistitionId { get; set; }
 
 
         public virtual Requisition? Requisition { get; set; }

@@ -27,8 +27,9 @@ using (var scope = app.Services.CreateScope())
     SeedTenant.Initialize(services);
     SeedSuppliers.Initialize(services);
     SeedApplicants.Initialize(services);
-    SeedApplicantForms.Initialize(services);
     SeedInventory.Initialize(services);
+    SeedUnit.Initialize(services);
+    SeedRooms.Initialize(services);
 }
 
 // Configure the HTTP request pipeline.

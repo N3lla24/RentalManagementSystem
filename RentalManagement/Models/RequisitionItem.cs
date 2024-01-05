@@ -33,7 +33,7 @@ namespace RentalManagement.Models
 
 
         [ForeignKey("Requisition")]
-        public int RequisitionId { get; set; }
+        public int? RequisitionId { get; set; }
         public virtual Requisition? Requisition { get; set; }
 
     }

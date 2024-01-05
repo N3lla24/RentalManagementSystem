@@ -28,7 +28,10 @@ namespace RentalManagement.Models
                        Applicants_PhoneNumber = "09987431022",
                        Applicants_Address = "Looc, Mandaue City, Cebu",
                        Applicant_CreatedAt = DateTime.Now,
-                       Applicant_UpdatedAt = DateTime.Now
+                       Applicant_UpdatedAt = DateTime.Now,
+                       Application_RoomNumber = 921,
+                       Application_UnitNumber = 567,
+                       Application_Status = "Pending"
                    },
                    new Applicants
                    {
@@ -39,7 +42,10 @@ namespace RentalManagement.Models
                        Applicants_PhoneNumber = "09432098765",
                        Applicants_Address = "Guizo, Mandaue City, Cebu",
                        Applicant_CreatedAt = DateTime.Now,
-                       Applicant_UpdatedAt = DateTime.Now
+                       Applicant_UpdatedAt = DateTime.Now,
+                       Application_RoomNumber = 945,
+                       Application_UnitNumber = 589,
+                       Application_Status = "Pending"
                    }
                 );
                 context.SaveChanges();

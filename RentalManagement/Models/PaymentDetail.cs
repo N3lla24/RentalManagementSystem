@@ -45,5 +45,12 @@ namespace RentalManagement.Models
 
         public DateTime Pay_CreatedAt { get; set; }
 
+        public DateTime Pay_UpdatedAt { get; set; }
+
+
+        [ForeignKey("Tenant")]
+        public int? TenantId { get; set; }
+
+        public virtual Tenant? Tenant { get; set; }
     }
 }

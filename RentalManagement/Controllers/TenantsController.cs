@@ -91,8 +91,8 @@ namespace RentalManagement.Controllers
                 }
             }
             ViewData["Successful"] = "Successful Registration";
+            
             return View();
-            return RedirectToAction("Index", "Login");
         }
 
         // GET: Tenants/Edit/5

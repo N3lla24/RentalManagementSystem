@@ -21,10 +21,10 @@ namespace RentalManagement.Models
         [Required(ErrorMessage = "Requisition Status is required.")]
         public string Requisition_Status { get; set; }
 
+         
 
-
-        [ForeignKey("Tenants")]
-        public int TenantId { get; set; }
+        [ForeignKey("Tenant")]
+        public int? TenantId { get; set; }
 
         public virtual Tenant? Tenant { get; set; }
 

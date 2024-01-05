@@ -22,7 +22,7 @@ namespace RentalManagement.Models
 
 
         [ForeignKey("Applicants")]
-        public int ApplicationId { get; set; }
+        public int? ApplicationId { get; set; }
 
         public virtual Applicants? Applicants { get; set; }
     }
