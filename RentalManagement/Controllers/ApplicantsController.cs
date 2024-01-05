@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -30,24 +31,45 @@ namespace RentalManagement.Controllers
         // GET: Applicants/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Applicants == null)
+            if (id == null || _context.Room == null)
             {
                 return NotFound();
             }
 
-            var applicants = await _context.Applicants
-                .FirstOrDefaultAsync(m => m.ApplicationId == id);
-            if (applicants == null)
+            var room = await _context.Room
+                .FirstOrDefaultAsync(m => m.RoomId == id);
+            if (room == null)
             {
                 return NotFound();
             }
 
-            return View(applicants);
+            return View(room);
+        }
+
+        // GET: Rooms
+        public async Task<IActionResult> RoomPicking()
+        {
+            ApplicationViewModel obj = new ApplicationViewModel();
+            obj.RoomModel = _context.Room.ToList();
+            obj.UnitModel = _context.Unit.ToList();
+            return View(obj);
         }
 
         // GET: Applicants/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
+            if (id == null || _context.Room == null)
+            {
+                return NotFound();
+            }
+            var roomnum = _context.Room.Find(id);
+            var unitnum = _context.Unit.Find(roomnum.UnitId);
+            if (roomnum == null || unitnum == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Roomnum = roomnum.Room_Num;
+            ViewBag.Unitnum = unitnum.Unit_Num;
             return View();
         }
 
@@ -56,14 +78,21 @@ namespace RentalManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ApplicationId,Applicants_FirstName,Applicants_MiddleName,Applicants_LastName,Applicants_Email,Applicants_PhoneNumber,Applicants_Address,Applicant_CreatedAt,Applicant_UpdatedAt")] Applicants applicants)
+        public async Task<IActionResult> Create([Bind("ApplicationId,Applicants_FirstName,Applicants_MiddleName,Applicants_LastName,Applicants_Email,Applicants_PhoneNumber,Applicants_Address, Application_RoomNumber, Application_UnitNumber, Applicant_CreatedAt,Applicant_UpdatedAt")] Applicants applicants)
         {
-            if (ModelState.IsValid)
+            Applicants existingApplication = await _context.Applicants.FirstOrDefaultAsync(q => q.Applicants_Email == applicants.Applicants_Email && q.Applicants_PhoneNumber == applicants.Applicants_PhoneNumber);
+
+            if (existingApplication == null)
             {
+                applicants.Application_Status = "Pending";
+                ViewData["ExistingApplicant"] = null;
+                ViewData["Successful"] = "Success";
                 _context.Add(applicants);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View();
             }
+            ViewData["Successful"] = null;
+            ViewData["ExistingApplicant"] = "Applicant Existing";
             return View(applicants);
         }
 

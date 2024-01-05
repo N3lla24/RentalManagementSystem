@@ -1,0 +1,148 @@
+﻿@model RentalManagement.Models.ApplicationViewModel;
+
+
+@{
+    ViewData["Title"] = "Application";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Kerwin's Apartment</title>
+    <link rel="icon" type="image/x-icon" href="images/logo2.svg">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/home.css">
+</head>
+<body style="background-color: #FEEAD1">
+    <section id="header">
+        <div class="navbar">
+            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+        </div>
+    </section>
+
+    <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
+        <div style="border-radius:5px">
+            <table class="table" style="background-color:antiquewhite">
+                <thead>
+                    <tr>
+                        <th>
+                            Room Number
+                        </th>
+                        <th>
+                            Room Pricing
+                        </th>
+                        <th>
+                            Room Status
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.RoomModel.Any(r => r.Room_Status == "Unoccupied"))
+                    {
+                        foreach (var item in Model.RoomModel)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Room_Num)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Room_Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Room_Status)
+                                </td>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.RoomId">Details</a> |
+                                    <a asp-action="Create" asp-route-id="@item.RoomId">Apply for Rent</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-dismissible alert-danger">
+                            <strong>No Rooms Available!</strong> Unfortunately all of the Rooms are Occupied. <a href="@Url.Action("Index", "Home")" class="alert-link">Go Back to Home</a>
+                        </div>
+                    }
+                </tbody>
+            </table>
+        </div>
+        
+    </section>
+
+    <section id="backTopCont">
+        <a href="#">
+            <div class="backTop">
+                <p>Back to Top&nbsp;&nbsp;<i class="fa-solid fa-arrow-up"></i></p>
+            </div>
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-columns">
+            <div class="column" id="col">
+                <img src="images/logo.svg" alt="">
+                <h2>Kerwin's Apartment</h2>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column">
+                <h4>About</h4>
+                <p>About us</p>
+                <p>Rental Information</p>
+                <p>Rent Rates and Policies</p>
+                <p>Terms and Condition</p>
+                <p>Community Information</p>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column" id="col">
+                <h4>Contact us</h4>
+                <p>+63 9123456789</p>
+                <p>kerwin.rental@kerwin.com.ph</p>
+                <p>Paknaan, Mandaue City, Cebu 6014</p>
+                <p>Kerwin's Apartment</p><br>
+                <h4>Follow us</h4>
+                <a href="https://www.facebook.com/">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com/">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.pinterest.com/">
+                    <i class="fa-brands fa-pinterest"></i>
+                </a>
+                <a href="https://www.youtube.com/">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+
+
+    </footer>
+
+    <footer id="foot2">
+        <div class="footCont">
+            <div class="footCont2">
+                <div class="column2">
+                    <p>Web Application developed by <b>DPMS 2023</b></p>
+                    <p>Delig • Pila • Monares • Salas</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}
+</html>
