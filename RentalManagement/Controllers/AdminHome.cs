@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RentalManagement.Data;
+using System.Threading.Tasks;
 
 namespace RentalManagement.Controllers
 {

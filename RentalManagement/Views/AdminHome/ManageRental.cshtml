@@ -108,11 +108,10 @@
             <div class="pmCol2">
 
                 <div class="reqInfor">
-                    <h3>Requisition Form - </h3> <!--requisiton id-->
-                    <p>Requester: </p>
-                    <p>Requested Item or Service: </p>
-                    <p>Requested Date: </p>
-                    <p>Document: </p>
+                    <h3>Requisition Form - <span id="requisitionId"></span></h3>
+                    <p>Requester: <span id="requester"></span></p>
+                    <p>Request Type: <span id="requisitionType"></span></p>
+                    <p>Requested Date: <span id="requestedDate"></span></p>
                 </div>
                 <div class="infoColumn">
                     <button id="reqApprove">Approve</button>
@@ -175,8 +174,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <div class="mrcLanding">
             <div class="mrButtonChoices">
@@ -422,6 +419,8 @@
     <script src="~/js/tenantDisplay.js"></script>
     <script src="~/js/manageRental.js"></script>
     <script src="~/js/reportsDashboard.js"></script>
+    <script src="~/js/requisitionDisplay.js"></script>
+    <script src="~/js/RequisitionApiDisplay.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
