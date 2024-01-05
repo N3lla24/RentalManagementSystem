@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RentalManagement.Data;
 using System.Threading.Tasks;
 
@@ -17,9 +18,9 @@ namespace RentalManagement.Controllers
         }
 
         [HttpGet("getRequisitionDetails/{RequisitionId}")]
-        public IActionResult GetRequisitionDetails(int requisitionId)
+        public IActionResult GetRequisitionDetails(int requisitionId) // ERROR!
         {
-            try
+            /*try
             {
                 var requisitionDetails = _context.Requisition
                     .Include(r => r.Tenant) // Include the related Tenant entity
@@ -37,7 +38,7 @@ namespace RentalManagement.Controllers
                         TenantLastName = requisitionDetails.Tenant.Tenant_LastName 
                     };
 
-                    return Json(detailsToReturn);
+                    // return Json(detailsToReturn);
                 }
                 else
                 {
@@ -49,7 +50,8 @@ namespace RentalManagement.Controllers
                 // Log and handle the exception 
                 _logger.LogError(ex, "An error occurred while processing GetRequisitionDetails.");
                 return StatusCode(500, "An unexpected error occurred.");
-            }
+            } ERROR PASAD NI SIYA */
+            return NotFound();
         }
     }
 }

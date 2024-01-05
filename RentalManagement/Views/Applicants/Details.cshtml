@@ -1,4 +1,4 @@
-﻿@model RentalManagement.Models.Applicants
+﻿@model RentalManagement.Models.Room
 
 @{
     ViewData["Title"] = "Details";
@@ -11,56 +11,38 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Applicants_FirstName)
+            @Html.DisplayNameFor(model => model.RoomId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Applicants_FirstName)
+            @Html.DisplayFor(model => model.RoomId)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Applicants_MiddleName)
+            @Html.DisplayNameFor(model => model.Room_Num)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Applicants_MiddleName)
+            @Html.DisplayFor(model => model.Room_Num)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Applicants_LastName)
+            @Html.DisplayNameFor(model => model.Room_Price)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Applicants_LastName)
+            @Html.DisplayFor(model => model.Room_Price)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Applicants_Email)
+            @Html.DisplayNameFor(model => model.Room_Status)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Applicants_Email)
+            @Html.DisplayFor(model => model.Room_Status)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Applicants_PhoneNumber)
+            @Html.DisplayNameFor(model => model.UnitId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Applicants_PhoneNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Applicants_Address)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Applicants_Address)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Applicant_CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Applicant_CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Applicant_UpdatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Applicant_UpdatedAt)
+            @Html.DisplayFor(model => model.UnitId)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.ApplicationId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Create" asp-route-id="@Model?.RoomId">Apply for Rent</a>
+    <a asp-action="RoomPicking">Back to List</a>
 </div>

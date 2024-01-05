@@ -234,11 +234,11 @@
                             <td>Ronel</td>
                             <td>Service</td>
                             <td>
-                                <button class="reqActionButton" data-req-id="@Requisition.RequisitonID">Details</button>
+                                @*<button class="reqActionButton" data-req-id="@Requisition.RequisitonID">Details</button> ERROR*@
                             </td>
                         </tr>
                         
-                        @foreach (var Requisition in Model)
+                        @*@foreach (var Requisition in Model) ERROR PUD NI
                         {
                             <tr>
                                 <td>@Requisition.RequisitionID</td>
@@ -248,7 +248,7 @@
                                     <button class="actionButton" data-req-id="@Requisition.RequisitionID">Details</button>
                                 </td>
                             </tr>
-                        }
+                        }*@
                         
 
                     </tbody>
