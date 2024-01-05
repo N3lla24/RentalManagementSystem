@@ -21,7 +21,14 @@ namespace RentalManagement.Models
         [Required(ErrorMessage = "Requisition Status is required.")]
         public string Requisition_Status { get; set; }
 
-         
+
+        [StringLength(300, MinimumLength = 10, ErrorMessage = "Requisition Description must be more than 10 characters & maximum of 300 characters.")]
+        public string Requisition_Status_Remarks { get; set; }
+
+
+        [DataType(DataType.Date)]
+        public DateTime Requisition_DueDate { get; set; }
+
 
         [ForeignKey("Tenant")]
         public int? TenantId { get; set; }
