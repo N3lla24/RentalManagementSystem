@@ -1,77 +1,121 @@
-﻿@model IEnumerable<RentalManagement.Models.Applicants>
+﻿@model RentalManagement.Models.Applicants
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Application Delete";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<h1>Index</h1>
+    <title>Kerwin's Apartment</title>
+    <link rel="icon" type="image/x-icon" href="images/logo2.svg">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/home.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <script src="home.js"></script>
+</head>
+<body style="background-color:#FEEAD1">
+    <header>
+        <div class="navbar">
+            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+        </div>
+    </header>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Applicants_FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Applicants_MiddleName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Applicants_LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Applicants_Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Applicants_PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Applicants_Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Applicant_CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Applicant_UpdatedAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Applicants_FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Applicants_MiddleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Applicants_LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Applicants_Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Applicants_PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Applicants_Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Applicant_CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Applicant_UpdatedAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ApplicationId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ApplicationId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ApplicationId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <container class="d-flex justify-content-center" style="margin-block: 30px">
+        <div class="card text-white bg-primary mb-3" style="width:50%">
+            <div class="card-header" style="background-color:#422c10;">
+                <h4 class="card-title">Application Finder</h4>
+            </div>
+            <div class="card-body" style="background-color:#65451F;">
+                @if (ViewData["SearchErrorMessage"] != null)
+                {
+                    <div class="alert alert-dismissible alert-danger" style="margin-block:10px">
+                        <strong>Failed Search! </strong>Incorrect Email or PhoneNumber.
+                    </div>
+                }
+                <form asp-action="Indexf">
+                    <div class="form-group">
+                        <label class="form-label mt-4">Applicant Details</label>
+                        <div class="form-floating mb-3">
+                            <input asp-for="Applicants_Email" type="text" class="form-control" placeholder="applicant@mail.com">
+                            <label for="floatingInput">Email Address</label>
+                        </div>
+                        <div class="form-floating">
+                            <input asp-for="Applicants_PhoneNumber" type="text" class="form-control" placeholder="09xxxxxxxxx">
+                            <label for="floatingPassword">Phone Number</label>
+                        </div><br/>
+                        <div class="form-group">
+                            <input type="submit" value="Search" class="btn btn-success" style="font-size: 20px">
+                        </div>
+                        <div style="margin-top:10px;">
+                            <label class="form-label mt-4">No Application Yet?</label><br />
+                            <a asp-action="RoomPicking" type="button" class="btn btn-dark" style="font-size: 15px">Choose a Room</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </container>
+
+    <footer>
+        <div class="footer-columns">
+            <div class="column" id="col">
+                <img src="images/logo.svg" alt="">
+                <h2>Kerwin's Apartment</h2>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column">
+                <h4>About</h4>
+                <p>About us</p>
+                <p>Rental Information</p>
+                <p>Rent Rates and Policies</p>
+                <p>Terms and Condition</p>
+                <p>Community Information</p>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column" id="col">
+                <h4>Contact us</h4>
+                <p>+63 9123456789</p>
+                <p>kerwin.rental@kerwin.com.ph</p>
+                <p>Paknaan, Mandaue City, Cebu 6014</p>
+                <p>Kerwin's Apartment</p><br>
+                <h4>Follow us</h4>
+                <a href="https://www.facebook.com/">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com/">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.pinterest.com/">
+                    <i class="fa-brands fa-pinterest"></i>
+                </a>
+                <a href="https://www.youtube.com/">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+
+
+    </footer>
+
+    <footer id="foot2">
+        <div class="footCont">
+            <div class="footCont2">
+                <div class="column2">
+                    <p>Web Application developed by <b>DPMS 2023</b></p>
+                    <p>Delig • Pila • Monares • Salas</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+

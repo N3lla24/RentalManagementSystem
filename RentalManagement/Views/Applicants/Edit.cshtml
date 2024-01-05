@@ -1,68 +1,111 @@
 ﻿@model RentalManagement.Models.Applicants
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Application Delete";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<h1>Edit</h1>
+    <title>Kerwin's Apartment</title>
+    <link rel="icon" type="image/x-icon" href="images/logo2.svg">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/home.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+</head>
+<body style="background-color: #FEEAD1">
+    <section id="header">
+        <div class="navbar">
+            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+        </div>
+    </section>
 
-<h4>Applicants</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ApplicationId" />
-            <div class="form-group">
-                <label asp-for="Applicants_FirstName" class="control-label"></label>
-                <input asp-for="Applicants_FirstName" class="form-control" />
-                <span asp-validation-for="Applicants_FirstName" class="text-danger"></span>
+    <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
+        <h1>Edit</h1>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ApplicationId" />
+                    <fieldset style="margin-left:80px; width:250%">
+                        <div class="form-group">
+                            <label asp-for="Applicants_FirstName" class="control-label"></label>
+                            <input asp-for="Applicants_FirstName" class="form-control" />
+                            <span asp-validation-for="Applicants_FirstName" class="text-danger"></span>
+                        </div><br/>
+                        <div class="form-group">
+                            <label asp-for="Applicants_MiddleName" class="control-label"></label>
+                            <input asp-for="Applicants_MiddleName" class="form-control" />
+                            <span asp-validation-for="Applicants_MiddleName" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label asp-for="Applicants_LastName" class="control-label"></label>
+                            <input asp-for="Applicants_LastName" class="form-control" />
+                            <span asp-validation-for="Applicants_LastName" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label asp-for="Applicants_Email" class="control-label"></label>
+                            <input asp-for="Applicants_Email" class="form-control" />
+                            <span asp-validation-for="Applicants_Email" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label asp-for="Applicants_PhoneNumber" class="control-label"></label>
+                            <input asp-for="Applicants_PhoneNumber" class="form-control" />
+                            <span asp-validation-for="Applicants_PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label asp-for="Applicants_Address" class="control-label"></label>
+                            <input asp-for="Applicants_Address" class="form-control" />
+                            <span asp-validation-for="Applicants_Address" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label asp-for="Application_RoomNumber" class="control-label"></label>
+                            <input asp-for="Application_RoomNumber" class="form-control" readonly />
+                            <span asp-validation-for="Application_RoomNumber" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label asp-for="Application_UnitNumber" class="control-label"></label>
+                            <input asp-for="Application_UnitNumber" class="form-control" readonly />
+                            <span asp-validation-for="Application_UnitNumber" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label asp-for="Applicants_Address" class="control-label"></label>
+                            <input asp-for="Applicants_Address" class="form-control" />
+                            <span asp-validation-for="Applicants_Address" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="form-group" hidden>
+                            <label asp-for="Applicant_UpdatedAt" class="control-label"></label>
+                            <input asp-for="Applicant_UpdatedAt" class="form-control" type="date" value="@DateTime.Now"  />
+                            <span asp-validation-for="Applicant_UpdatedAt" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </fieldset>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Applicants_MiddleName" class="control-label"></label>
-                <input asp-for="Applicants_MiddleName" class="form-control" />
-                <span asp-validation-for="Applicants_MiddleName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Applicants_LastName" class="control-label"></label>
-                <input asp-for="Applicants_LastName" class="form-control" />
-                <span asp-validation-for="Applicants_LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Applicants_Email" class="control-label"></label>
-                <input asp-for="Applicants_Email" class="form-control" />
-                <span asp-validation-for="Applicants_Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Applicants_PhoneNumber" class="control-label"></label>
-                <input asp-for="Applicants_PhoneNumber" class="form-control" />
-                <span asp-validation-for="Applicants_PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Applicants_Address" class="control-label"></label>
-                <input asp-for="Applicants_Address" class="form-control" />
-                <span asp-validation-for="Applicants_Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Applicant_CreatedAt" class="control-label"></label>
-                <input asp-for="Applicant_CreatedAt" class="form-control" />
-                <span asp-validation-for="Applicant_CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Applicant_UpdatedAt" class="control-label"></label>
-                <input asp-for="Applicant_UpdatedAt" class="form-control" />
-                <span asp-validation-for="Applicant_UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+        </div>
+        <br />
+        <hr />
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </section>
+</body>
+</html>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

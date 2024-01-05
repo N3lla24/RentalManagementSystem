@@ -25,6 +25,8 @@
     </section>
 
     <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 30px">
+        <h1>Application</h1>
+        <hr />
         <form asp-action="Create" onload="loadValues()">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <fieldset style="margin-left:50px; width:85%">
@@ -95,11 +97,12 @@
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" style="margin-top: 10px"/>
                 </div>
-                <div style="margin-top:50px">
-                        <a href="@Url.Action("RoomPicking", "Applicants")">Change Room?</a>
-                </div>
             </fieldset>
         </form>
+        <hr />
+        <div style="margin-top:50px">
+            <a href="@Url.Action("RoomPicking", "Applicants")">Change Room?</a>
+        </div>
     </section>
 
     <section id="backTopCont">

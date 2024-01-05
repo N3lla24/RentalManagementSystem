@@ -32,6 +32,9 @@
                             Room Number
                         </th>
                         <th>
+                            Room Capacity
+                        </th>
+                        <th>
                             Room Pricing
                         </th>
                         <th>
@@ -50,13 +53,16 @@
                                     @Html.DisplayFor(modelItem => item.Room_Num)
                                 </td>
                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Room_Capacity)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(modelItem => item.Room_Price)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Room_Status)
                                 </td>
                                 <td>
-                                    <a asp-action="Details" asp-route-id="@item.RoomId">Details</a> |
+                                    <a asp-action="RoomDetails" asp-route-id="@item.RoomId">Details</a> |
                                     <a asp-action="Create" asp-route-id="@item.RoomId">Apply for Rent</a>
                                 </td>
                             </tr>
@@ -70,6 +76,9 @@
                     }
                 </tbody>
             </table>
+            <div style="margin-top:50px;">
+                <a href="@Url.Action("Index", "Applicants")" style="color: orangered">Already Have an Application?</a>
+            </div>
         </div>
         
     </section>

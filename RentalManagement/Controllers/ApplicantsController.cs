@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentalManagement.Data;
 using RentalManagement.Models;
+using RentalManagement.Services;
 
 namespace RentalManagement.Controllers
 {
@@ -20,16 +21,31 @@ namespace RentalManagement.Controllers
             _context = context;
         }
 
-        // GET: Applicants
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-              return _context.Applicants != null ? 
-                          View(await _context.Applicants.ToListAsync()) :
-                          Problem("Entity set 'RentalManagementContext.Applicants'  is null.");
+            return View();
         }
 
-        // GET: Applicants/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Applicants
+        public async Task<IActionResult> Indexf(Applicants applicants)
+        {
+            if (applicants.Applicants_Email != null && applicants.Applicants_PhoneNumber != null)
+            {
+                Applicants searchapplicant = await _context.Applicants.SingleOrDefaultAsync(q => q.Applicants_Email == applicants.Applicants_Email && q.Applicants_PhoneNumber == applicants.Applicants_PhoneNumber);
+                if (searchapplicant != null)
+                {
+                    ViewData["SearchErrorMessage"] = null;
+                    return RedirectToAction("Details", new {id = searchapplicant.ApplicationId});
+                }
+                ViewData["SearchErrorMessage"] = "Incorrect Username or Password";
+                return View(applicants);
+            }
+            ViewData["SearchErrorMessage"] = "Incorrect Username or Password";
+            return View(applicants);
+        }
+
+        // GET: Room/Details
+        public async Task<IActionResult> RoomDetails(int? id)
         {
             if (id == null || _context.Room == null)
             {
@@ -44,6 +60,24 @@ namespace RentalManagement.Controllers
             }
 
             return View(room);
+        }
+
+        // GET: Applicants/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.Applicants == null)
+            {
+                return NotFound();
+            }
+
+            var applicants = await _context.Applicants
+                .FirstOrDefaultAsync(m => m.ApplicationId == id);
+            if (applicants == null)
+            {
+                return NotFound();
+            }
+
+            return View(applicants);
         }
 
         // GET: Rooms
