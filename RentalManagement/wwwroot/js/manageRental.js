@@ -7,6 +7,9 @@
         // Hide all displays
         $('.tenantDisplay, .reqDisplay, .roomDisplay, .reportsDisplay, .feedDisplay, .appDisplay').hide();
 
+        $('#reqPopUpModal').hide();
+        var footer = document.querySelector('footer')
+        footer.style.marginTop = '0';
         // Show the corresponding display based on data-target attribute
         var target = $(this).data('target');
         $('.' + target).show();

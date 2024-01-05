@@ -10,11 +10,10 @@
         <title>Kerwin's Apartment</title>
         <link rel="icon" type="image/x-icon" href="~/images/logo2.svg">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="~/css/home.css">
         <link rel="stylesheet" href="~/css/mrDesign.css">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
     </head>
 
 <body id="bodyCont">
@@ -34,41 +33,80 @@
         </div>
     </section>
 
+    
+
+    <div class="reqConfirmPopUp">
+        <div class="rcpDetails">
+            <h3>Requested Items or Service</h3>
+            <div class="rcpItems">
+                <table>
+                    <tbody>
+                        <td>
+                            <p>Product 1</p>
+                        </td>
+                        <td>
+                            <select id="item1DD" onchange="handleSelectChange(this)">
+                                <option value="default" selected disabled>Select item in inventory</option>
+                                <option value="option1">Soap</option>
+                                <option value="option2">Cleaning Product</option>
+                                <option value="option3">Grocery</option>
+                                <option value="option4">Clothes</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" name="" id="numericInput" disabled oninput="handleNumericInputChange()">
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+            <button class="rcpContinue">Continue</button>
+            <button class="rcpCancel">Cancel</button>
+        </div>
+    </div>
+
+    <div class="reqRejectPopUp">
+        <div class="rrpDetails">
+            <h3>Are you sure you want to reject this requisition form?</h3>
+            <span>Note: This can't be undone.</span><br><br><br>
+            <button class="rrpCancel">Cancel</button>
+            <button class="rrpProceed">Proceed</button>
+        </div>
+    </div>
+
+
     <section class="manageRentalContainer">
         <div class="popUpModal" id="popUpModal">
             <div class="pmCol1">
                 <img id="tenantImage" src="" alt="Tenant Image">
             </div>
             <div class="pmCol2">
-                <div class="infoColumn">
+
+                <!-- <div class="infoColumn">
                     <button id="editButton">Edit</button>
                     <button id="closeButton">Close</button>
                     <div id="editModal" style="display: none;">
-                        <!-- Editable fields -->
                         <input type="file" id="tenantImageInput" accept="image/*">
                         <input type="text" id="firstNameInput" placeholder="First Name">
                         <input type="text" id="middleNameInput" placeholder="Middle Name">
                         <input type="text" id="lastNameInput" placeholder="Last Name">
                         <input type="text" id="phoneNumberInput" placeholder="Phone Number">
-                        <!-- Edit buttons -->
                         <button id="discardButton">Discard</button>
                         <button id="updateButton">Update</button>
                     </div>
                 </div>
                 <div class="historyColumn">
                     <div class="scrollableDiv" id="paymentHistory">
-                        <!-- Content for payment history -->
-                        <!-- Use AJAX or similar to load payment history dynamically based on tenantId -->
                     </div>
                     <div class="scrollableDiv" id="requisitionHistory">
-                        <!-- Content for requisition history -->
-                        <!-- Use AJAX or similar to load requisition history dynamically based on tenantId -->
                     </div>
-                </div>
+                </div> -->
+
             </div>
         </div>
-        <div class="popUpModal" id="popUpModal">
+        <div class="popUpModal" id="reqPopUpModal">
+            <i class="fa-solid fa-circle-xmark" id="reqX"></i>
             <div class="pmCol2">
+
                 <div class="reqInfor">
                     <h3>Requisition Form - </h3> <!--requisiton id-->
                     <p>Requester: </p>
@@ -77,10 +115,11 @@
                     <p>Document: </p>
                 </div>
                 <div class="infoColumn">
-                    <button id="approveButton">Approve</button>
-                    <button id="rejectButton">Reject</button>
+                    <button id="reqApprove">Approve</button>
+                    <button id="reqReject">Reject</button>
                 </div>
             </div>
+
         </div>
         <div class="popUpModal" id="popUpModal">
             <div class="pmCol1">
@@ -92,7 +131,11 @@
                     <button id="closeButton">Close</button>
                     <div id="editModal" style="display: none;">
                         <!-- Editable fields -->
+                        <input type="file" id="roomImageInput" accept="image/*">
                         <input type="text" id="roomNameInput" placeholder="Room Name">
+                        <input type="text" id="middleNameInput" placeholder="Middle Name">
+                        <input type="text" id="lastNameInput" placeholder="Last Name">
+                        <input type="text" id="phoneNumberInput" placeholder="Phone Number">
                         <!-- Edit buttons -->
                         <button id="discardButton">Discard</button>
                         <button id="updateButton">Update</button>
@@ -158,19 +201,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--
-                        @* @foreach (var tenant in Model)
+                        @*
+                        @foreach (var tenant in Model)
                         {
-                            <tr>
-                                            <td>@tenant.TenantID</td>
-                                            <td>@tenant.FirstName</td>
-                                            <td>@tenant.LastName</td>
-                                            <td>
-                                                <button class="actionButton" data-tenant-id="@tenant.TenantID">Details</button>
-                                            </td>
-                                        </tr>
-                        } *@
-                         -->
+                                <tr>
+                                    <td>@tenant.TenantID</td>
+                                    <td>@tenant.FirstName</td>
+                                    <td>@tenant.LastName</td>
+                                    <td>
+                                        <button class="actionButton" data-tenant-id="@tenant.TenantID">Details</button>
+                                    </td>
+                                </tr>
+                        }
+                        *@
                     </tbody>
                 </table>
             </div>
@@ -183,25 +226,42 @@
                     <thead>
                         <tr>
                             <th>Requistion ID</th>
-                            <th>Requisted Item or Service</th>
+                            <th>Requester</th>
                             <th>Requisition Type</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @* <!--
+                        <tr>
+                            <td>1</td>
+                            <td>Ronel</td>
+                            <td>Service</td>
+                            <td>
+                                <button class="reqActionButton" @*data-req-id="@requisition.RequisitonID"*@>Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Omar</td>
+                            <td>Product</td>
+                            <td>
+                                <button class="reqActionButton" @*data-req-id="@requisition.RequisitonID"*@>Details</button>
+                            </td>
+                        </tr>
+                        @*
                         @foreach (var requisiton in Model)
                         {
-                        <tr>
-                        <td>@requisition.RequisitionID</td>
-                        <td>@requisition.RequisitionItem</td>
-                        <td>@requisition.RequisitionType</td>
-                        <td>
-                        <button class="actionButton" data-req-id="@requisition.RequisitonID">Details</button>
-                        </td>
-                        </tr>
+                                <tr>
+                                    <td>@requisition.RequisitionID</td>
+                                    <td>@requisition.RequisitionItem</td>
+                                    <td>@requisition.RequisitionType</td>
+                                    <td>
+                                        <button class="actionButton" data-req-id="@requisition.RequisitionID">Details</button>
+                                    </td>
+                                </tr>
                         }
-                        --> *@
+                        *@
+
                     </tbody>
                 </table>
             </div>
@@ -220,30 +280,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*  <!--
+                        @*
                         @foreach (var room in Model)
                         {
-                        <tr>
-                        <td>@room.roomID</td>
-                        <td>@room.roomDetails</td>
-                        <td>@room.roomCap</td>
-                        <td>
-                        <button class="actionButton" data-req-id="@room.roomID">Details</button>
-                        </td>
-                        </tr>
+                                <tr>
+                                    <td>@room.roomID</td>
+                                    <td>@room.roomDetails</td>
+                                    <td>@room.roomCap</td>
+                                    <td>
+                                        <button class="actionButton" data-req-id="@room.roomID">Details</button>
+                                    </td>
+                                </tr>
                         }
-                        --> *@
+                        *@
                     </tbody>
                 </table>
             </div>
 
             <div class="reportsDisplay">
-                <div class="reportDashboard">
-                    <div id="chartContainer1">
+                <canvas id="myChart" width="400" height="400"></canvas>
 
-                    </div>
-                </div>
-                
             </div>
 
             <div class="feedDisplay">
@@ -260,19 +316,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @* <!--
+                        @*
                         @foreach (var feedback in Model)
                         {
-                        <tr>
-                        <td>@feedback.FeedbackID</td>
-                        <td>@feedback.FeedbackSender</td>
-                        <td>@feedback.FeedbackType</td>
-                        <td>
-                        <button class="actionButton" data-req-id="@feedback.FeedbackID">Details</button>
-                        </td>
-                        </tr>
+                                <tr>
+                                    <td>@feedback.FeedbackID</td>
+                                    <td>@feedback.FeedbackSender</td>
+                                    <td>@feedback.FeedbackType</td>
+                                    <td>
+                                        <button class="actionButton" data-req-id="@feedback.FeedbackID">Details</button>
+                                    </td>
+                                </tr>
                         }
-                        --> *@
+                        *@
                     </tbody>
                 </table>
             </div>
@@ -291,19 +347,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*  <!--
+                        @*
                         @foreach (var application in Model)
                         {
-                        <tr>
-                        <td>@application.ApplicationID</td>
-                        <td>@application.ApplicationFName</td>
-                        <td>@application.ApplicationLName</td>
-                        <td>
-                        <button class="actionButton" data-tenant-id="@application.ApplicationID">Details</button>
-                        </td>
-                        </tr>
+                                <tr>
+                                    <td>@application.ApplicationID</td>
+                                    <td>@application.ApplicationFName</td>
+                                    <td>@application.ApplicationLName</td>
+                                    <td>
+                                        <button class="actionButton" data-tenant-id="@application.ApplicationID">Details</button>
+                                    </td>
+                                </tr>
                         }
-                        --> *@
+                        *@
                     </tbody>
                 </table>
             </div>
@@ -313,13 +369,7 @@
 
 
 
-    <section id="backTopCont">
-        <a href="#">
-            <div class="backTop">
-                <p>Back to Top&nbsp;&nbsp;<i class="fa-solid fa-arrow-up"></i></p>
-            </div>
-        </a>
-    </section>
+
 
     <footer>
         <div class="footer-columns">
@@ -376,29 +426,14 @@
         </div>
     </footer>
 
-    <script src="~/js/tenantlist.js"></script>
+    @*<script src="~/js/tenantlist.js"></script>*@
     <script src="~/js/tenantDisplay.js"></script>
     <script src="~/js/manageRental.js"></script>
+    <script src="~/js/reportsDashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <script>
-        var chartData = {
-            labels: ['January', 'February', 'March', 'April', 'May'],
-            datasets: [{
-                label: 'Monthly Sales',
-                data: [50, 75, 120, 100, 150],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        };
-
-        // Get the canvas element within the specified div
-        var ctx = document.getElementById('chartContainer1').getContext('2d');
-
-        // Create a bar chart
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: chartData
-        });
+       
     </script>
 
 </body>

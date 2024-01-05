@@ -17,6 +17,44 @@
         $('#popUpModal').show();
     });
 
+    $('.reqActionButton').click(function () {
+        var tenantId = $(this).data('req-id');
+        var reqPM = document.getElementById('reqPopUpModal');
+        var footer = document.querySelector('footer')
+
+        reqPM.style.display = 'block';
+        reqPM.style.height = '300px';
+        footer.style.marginTop = '350px';
+    });
+
+    $('#reqApprove').click(function () {
+        $('.reqConfirmPopUp').show();
+    });
+
+    $('.rcpCancel').click(function () {
+        $('.reqConfirmPopUp').hide();
+    });
+    $('#reqReject').click(function () {
+        $('.reqRejectPopUp').show();
+    });
+    $('.rrpCancel').click(function () {
+        $('.reqRejectPopUp').hide();
+    });
+    $('.rrpProceed').click(function () {
+        $('.reqRejectPopUp').hide();
+        $('#reqPopUpModal').hide();
+        var footer = document.querySelector('footer')
+        footer.style.marginTop = '0';
+    });
+    $('#reqX').click(function () {
+        $('#reqPopUpModal').hide();
+        var footer = document.querySelector('footer');
+        footer.style.marginTop = '0';
+    });
+
+
+
+
     $('#editButton').click(function () {
         // Show the edit modal
         $('#editModal').show();
@@ -84,4 +122,44 @@ function loadHistoryData(targetElementId, endpoint, tenantId) {
             console.error('Error loading history:', error);
         }
     });
+}
+
+//start
+document.getElementById('numericInput').addEventListener('input', function (event) {
+    // Get the input value
+    let inputValue = event.target.value;
+
+    // Remove non-numeric characters using a regular expression
+    let numericValue = inputValue.replace(/\D/g, '');
+
+    // Update the input value with only numeric characters
+    event.target.value = numericValue;
+});
+
+function handleSelectChange(selectElement) {
+    // Get the selected value
+    var selectedValue = selectElement.value;
+
+    // Enable or disable the numericInput based on the selected value
+    var numericInput = document.getElementById('numericInput');
+    numericInput.disabled = selectedValue === 'default';
+
+    // Clear the numericInput value when no option is selected
+    if (selectedValue === 'default') {
+        numericInput.value = '';
+    }
+}
+
+function handleNumericInputChange() {
+    // Get the numericInput element
+    var numericInput = document.getElementById('numericInput');
+
+    // Get the selected value from the dropdown
+    var selectElement = document.getElementById('item1DD');
+    var selectedValue = selectElement.value;
+
+    // Prevent input if no option is selected
+    if (selectedValue === 'default') {
+        numericInput.value = '';
+    }
 }

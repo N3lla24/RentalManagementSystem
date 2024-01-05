@@ -351,8 +351,354 @@ a {
 }
 
 
-/*start in reports*/
-#chartContainer1 {
-    width: 80%;
+/*start req form container*/
+
+
+.manageRentalContainer {
+    width: 1300px;
+    height: 500px;
     margin: auto;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    padding: 10px;
 }
+
+.mrcLanding {
+    display: flex;
+    height: 100%;
+}
+
+.mrButtonChoices {
+    width: 20%;
+    padding: 10px;
+    height: 100%;
+}
+
+.tenantDisplay,
+.reqDisplay,
+.roomDisplay,
+.reportsDisplay,
+.feedDisplay,
+.appDisplay {
+    width: 80%;
+    padding: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09); 
+    background-color: #FFF9F2;
+    height: 300px;
+    height: 100%;
+}
+
+.mrButtonChoices button {
+    width: 100%;
+    height: 15.5%;
+    margin-bottom: 7.5px;
+    border: none;
+    background-color: #8F6C41;
+    color: aliceblue;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.mrButtonChoices button:hover {
+    background-color: #a78459;
+    border-left: solid #503514 5px;
+}
+
+.tenantSearch, .reqSearch,
+.roomSearch, .reportsSearch,
+.feedSearch, .appSearch {
+    margin-bottom: 10px;
+}
+
+
+.tenantDisplay .tenantSearch input[type=search],
+.reqDisplay .reqSearch input[type=search],
+.roomDisplay .roomSearch input[type=search],
+.reportsDisplay .reportsSearch input[type=search],
+.feedDisplay .feedSearch input[type=search],
+.appDisplay .appSearch input[type=search] {
+    width: 95%;
+    height: 30px;
+    border: solid black 1px;
+    border-radius: 5px 0 0 5px;
+    padding: 5px;
+}
+
+.tenantDisplay .tenantSearch i,
+.reqDisplay .reqSearch i,
+.roomDisplay .roomSearch i,
+.reportsDisplay .reportsSearch i,
+.feedDisplay .feedSearch i,
+.appDisplay .appSearch i {
+    width: 5%;
+    height: 30px;
+    text-align: center;
+    background-color:#65451F;
+    padding: 5px;
+    color: aliceblue;
+    border-radius: 0 5px 5px 0;
+    transition: 0.3s ease;
+}
+
+.tenantDisplay .tenantSearch i:hover,
+.reqDisplay .reqSearch i:hover,
+.roomDisplay .roomSearch i:hover,
+.reportsDisplay .reportsSearch i:hover,
+.feedDisplay .feedSearch i:hover,
+.appDisplay .appSearch i:hover {
+    background-color:#8b6536;
+}
+
+.mrcLanding #tenantTable,
+.mrcLanding #reqTable,
+.mrcLanding #roomTable,
+.mrcLanding #reportsTable,
+.mrcLanding #feedTable,
+.mrcLanding #appTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mrcLanding #tenantTable th, .mrcLanding #tenantTable td,
+.mrcLanding #reqTable th, .mrcLanding #reqTable td,
+.mrcLanding #roomTable th, .mrcLanding #roomTable td,
+.mrcLanding #reportsTable th, .mrcLanding #reportsTable td,
+.mrcLanding #feedTable th, .mrcLanding #feedTable td,
+.mrcLanding #appTable th, .mrcLanding #appTable td  {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.mrcLanding #tenantTable th,
+.mrcLanding #reqTable th,
+.mrcLanding #roomTable th,
+.mrcLanding #reportsTable th,
+.mrcLanding #feedTable th,
+.mrcLanding #appTable th {
+    font-size: 13px;
+}
+
+.mrcLanding #tenantTable th:nth-child(1),
+.mrcLanding #reqTable th:nth-child(1),
+.mrcLanding #roomTable th:nth-child(1),
+.mrcLanding #reportsTable th:nth-child(1),
+.mrcLanding #feedTable th:nth-child(1),
+.mrcLanding #appTable th:nth-child(1),
+.mrcLanding #tenantTable th:nth-child(4),
+.mrcLanding #reqTable th:nth-child(4),
+.mrcLanding #roomTable th:nth-child(4),
+.mrcLanding #reportsTable th:nth-child(4),
+.mrcLanding #feedTable th:nth-child(4),
+.mrcLanding #appTable th:nth-child(4) {
+    width: 10%;
+}
+
+.mrcLanding #tenantTable th:nth-child(2),
+.mrcLanding #reqTable th:nth-child(2),
+.mrcLanding #roomTable th:nth-child(2),
+.mrcLanding #reportsTable th:nth-child(2),
+.mrcLanding #feedTable th:nth-child(2),
+.mrcLanding #appTable th:nth-child(2),
+.mrcLanding #tenantTable th:nth-child(3),
+.mrcLanding #reqTable th:nth-child(3),
+.mrcLanding #roomTable th:nth-child(3),
+.mrcLanding #reportsTable th:nth-child(3),
+.mrcLanding #feedTable th:nth-child(3),
+.mrcLanding #appTable th:nth-child(3)  {
+    width: 35%;
+}
+
+.scrollableDiv {
+    max-height: 200px; 
+    overflow-y: auto; 
+    border: 1px solid #000000; 
+    padding: 10px;
+}
+
+.mrButtonChoices button.active {
+    background-color: #a78459;
+    border-left: solid #503514 5px;
+}
+
+/*START*/
+
+.mrcLanding td {
+    font-size: 13px;
+    font-weight: 500;
+    
+}
+
+.reqDisplay #reqTable td:nth-child(4) {
+    text-align: center;
+}
+
+.reqDisplay #reqTable td:nth-child(4) button {
+    background-color: #503514;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+    color: aliceblue;
+    transition: 0.3s ease;
+}
+
+.reqDisplay #reqTable td:nth-child(4) button:hover {
+    background-color: #77542a;
+}
+
+#popUpModal, #reqPopUpModal {
+    display: none;
+    background-color:aliceblue;
+    padding: 10px 20px 20px 20px;
+    width: 1200px;
+    margin: auto;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09); 
+}
+
+#reqPopUpModal i {
+    margin-bottom: 10px;
+    margin-left: 1150px;
+    transition: 0.3s ease;
+}
+
+#reqPopUpModal i:hover {
+    color: #705028;
+}
+
+#reqPopUpModal .infoColumn button {
+    width: 45%;
+    padding: 10px;
+    background-color: #503514;
+    border: none;
+    border-radius: 5px;
+    color: aliceblue;
+    transition: 0.3s ease;
+}
+
+#reqPopUpModal .infoColumn button:hover {
+    background-color: #77542a;
+}
+
+#reqPopUpModal .reqInfor {
+    height: 205px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    border: solid #000000 1px;
+    padding: 10px;
+}
+
+#reqPopUpModal .infoColumn {
+    height: 50px;
+    width: 30%;
+    margin-left: auto;
+    text-align: right;
+}
+
+.reqInfor h3, .reqInfor p {
+    font-size: 15px;
+}
+
+.reqConfirmPopUp,
+.reqRejectPopUp {
+    display: none;
+    position: fixed; 
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; 
+    height: 100%;
+    z-index: 9998; 
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.reqConfirmPopUp .rcpDetails {
+    width: 700px;
+    height: 550px;
+    margin: auto;
+    margin-top: 180px;
+    background-color: aliceblue;
+    padding: 10px;
+}
+
+.reqRejectPopUp .rrpDetails {
+    width: 500px;
+    height: 200px;
+    margin: auto;
+    margin-top: 300px;
+    background-color: aliceblue;
+    padding: 30px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.reqRejectPopUp .rrpDetails button {
+    width: 30%;
+    padding: 5px 15px;
+    margin: 10px;
+    border: none;
+    background-color: #422c10;
+    color: aliceblue;
+    border-radius: 3px;
+    transition: 0.3s ease;
+}
+
+.reqRejectPopUp .rrpDetails button:hover {
+    background-color: #705028;
+}
+
+.reqRejectPopUp .rrpDetails h3 {
+    margin-bottom: 10px;
+}
+
+.reqRejectPopUp .rrpDetails span {
+    font-size: 13px;
+}
+
+.reqConfirmPopUp .rcpDetails .rcpItems {
+    width: 100%;
+    border: solid #000000 1px;
+    height: 85%;
+    padding: 10px;
+    margin-top: 10px;
+    overflow-y: scroll;
+    display: flex;
+    align-items:baseline;
+    justify-content: left;
+    flex-direction: row;
+}
+
+.reqConfirmPopUp .rcpDetails .rcpItems select {
+    border: none;
+    padding: 5px;
+}
+
+.reqConfirmPopUp .rcpDetails .rcpItems table {
+    border-collapse: collapse;
+}
+
+.reqConfirmPopUp .rcpDetails .rcpItems td {
+    border-bottom: solid red 1px;
+    text-align: center;
+    padding: 5px;
+    font-size: 13px;
+    border-collapse: collapse;
+}
+
+
+.reqConfirmPopUp .rcpDetails button {
+    float: right;
+    width: 20%;
+    margin: 10px 0 5px 10px;
+    padding: 10px;
+    background-color: #503514;
+    border: none;
+    color: aliceblue;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.reqConfirmPopUp .rcpDetails button:hover {
+    background-color: #77542a;
+}
+
