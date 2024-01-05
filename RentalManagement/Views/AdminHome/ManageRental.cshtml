@@ -1,4 +1,6 @@
-﻿@{
+﻿@model RentalManagement.Models.RequisitionDisplay;
+
+@{
     Layout = null;
 }
 
@@ -32,8 +34,6 @@
             </div>
         </div>
     </section>
-
-    
 
     <div class="reqConfirmPopUp">
         <div class="rcpDetails">
@@ -225,9 +225,9 @@
                 <table id="reqTable" class="table">
                     <thead>
                         <tr>
-                            <th>Requistion ID</th>
-                            <th>Requester</th>
+                            <th>Requisition ID</th>
                             <th>Requisition Type</th>
+                            <th>Requisition Created</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -237,30 +237,22 @@
                             <td>Ronel</td>
                             <td>Service</td>
                             <td>
-                                <button class="reqActionButton" @*data-req-id="@requisition.RequisitonID"*@>Details</button>
+                                <button class="reqActionButton" data-req-id="@Requisition.RequisitonID">Details</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Omar</td>
-                            <td>Product</td>
-                            <td>
-                                <button class="reqActionButton" @*data-req-id="@requisition.RequisitonID"*@>Details</button>
-                            </td>
-                        </tr>
-                        @*
-                        @foreach (var requisiton in Model)
+                        
+                        @foreach (var Requisition in Model)
                         {
-                                <tr>
-                                    <td>@requisition.RequisitionID</td>
-                                    <td>@requisition.RequisitionItem</td>
-                                    <td>@requisition.RequisitionType</td>
-                                    <td>
-                                        <button class="actionButton" data-req-id="@requisition.RequisitionID">Details</button>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>@Requisition.RequisitionID</td>
+                                <td>@Requisition.Requisition_Type</td>
+                                <td>@Requisition.Requistition_CreatedAt</td>
+                                <td>
+                                    <button class="actionButton" data-req-id="@Requisition.RequisitionID">Details</button>
+                                </td>
+                            </tr>
                         }
-                        *@
+                        
 
                     </tbody>
                 </table>
