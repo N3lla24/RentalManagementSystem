@@ -26,19 +26,38 @@ namespace RentalManagement.Controllers
         {
             try
             {
-                var requisitions = await _context.Requisition.ToListAsync();
+                var tenant = await _context.Tenant.ToListAsync();
+                var requisition = await _context.Requisition.ToListAsync();
+                var room = await _context.Room.ToListAsync();
+                var feedback = await _context.Feedback.ToListAsync();
+                var applicants = await _context.Applicants.ToListAsync();
 
-                return requisitions != null ?
-                    View(requisitions) :
-                    Problem("Entity set 'RentalManagementContext.Requisition' is null.");
+                if (tenant != null && requisition != null && room != null && feedback != null && applicants != null)
+                {
+                    var viewModel = new RentalViewModel
+                    {
+                        Tenant = tenant,
+                        Requisition = requisition,
+                        Room = room,
+                        Feedback = feedback,
+                        Applicants = applicants
+                    };
+
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Problem("Error fetching data from the database.");
+                }
             }
             catch (Exception ex)
             {
-                // error log
+                // Log and handle the exception
                 _logger.LogError(ex, "An error occurred while processing the application.");
                 return Content("An unexpected error occurred. Please try again later.");
             }
         }
+
 
         public IActionResult Logout()
         {

@@ -1,4 +1,4 @@
-﻿@model RentalManagement.Models.RequisitionDisplay;
+﻿@model RentalManagement.Models.RentalViewModel;
 
 @{
     Layout = null;
@@ -190,27 +190,33 @@
                 </div>
                 <table id="tenantTable" class="table">
                     <thead>
-                        <tr>
-                            <th>Tenant ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+                            <tr>
+                                <th>Tenant ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
                     <tbody>
-                        @*
-                        @foreach (var tenant in Model)
+                        <tr>
+                            <td>1</td>
+                            <td>Ronel</td>
+                            <td>Delig</td>
+                            <td>
+                                <button class="tenantActionButton" data-tenant-id="@tenant.TenantID">Details</button>
+                            </td>
+                        </tr>
+                        @foreach (var tenant in Model.Tenant)
                         {
-                                <tr>
-                                    <td>@tenant.TenantID</td>
-                                    <td>@tenant.FirstName</td>
-                                    <td>@tenant.LastName</td>
-                                    <td>
-                                        <button class="actionButton" data-tenant-id="@tenant.TenantID">Details</button>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>@Tenant.TenantID</td>
+                                <td>@Tenant.Tenant_FirstName</td>
+                                <td>@Tenant.Tenant_LastName</td>
+                                <td>
+                                    <button class="tenantActionButton" data-tenant-id="@tenant.TenantID">Details</button>                                    
+                                </td>
+                            </tr>
                         }
-                        *@
                     </tbody>
                 </table>
             </div>
@@ -234,18 +240,18 @@
                             <td>Ronel</td>
                             <td>Service</td>
                             <td>
-                                <button class="reqActionButton" data-req-id="@Requisition.RequisitonID">Details</button>
+                                <button class="reqActionButton" data-req-id="@requisition.RequisitonID">Details</button>
                             </td>
                         </tr>
                         
-                        @foreach (var Requisition in Model)
+                        @foreach (var requisition in Model.Requisition)
                         {
                             <tr>
                                 <td>@Requisition.RequisitionID</td>
                                 <td>@Requisition.Requisition_Type</td>
-                                <td>@Requisition.Requistition_CreatedAt</td>
+                                <td>@Requisition.Requisition_CreatedAt.ToString("yyyy-MM-dd")</td>
                                 <td>
-                                    <button class="actionButton" data-req-id="@Requisition.RequisitionID">Details</button>
+                                    <button class="actionButton" data-req-id="@requisition.RequisitionID">Details</button>
                                 </td>
                             </tr>
                         }
@@ -259,29 +265,35 @@
                 <div class="roomSearch">
                     <input type="search" placeholder="Search rooms" /><i class="fas fa-search"></i>
                 </div>
-                <table id="roomTable" class="table">
+                <table id="tenantTable" class="table">
                     <thead>
                         <tr>
                             <th>Room ID</th>
-                            <th>Room Details</th>
-                            <th>Room Capacity</th>
+                            <th>Room Image</th>
+                            <th>Room Number</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @*
-                        @foreach (var room in Model)
+                        <tr>
+                            <td>1</td>
+                            <td><img src="~/images/logosolo.svg" alt=""></td>
+                            <td>101</td>
+                            <td>
+                                <button class="roomActionButton" data-room-id="@Room.RoomID">Details</button>
+                            </td>
+                        </tr>
+                        @foreach (var Room in Model)
                         {
-                                <tr>
-                                    <td>@room.roomID</td>
-                                    <td>@room.roomDetails</td>
-                                    <td>@room.roomCap</td>
-                                    <td>
-                                        <button class="actionButton" data-req-id="@room.roomID">Details</button>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>@Room.RoomID</td>
+                                <td>@Room.Room_Image</td>
+                                <td>@Room.Room_Number</td>
+                                <td>
+                                    <button class="roomActionButton" data-room-id="@Room.RoomID">Details</button>                                    
+                                </td>
+                            </tr>
                         }
-                        *@
                     </tbody>
                 </table>
             </div>
