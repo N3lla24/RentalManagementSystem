@@ -1,0 +1,77 @@
+﻿@model IEnumerable<RentalManagement.Models.Requisition>
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/Requisition_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+
+    @foreach (var requisition in Model)
+    {
+        <div>
+            <h4>Tenant Request Details</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3">Tenant Name:</dt>
+                <dd class="col-sm-9">@($"{requisition.Tenant?.Tenant_FirstName} {requisition.Tenant?.Tenant_LastName}")</dd>
+            </dl>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">Requisition ID: @requisition.RequisitionId</h5>
+
+                <dl class="row">
+                    <!-- Add other details as needed -->
+                    @if (requisition.Requisition_Type == "REQUEST ITEM" && requisition.RequisitionItems != null && requisition.RequisitionItems.Any())
+                    {
+                        <dt class="col-sm-3">Requisition Items:</dt>
+                        <dd class="col-sm-9">
+                            <ul>
+                                @foreach (var item in requisition.RequisitionItems)
+                                {
+                                    <li>
+                                        <strong>@item.Req_Item_Name</strong>
+                                        <br />
+                                        Quantity: @item.Req_Item_Quantity, Units: @item.Req_Item_Units
+                                    </li>
+                                }
+                            </ul>
+                        </dd>
+                    }
+
+                    @if (requisition.Requisition_Type == "REQUEST SERVICE" && requisition.RequisitionServices != null && requisition.RequisitionServices.Any())
+                    {
+                        <dt class="col-sm-3">Requisition Services:</dt>
+                        <dd class="col-sm-9">
+                            <ul>
+                                @foreach (var service in requisition.RequisitionServices)
+                                {
+                                    <li>@service.Req_Serv_Name</li>
+                                }
+                            </ul>
+                        </dd>
+                    }
+
+                    <dt class="col-sm-3">Requisition Due Date:</dt>
+                    <dd class="col-sm-9">@requisition.Requisition_DueDate</dd>
+
+                    <dt class="col-sm-3">Requisition Status:</dt>
+                    <dd class="col-sm-9">@requisition.Requisition_Status</dd>
+
+                    <dt class="col-sm-3">Requisition Created At:</dt>
+                    <dd class="col-sm-9">@requisition.Requistition_CreatedAt</dd>
+
+                    <dt class="col-sm-3">Remarks:</dt>
+                    <dd class="col-sm-9">@requisition.Requisition_Status_Remarks</dd>
+                </dl>
+
+                <div class="mt-3">
+                    <a asp-action="Index" class="btn btn-primary">Back to Request List</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

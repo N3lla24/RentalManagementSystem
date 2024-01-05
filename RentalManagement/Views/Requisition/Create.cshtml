@@ -1,0 +1,137 @@
+﻿@model RentalManagement.ViewModel.ReqVM
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/Requisition_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Create", "Requisition"))
+{
+    @Html.AntiForgeryToken()
+    <h4>Requisition</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <input type="hidden" asp-for="TenantId" />
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Requisition_Type, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Requisition_Type, new SelectList(new[] { "REQUEST SERVICE", "REQUEST ITEM" }), "Select Request Type", new { @class = "form-control" })
+        </div>
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Requisition_Status_Remarks, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Requisition_Status_Remarks, new { htmlAttributes = new { @class = "form-control required", placeholder = "Enter Request Description" } })
+        </div>
+    </div>
+
+
+    @Html.LabelFor(model => model.Requisition_DueDate, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Requisition_DueDate, new { htmlAttributes = new { @class = "form-control required", type = "date", placeholder = "Enter Due Date Of Your Request" } })
+
+    </div>
+    <div class="form-group" id="serviceFields" style="display:none;">
+
+        @Html.LabelFor(model => model.ReqServ[0].Req_Serv_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ReqServ[0].Req_Serv_Name, new { htmlAttributes = new { @class = "form-control required", placeholder = "Enter Request Service" } })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="button" id="addservbtn" class="btn btn-primary">Add Field</button>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="form-group" id="itemFields" style="display:none;">
+
+        @Html.LabelFor(model => model.ReqItem[0].Req_Item_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ReqItem[0].Req_Item_Name, new { htmlAttributes = new { @class = "form-control required", placeholder = "Enter Request Item" } })
+        </div>
+
+
+        @Html.LabelFor(model => model.ReqItem[0].Req_Item_Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ReqItem[0].Req_Item_Quantity, new { htmlAttributes = new { @class = "form-control required", placeholder = "Enter Request Item Quantity" } })
+        </div>
+
+        @Html.LabelFor(model => model.ReqItem[0].Req_Item_Units, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ReqItem[0].Req_Item_Units, new { htmlAttributes = new { @class = "form-control required", placeholder = "Enter Request Item Units" } })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="button" id="additembtn" class="btn btn-primary">Add Field</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+}
+@section scripts {
+    <script>
+
+        $(document).ready(function () {
+            $("#Requisition_Type").change(function () {
+                if ($(this).val() == "REQUEST ITEM") {
+                    $("#itemFields").show();
+                    $("#serviceFields").hide();
+                } else if ($(this).val() == "REQUEST SERVICE") {
+                    $("#serviceFields").show();
+                    $("#itemFields").hide();
+                } else {
+                    $('#serviceFields').hide();
+                    $('#itemFields').hide();
+
+                }
+            });
+
+            //dynamic fields for add more service and item
+            $("#addservbtn").click(function () {
+                var index = $("#serviceFields div").length;
+                var newField = '<div>' +
+                    '<label for="ReqServ[' + index + '].Req_Serv_Name">Service Name</label>' +
+                    '<input type="text" name="ReqServ[' + index + '].Req_Serv_Name" class="form-control" />' +
+                    '<button type="button" class="btn btn-danger remove-field">Remove</button>' +
+                    '</div>';
+                $("#serviceFields").append(newField);
+            });
+
+            $("#additembtn").click(function () {
+                var index = $("#itemFields div").length;
+                var newField = '<div>' +
+                    '<label for="ReqItem[' + index + '].Req_Item_Name">Item Name</label>' +
+                    '<input type="text" name="ReqItem[' + index + '].Req_Item_Name" class="form-control" />' +
+                    '<label for="ReqItem[' + index + '].Req_Item_Quantity">Quantity</label>' +
+                    '<input type="number" name="ReqItem[' + index + '].Req_Item_Quantity" class="form-control" />' +
+                    '<label for="ReqItem[' + index + '].Req_Item_Units">Units</label>' +
+                    '<input type="text" name="ReqItem[' + index + '].Req_Item_Units" class="form-control" />' +
+                    '<button type="button" class="btn btn-danger remove-field">Remove</button>' +
+                    '</div>';
+                $("#itemFields").append(newField);
+            });
+
+        });
+
+        $("#itemFields, #serviceFields").on("click", ".remove-field", function () {
+            $(this).parent().remove();
+        });
+
+
+    </script>
+}

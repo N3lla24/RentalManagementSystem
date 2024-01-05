@@ -13,6 +13,46 @@ namespace RentalManagement.Data
             : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Requisition>()
+                .HasMany(r => r.RequisitionItems)
+                .WithOne(item => item.Requisition)
+                .HasForeignKey(item => item.RequisitionId);
+
+            modelBuilder.Entity<Requisition>()
+                .HasMany(r => r.RequisitionServices)
+                .WithOne(service => service.Requisition)
+                .HasForeignKey(service => service.RequisitionId);
+
+            modelBuilder.Entity<RequisitionItem>()
+                .HasOne(item => item.Requisition)
+                .WithMany(r => r.RequisitionItems)
+                .HasForeignKey(item => item.RequisitionId);
+
+            modelBuilder.Entity<RequisitionService>()
+                .HasOne(service => service.Requisition)
+                .WithMany(r => r.RequisitionServices)
+                .HasForeignKey(service => service.RequisitionId);
+
+            modelBuilder.Entity<RequisitionItem>()
+                .Property(ri => ri.Req_Item_Name)
+                .IsRequired(false);
+
+            modelBuilder.Entity<RequisitionItem>()
+                .Property(ri => ri.Req_Item_Quantity)
+                .IsRequired(false);
+
+            modelBuilder.Entity<RequisitionItem>()
+                .Property(ri => ri.Req_Item_Units)
+                .IsRequired(false);
+
+            modelBuilder.Entity<RequisitionService>()
+                .Property(rs => rs.Req_Serv_Name)
+                .IsRequired(false);
+
+            base.OnModelCreating(modelBuilder);
+        }
 
         public DbSet<RentalManagement.Models.Admin> Admin { get; set; } = default!;
 

@@ -1,4 +1,4 @@
-﻿@model RentalManagement.Models.RentalViewModel;
+﻿@* @model RentalManagement.Models.RentalViewModel;
 
 @{
     Layout = null;
@@ -249,7 +249,7 @@
                             <tr>
                                 <td>@Requisition.RequisitionID</td>
                                 <td>@Requisition.Requisition_Type</td>
-                                <td>@Requisition.Requisition_CreatedAt.ToString("yyyy-MM-dd")</td>
+                                <td>@Requisition.Requistition_CreatedAt.ToString("yyyy-MM-dd")</td>
                                 <td>
                                     <button class="actionButton" data-req-id="@requisition.RequisitionID">Details</button>
                                 </td>
@@ -257,7 +257,7 @@
                         }*@
                         
 
-                    </tbody>
+             @*        </tbody>
                 </table>
             </div>
 
@@ -280,9 +280,9 @@
                             <td><img src="~/images/logosolo.svg" alt=""></td>
                             <td>101</td>
                             <td>
-                                <button class="roomActionButton" data-room-id="@Room.RoomID">Details</button>
-                            </td>
-                        </tr>
+@*                                 <button class="roomActionButton" data-room-id="@Room.RoomID">Details</button>
+ *@                            </td>
+                       @*  </tr>
                         @foreach (var Room in Model)
                         {
                             <tr>
@@ -296,9 +296,9 @@
                         }
                     </tbody>
                 </table>
-            </div>
+            </div> *@
 
-            <div class="reportsDisplay">
+            @* <div class="reportsDisplay">
                 <canvas id="myChart" width="400" height="400"></canvas>
 
             </div>
@@ -316,7 +316,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody> *@
                         @*
                         @foreach (var feedback in Model)
                         {
@@ -329,8 +329,8 @@
                                     </td>
                                 </tr>
                         }
-                        *@
-                    </tbody>
+                   @*      *@
+             @*        </tbody>
                 </table>
             </div>
 
@@ -347,7 +347,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody>  *@*
                         @*
                         @foreach (var application in Model)
                         {
@@ -360,14 +360,14 @@
                                     </td>
                                 </tr>
                         }
-                        *@
-                    </tbody>
+                       *@
+      @*               </tbody>
                 </table>
             </div>
 
         </div>
-    </section>
-
+    </section>  *@
+@* 
 
 
 
@@ -425,10 +425,10 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer> *@
 
     @*<script src="~/js/tenantlist.js"></script>*@
-    <script src="~/js/tenantDisplay.js"></script>
+@*     <script src="~/js/tenantDisplay.js"></script>
     <script src="~/js/manageRental.js"></script>
     <script src="~/js/reportsDashboard.js"></script>
     <script src="~/js/requisitionDisplay.js"></script>
@@ -440,4 +440,4 @@
     </script>
 
 </body>
-</html>
+</html>  *@

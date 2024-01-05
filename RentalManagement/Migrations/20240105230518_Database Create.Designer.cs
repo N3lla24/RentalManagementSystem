@@ -12,7 +12,7 @@ using RentalManagement.Data;
 namespace RentalManagement.Migrations
 {
     [DbContext(typeof(RentalManagementContext))]
-    [Migration("20240105072913_Database Create")]
+    [Migration("20240105230518_Database Create")]
     partial class DatabaseCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -305,7 +305,6 @@ namespace RentalManagement.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("PurchaseOrderId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("PurchaseItem_Id");
@@ -366,7 +365,6 @@ namespace RentalManagement.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseServ_Id"), 1L, 1);
 
                     b.Property<int?>("PurchaseOrderId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("PurchaseServ_Name")
@@ -420,10 +418,18 @@ namespace RentalManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequisitionId"), 1L, 1);
 
+                    b.Property<DateTime>("Requisition_DueDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Requisition_Status")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Requisition_Status_Remarks")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Requisition_Type")
                         .IsRequired()
@@ -451,24 +457,14 @@ namespace RentalManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Req_Item_ID"), 1L, 1);
 
-                    b.Property<DateTime>("Req_Item_DueDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Req_Item_Name")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("Req_Item_Quantity")
+                    b.Property<int?>("Req_Item_Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("Req_Item_Remarks")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
                     b.Property<string>("Req_Item_Units")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -490,16 +486,7 @@ namespace RentalManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Req_Serv_ID"), 1L, 1);
 
-                    b.Property<DateTime>("Req_Serv_DueDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Req_Serv_Name")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<string>("Req_Serv_Remarks")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -726,9 +713,7 @@ namespace RentalManagement.Migrations
                 {
                     b.HasOne("RentalManagement.Models.PurchaseOrder", "PurchaseOrder")
                         .WithMany()
-                        .HasForeignKey("PurchaseOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PurchaseOrderId");
 
                     b.Navigation("PurchaseOrder");
                 });
@@ -752,9 +737,7 @@ namespace RentalManagement.Migrations
                 {
                     b.HasOne("RentalManagement.Models.PurchaseOrder", "PurchaseOrder")
                         .WithMany()
-                        .HasForeignKey("PurchaseOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PurchaseOrderId");
 
                     b.Navigation("PurchaseOrder");
                 });
@@ -780,7 +763,7 @@ namespace RentalManagement.Migrations
             modelBuilder.Entity("RentalManagement.Models.RequisitionItem", b =>
                 {
                     b.HasOne("RentalManagement.Models.Requisition", "Requisition")
-                        .WithMany()
+                        .WithMany("RequisitionItems")
                         .HasForeignKey("RequisitionId");
 
                     b.Navigation("Requisition");
@@ -789,7 +772,7 @@ namespace RentalManagement.Migrations
             modelBuilder.Entity("RentalManagement.Models.RequisitionService", b =>
                 {
                     b.HasOne("RentalManagement.Models.Requisition", "Requisition")
-                        .WithMany()
+                        .WithMany("RequisitionServices")
                         .HasForeignKey("RequisitionId");
 
                     b.Navigation("Requisition");
@@ -814,6 +797,13 @@ namespace RentalManagement.Migrations
                     b.Navigation("Tenant");
 
                     b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("RentalManagement.Models.Requisition", b =>
+                {
+                    b.Navigation("RequisitionItems");
+
+                    b.Navigation("RequisitionServices");
                 });
 #pragma warning restore 612, 618
         }
