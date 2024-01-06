@@ -49,7 +49,7 @@ namespace RentalManagement.Controllers
                     {
                         RequisitionId = requisition.RequisitionId,
                         Requisition_Type = requisition.Requisition_Type,
-                        Requistition_CreatedAt = requisition.Requistition_CreatedAt,
+                        Requistition_CreatedAt = requisition.Requisition_CreatedAt,
 
                     }).ToList();
 
@@ -142,6 +142,10 @@ namespace RentalManagement.Controllers
 
         public async Task<IActionResult> Accept(int? id)
         {
+            if (id == null || _context.Applicants == null)
+            {
+                return NotFound();
+            }
             var applicants = await _context.Applicants
                 .FirstOrDefaultAsync(m => m.ApplicationId == id);
             if (applicants == null)
