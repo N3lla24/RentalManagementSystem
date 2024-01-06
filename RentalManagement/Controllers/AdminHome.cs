@@ -121,9 +121,9 @@ namespace RentalManagement.Controllers
                     {
                         RequisitionId = rh.RequisitionId,
                         Requisition_Type = rh.Requisition_Type,
-                        Requistition_CreatedAt = rh.Requistition_CreatedAt,
+                        Requisition_CreatedAt = rh.Requisition_CreatedAt,
                         Requisition_Status = rh.Requisition_Status,
-                        Requisition_Status_Remarks = rh.Requisition_Status_Remarks,
+                        Requisition_Remarks = rh.Requisition_Remarks,
                         Requisition_DueDate = rh.Requisition_DueDate
 
                     }).ToList();

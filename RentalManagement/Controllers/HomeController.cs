@@ -41,15 +41,15 @@ namespace RentalManagement.Controllers
 
         public void ClearRejected()
         {
-            List<Applicants> applicants = _context.Applicants.ToList();
-            foreach (Applicants applicant in applicants)
-            {
-                TimeSpan difference = applicant.Applicant_CreatedAt - DateTime.Now;
-                if (applicant.Application_Status == "Reject" && difference.TotalDays < 30)
-                {
-                    _context.Applicants.Remove(applicant);
-                }
-            }
+            //List<Applicants> applicants = _context.Applicants.ToList();
+            //foreach (Applicants applicant in applicants)
+            //{
+            //    TimeSpan difference = applicant.Applicant_CreatedAt - DateTime.Now;
+            //    if (applicant.Application_Status == "Reject" && difference.TotalDays < 30)
+            //    {
+            //        _context.Applicants.Remove(applicant);
+            //    }
+            //}
         }
     }
 }
