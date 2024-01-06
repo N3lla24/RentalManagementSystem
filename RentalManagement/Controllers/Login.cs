@@ -21,6 +21,46 @@ namespace RentalManagement.Controllers
             return View();
         }
 
+        public IActionResult ForgotPass()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Recover([Bind("Tenant_Email, Tenant_PhoneNumber, Tenant_RoomNumber, Tenant_UnitNumber, Tenant_Password")] Tenant tenant)
+        {
+            Tenant existingacc = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_Email == tenant.Tenant_Email && q.Tenant_PhoneNumber == tenant.Tenant_PhoneNumber && q.Tenant_RoomNumber == tenant.Tenant_RoomNumber && q.Tenant_UnitNumber == tenant.Tenant_UnitNumber);
+
+            if (existingacc != null)
+            {
+                string hashpass = Hashing.HashPass(tenant.Tenant_Password);
+                existingacc.Tenant_Password = hashpass;
+                try
+                {
+                    _context.Update(existingacc);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (existingacc == null)
+                    {
+                        ViewData["Success"] = null;
+                        ViewData["Errormessage"] = "Not Found";
+                        return View("ForgotPass");
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                ViewData["Success"] = "success";
+                ViewData["Errormessage"] = null;
+                return View("ForgotPass");
+            }
+            ViewData["Success"] = null;
+            ViewData["Errormessage"] = "Not Found";
+            return View("ForgotPass");
+        }
+
         public IActionResult RegisterAccount()
         {
             return RedirectToAction("Create", "Tenants");

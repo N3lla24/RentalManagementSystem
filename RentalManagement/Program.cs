@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RentalManagement.Data;
 using RentalManagement.Models;
+using RentalManagement.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<RentalManagementContext>(options =>

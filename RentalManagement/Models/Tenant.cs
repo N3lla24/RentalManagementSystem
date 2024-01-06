@@ -42,11 +42,10 @@ namespace RentalManagement.Models
         public string Tenant_PhoneNumber { get; set; }
 
 
-        
+
         [Required(ErrorMessage = "Password is required.")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&/,.-])[A-Za-z\d@$!%*?&/,.-]{8,30}$", ErrorMessage = "Password must have: * 8 minimum char long * Atleast 1 Uppercase Character * Atleast 1 Special Character * Atleast 1 Numerical Character")]
         public string Tenant_Password { get; set; }
-
 
         public int Tenant_RoomNumber { get; set; }
 
