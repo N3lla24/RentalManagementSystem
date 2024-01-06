@@ -140,6 +140,59 @@ namespace RentalManagement.Controllers
             return View(applicants);
         }
 
+        public async Task<IActionResult> Accept(int? id)
+        {
+            var applicants = await _context.Applicants
+                .FirstOrDefaultAsync(m => m.ApplicationId == id);
+            if (applicants == null)
+            {
+                return View(applicants);
+            }
+            applicants.Application_Status = "Accept";
+            _context.Tenant.AddRange(
+                    new Tenant
+                    {
+                        Tenant_FirstName = applicants.Applicants_FirstName,
+                        Tenant_MiddleName = applicants.Applicants_MiddleName,
+                        Tenant_LastName = applicants.Applicants_LastName,
+                        Tenant_UserName = 'N/A',
+                        Tenant_Email = applicants.Applicants_Email,
+                        Tenant_PhoneNumber = applicants.Applicants_PhoneNumber,
+                        Tenant_Password = "N/A",
+                        Tenant_RoomNumber = applicants.Application_RoomNumber,
+                        Tenant_UnitNumber = applicants.Application_UnitNumber,
+                        Tenant_CreatedAt = DateTime.Now,
+                        Tenant_UpdatedAt = DateTime.Now,
+                    }
+                );
+            _context.SaveChanges();
+            return View(applicants);
+        }
+
+        public async Task<IActionResult> Reject(int? id)
+        {
+            var applicants = await _context.Applicants
+                .FirstOrDefaultAsync(m => m.ApplicationId == id);
+            if (applicants == null)
+            {
+                return NotFound();
+            }
+            return View(applicants);
+        }
+
+        public async Task<IActionResult> RejectForm([Bind("ApplicationId,Applicants_FirstName,Applicants_MiddleName,Applicants_LastName,Applicants_Email,Applicants_PhoneNumber,Applicants_Address, Application_RoomNumber, Application_UnitNumber, Applicant_CreatedAt,Applicant_UpdatedAt")] Applicants applicants)
+        {
+
+            Applicants matchapp = await _context.Applicants.FirstOrDefaultAsync(m => m.ApplicationId == applicants.ApplicationId);
+            if (applicants != null)
+            {
+                matchapp.Application_Status = "Reject";
+                matchapp.Application_StatusRemark = applicants.Application_StatusRemark;
+                return RedirectToAction("ManageRental", "AdminHome");
+            }
+            return View(applicants);
+        }
+
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("AdminID");
