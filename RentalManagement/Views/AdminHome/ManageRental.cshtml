@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="~/css/home.css">
         <link rel="stylesheet" href="~/css/mrDesign.css">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         
     </head>
 
@@ -75,13 +76,10 @@
 
 
     <section class="manageRentalContainer">
-        <div class="popUpModal" id="popUpModal">
-            <div class="pmCol1">
-                <img id="tenantImage" src="" alt="Tenant Image">
-            </div>
+        <div class="popUpModal" id="tenantPopUpModal">
+            <i class="fa-solid fa-circle-xmark" id="reqX"></i>
             <div class="pmCol2">
-
-                <!-- <div class="infoColumn">
+                <div class="infoColumn">
                     <button id="editButton">Edit</button>
                     <button id="closeButton">Close</button>
                     <div id="editModal" style="display: none;">
@@ -99,8 +97,7 @@
                     </div>
                     <div class="scrollableDiv" id="requisitionHistory">
                     </div>
-                </div> -->
-
+                </div> 
             </div>
         </div>
         <div class="popUpModal" id="reqPopUpModal">
@@ -233,7 +230,7 @@
                             <td>Ronel</td>
                             <td>Service</td>
                             <td>
-                               @*  <button class="reqActionButton" data-req-id="@requisition.RequisitonID">Details</button> *@
+                               <button class="reqActionButton"@*  data-req-id="@requisition.RequisitonID" *@>Details</button> 
                             </td>
                         </tr>
   
@@ -251,45 +248,40 @@
                         </tbody>
                 </table>
             </div>
-
-            @*
+            
             <div class="roomDisplay">
                 <div class="roomSearch">
                     <input type="search" placeholder="Search rooms" /><i class="fas fa-search"></i>
                 </div>
-                <table id="tenantTable" class="table">
+                <table id="roomTable" class="table">
                     <thead>
                         <tr>
                             <th>Room ID</th>
-                            <th>Room Image</th>
                             <th>Room Number</th>
+                            <th>Room Status</th>
+                            <th>Room Capacity</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><img src="~/images/logosolo.svg" alt=""></td>
-                            <td>101</td>
-                            <td>
-                                 <button class="roomActionButton" data-room-id="@Room.RoomID">Details</button>
-                            </td>
-                    </tr>
-                        @foreach (var Room in Model)
+                        @foreach (var room in Model.Room)
                         {
                             <tr>
-                                <td>@Room.RoomID</td>
-                                <td>@Room.Room_Image</td>
-                                <td>@Room.Room_Number</td>
+                                <td>@room.RoomId</td>
+                                <td>@room.Room_Num</td>
+                                <td>@room.Room_Status</td>
+                                <td>@room.Room_Capacity</td>
                                 <td>
-                                    <button class="roomActionButton" data-room-id="@Room.RoomID">Details</button>                                    
+                                    <button class="roomActionButton" data-room-id="@room.RoomId">Details</button>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
-            </div>  <div class="reportsDisplay">
-                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>  
+            
+            <div class="reportsDisplay">
+                <div id="plotly-chart"></div>
 
             </div>
 
@@ -307,22 +299,22 @@
                         </tr>
                     </thead>
                     <tbody> 
-                        @foreach (var feedback in Model)
+                        @foreach (var feedback in Model.Feedback)
                         {
-                                <tr>
-                                    <td>@feedback.FeedbackID</td>
-                                    <td>@feedback.FeedbackSender</td>
-                                    <td>@feedback.FeedbackType</td>
-                                    <td>
-                                        <button class="actionButton" data-req-id="@feedback.FeedbackID">Details</button>
-                                    </td>
-                                </tr>
+                             <tr>
+                                 <td>@feedback.FeedbackId</td>
+                                 <td>@feedback.Feedback_Email</td>
+                                 <td>@feedback.Feedback_Content</td>
+                                 <td>
+                                     <button class="actionButton" data-req-id="@feedback.FeedbackId">Details</button>
+                                 </td>
+                             </tr>
                         }
-                   
+
                    </tbody>
                 </table>
             </div>
-
+            @*
             <div class="appDisplay">
                 <div class="appSearch">
                     <input type="search" placeholder="Search applications" /><i class="fas fa-search"></i>
@@ -423,6 +415,31 @@
     <script src="~/js/requisitionDisplay.js"></script>
     <script src="~/js/RequisitionApiDisplay.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var reportsData = @Html.Raw(Json.Serialize(Model.Reports));
+
+        // Extract x (months) and y (total fees) values
+        var months = reportsData.map(item => item.Month);
+        var totalFees = reportsData.map(item => item.TotalFees);
+
+        // Create the chart
+        var data = [{
+            x: months,
+            y: totalFees,
+            type: 'bar'
+        }];
+
+        // Specify the layout with x-axis type as category and set the title
+        var layout = {
+            xaxis: {
+                type: 'category'
+            },
+            title: 'Monthly Total Fees'
+        };
+
+        Plotly.newPlot('plotly-chart', data, layout);
+    </script>
     
 
 </body>

@@ -33,15 +33,16 @@ namespace RentalManagement.Controllers
                 var room = await _context.Room.ToListAsync();
                 var feedback = await _context.Feedback.ToListAsync();
                 var applicants = await _context.Applicants.ToListAsync();
+                var payment = await _context.PaymentDetail.ToListAsync();
 
-                if (tenant != null && requisition != null /*&& room != null && feedback != null && applicants != null*/)
+                if (tenant != null && requisition != null && room != null && feedback != null && payment != null/* && applicants != null*/)
                 {
                     var tenantDisplayList = tenant.Select(tenant => new TenantDisplay
                     {
-                        TenantId = tenant.TenantId, // Adjust based on the actual property name in your Tenant class
+                        TenantId = tenant.TenantId, 
                         Tenant_FirstName = tenant.Tenant_FirstName,
                         Tenant_LastName = tenant.Tenant_LastName,
-                        // other properties
+
                     }).ToList();
 
                     var requisitionDisplayList = requisition.Select(requisition => new RequisitionDisplay
@@ -49,14 +50,43 @@ namespace RentalManagement.Controllers
                         RequisitionId = requisition.RequisitionId,
                         Requisition_Type = requisition.Requisition_Type,
                         Requistition_CreatedAt = requisition.Requistition_CreatedAt,
-                        // other properties
+
                     }).ToList();
+
+                    var roomDisplayList = room.Select(room => new RoomDisplay
+                    {
+                        RoomId = room.RoomId,
+                        Room_Num = room.Room_Num,
+                        Room_Status = room.Room_Status,
+                        Room_Capacity = room.Room_Capacity,
+
+                    }).ToList();
+
+                    var feedbackDisplayList = feedback.Select(feedback => new FeedbackDisplay
+                    {
+                        FeedbackId = feedback.FeedbackId,
+                        Feedback_Email = feedback.Feedback_Email,
+                        Feedback_Content = feedback.Feedback_Content,
+
+                    }).ToList();
+
+                    var monthlyTotals = payment
+                    .GroupBy(p => p.Pay_CreatedAt.ToString("yyyy-MM"))
+                    .Select(g => new ReportsDisplay
+                    {
+                        Month = g.Key, 
+                        TotalFees = g.Sum(p => p.Pay_RentPrice + p.Pay_UtilityFee + p.Pay_GarbageFee + p.Pay_AirconFee + p.Pay_InternetFee + p.Pay_RefrigeratorFee + p.Pay_WashingFee)
+                    })
+                    .ToList();
 
                     var viewModel = new RentalViewModel
                     {
                         Tenant = tenantDisplayList,
                         Requisition = requisitionDisplayList,
-                        // Room, Feedback, and Applicants are commented out in RentalViewModel
+                        Room = roomDisplayList,
+                        Feedback = feedbackDisplayList,
+                        Reports = monthlyTotals
+
                     };
 
 
