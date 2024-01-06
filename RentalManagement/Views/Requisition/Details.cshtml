@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RentalManagement.Models.Requisition>
+@model IEnumerable<RentalManagement.Models.Requisition>
 
 @{
     ViewData["Title"] = "Details";
@@ -55,17 +55,6 @@
                         </dd>
                     }
 
-                    <dt class="col-sm-3">Requisition Due Date:</dt>
-                    <dd class="col-sm-9">@requisition.Requisition_DueDate</dd>
-
-                    <dt class="col-sm-3">Requisition Status:</dt>
-                    <dd class="col-sm-9">@requisition.Requisition_Status</dd>
-
-                    <dt class="col-sm-3">Requisition Created At:</dt>
-                    <dd class="col-sm-9">@requisition.Requistition_CreatedAt</dd>
-
-                    <dt class="col-sm-3">Remarks:</dt>
-                    <dd class="col-sm-9">@requisition.Requisition_Status_Remarks</dd>
                 </dl>
 
                 <div class="mt-3">
