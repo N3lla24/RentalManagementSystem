@@ -34,8 +34,10 @@ namespace RentalManagement.Controllers
                 var feedback = await _context.Feedback.ToListAsync();
                 var applicants = await _context.Applicants.ToListAsync();
                 var payment = await _context.PaymentDetail.ToListAsync();
+                var ph = await _context.PaymentDetail.ToListAsync();
+                var rh = await _context.Requisition.ToListAsync();
 
-                if (tenant != null && requisition != null && room != null && feedback != null && payment != null && applicants != null)
+                if (tenant != null && requisition != null && room != null && feedback != null && payment != null && applicants != null && ph != null && rh != null)
                 {
                     var tenantDisplayList = tenant.Select(tenant => new TenantDisplay
                     {
@@ -95,6 +97,34 @@ namespace RentalManagement.Controllers
                     })
                     .ToList();
 
+                    var paymentHistoryList = ph.Select(ph => new PaymentDetail
+                    {
+                        Pay_ID = ph.Pay_ID,
+                        Pay_DueDate = ph.Pay_DueDate,
+                        Pay_RentPrice = ph.Pay_RentPrice,
+                        Pay_UtilityFee = ph.Pay_UtilityFee,
+                        Pay_GarbageFee = ph.Pay_GarbageFee,
+                        Pay_AirconFee = ph.Pay_AirconFee,
+                        Pay_InternetFee = ph.Pay_InternetFee,
+                        Pay_RefrigeratorFee = ph.Pay_RefrigeratorFee,
+                        Pay_WashingFee = ph.Pay_WashingFee,
+                        Pay_UpdatedAt = ph.Pay_UpdatedAt,
+
+                    }).ToList();
+
+                    var requisitionHistoryList = rh.Select(rh => new Requisition
+                    {
+                        RequisitionId = rh.RequisitionId,
+                        Requisition_Type = rh.Requisition_Type,
+                        Requistition_CreatedAt = rh.Requistition_CreatedAt,
+                        Requisition_Status = rh.Requisition_Status,
+                        Requisition_Status_Remarks = rh.Requisition_Status_Remarks,
+                        Requisition_DueDate = rh.Requisition_DueDate
+
+                    }).ToList();
+
+
+
                     var viewModel = new RentalViewModel
                     {
                         Tenant = tenantDisplayList,
@@ -102,8 +132,9 @@ namespace RentalManagement.Controllers
                         Room = roomDisplayList,
                         Feedback = feedbackDisplayList,
                         Reports = monthlyTotals,
+                        PaymentHistory = paymentHistoryList,
+                        RequisitionHistory = requisitionHistoryList,
                         Applicants = appDisplayList
-                        
                     };
 
 

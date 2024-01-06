@@ -16,7 +16,6 @@ function showTenantPopUpModal() {
     footer.style.marginTop = '350px';
 }
 
-//double check with available event handlers in the tenantDisplay
 $(document).ready(function () {
 
     $('.tenantActionButton').click(function () {
@@ -28,36 +27,47 @@ $(document).ready(function () {
         footer.style.marginTop = '350px';
     });
 
-    $('#reqApprove').click(function () {
-        $('.reqConfirmPopUp').show();
-    });
-
-    $('.rcpCancel').click(function () {
-        $('.reqConfirmPopUp').hide();
-    });
-    $('#reqReject').click(function () {
-        $('.reqRejectPopUp').show();
-    });
-    $('.rrpCancel').click(function () {
-        $('.reqRejectPopUp').hide();
-    });
-    $('.rrpProceed').click(function () {
-        $('.reqRejectPopUp').hide();
-        $('#reqPopUpModal').hide();
-        var footer = document.querySelector('footer')
-        footer.style.marginTop = '0';
-    });
-    $('#reqX').click(function () {
-        $('#reqPopUpModal').hide();
+    // x mark to close pop up
+    $('#tenantX').click(function () {
+        $('#tenantPopUpModal').hide();
         var footer = document.querySelector('footer');
         footer.style.marginTop = '0';
     });
+
+    // hide pop when other buttons (categories) are clicked
+    $('#reqButton').click(function ()) {
+        $('#tenantPopUpModal').hide();
+        var footer = document.querySelector('footer');
+        footer.style.marginTop = '0';
+    }
+    $('#roomButton').click(function ()) {
+        $('#tenantPopUpModal').hide();
+        var footer = document.querySelector('footer');
+        footer.style.marginTop = '0';
+    }
+    $('#reportsButton').click(function ()) {
+        $('#tenantPopUpModal').hide();
+        var footer = document.querySelector('footer');
+        footer.style.marginTop = '0';
+    }
+    $('#feedbackButton').click(function ()) {
+        $('#tenantPopUpModal').hide();
+        var footer = document.querySelector('footer');
+        footer.style.marginTop = '0';
+    }
+    $('#appButton').click(function ()) {
+        $('#tenantPopUpModal').hide();
+        var footer = document.querySelector('footer');
+        footer.style.marginTop = '0';
+    }
+
 
 
 
 
     $('#editButton').click(function () {
-        // Show the edit modal
+        $('#tenantRoomNumberSpan').hide(); // Hide the span
+        $('#unitNumberInput').show(); // Show the input field
         $('#editModal').show();
     });
 

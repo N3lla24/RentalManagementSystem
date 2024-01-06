@@ -12,7 +12,11 @@ namespace RentalManagement.Models
         public string Requisition_Type { get; set; }
 
         public DateTime Requistition_CreatedAt { get; set; }
-        
+
+        public string Requisition_Status { get; set; }
+
+        public string Requisition_Status_Remarks { get; set; }
+
         [ForeignKey("Tenant")]
         public int? TenantId { get; set; }
     }

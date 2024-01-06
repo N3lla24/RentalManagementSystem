@@ -207,7 +207,6 @@ a {
     padding: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
     background-color: #FFF9F2;
-    height: 300px;
     height: 100%;
 }
 
@@ -331,19 +330,6 @@ a {
             width: 35%;
         }
 
-
-#popUpModal {
-    display: none;
-    background-color: red;
-    padding: 10px;
-}
-
-.scrollableDiv {
-    max-height: 200px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    padding: 10px;
-}
 
 .mrButtonChoices button.active {
     background-color: #a78459;
@@ -516,13 +502,6 @@ a {
     width: 35%;
 }
 
-.scrollableDiv {
-    max-height: 200px; 
-    overflow-y: auto; 
-    border: 1px solid #000000; 
-    padding: 10px;
-}
-
 .mrButtonChoices button.active {
     background-color: #a78459;
     border-left: solid #503514 5px;
@@ -537,7 +516,7 @@ a {
 
 .reqDisplay #reqTable td:nth-child(4),
 .tenantDisplay #tenantTable td:nth-child(4),
-.roomDisplay #roomtTable td:nth-child(5),
+.roomDisplay #roomTable td:nth-child(5),
 .feedDisplay #feedTable td:nth-child(4) {
     text-align: center;
 }
@@ -564,17 +543,18 @@ a {
 
 #popUpModal, #reqPopUpModal, #tenantPopUpModal {
     display: none;
-    background-color:aliceblue;
+    height: 500px;
+    background-color: aliceblue;
     padding: 10px 20px 20px 20px;
-    width: 1200px;
+    width: 100%;
     margin: auto;
     margin-bottom: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09); 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
 }
 
 #reqPopUpModal i, #tenantPopUpModal i {
     margin-bottom: 10px;
-    margin-left: 1150px;
+    margin-left: 1220px;
     transition: 0.3s ease;
 }
 
@@ -606,13 +586,105 @@ a {
     padding: 10px;
 }
 
-#reqPopUpModal .infoColumn,
-#tenantPopUpModal .infoColumn {
+#reqPopUpModal .infoColumn {
     height: 50px;
     width: 30%;
     margin-left: auto;
     text-align: right;
 }
+
+
+#tenantPopUpModal .pmCol2 {
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    flex-direction: row;
+    height: 250px;
+}
+
+#tenantPopUpModal .infoColumn {
+    width: 15%;
+    padding: 5px;
+    height: 100%;
+    margin-right: 5%;
+    font-size: 14px;
+}
+
+#tenantPopUpModal .pmCol2 .historyColumn {
+    width: 80%;
+    height: 100%;
+}
+
+#tenantPopUpModal .historyColumn #paymentHistory {
+    overflow-y: scroll;
+    width: 100%;
+    height: 48%;
+    border-bottom: solid black 1px;
+    margin-bottom: 10px;
+}
+
+#tenantPopUpModal .historyColumn #paymentHistory p,
+#tenantPopUpModal .historyColumn #requisitionHistory p {
+    font-weight: 500;
+    font-size: 15px;
+    background-color: white;
+}
+
+#tenantPopUpModal .historyColumn #paymentHistory table,
+#tenantPopUpModal .historyColumn #requisitionHistory table {
+    border-collapse: collapse;
+    height: 100%;
+}
+
+#tenantPopUpModal .historyColumn #paymentHistory th,
+#tenantPopUpModal .historyColumn #requisitionHistory th {
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    border: solid black 1px;
+    border-collapse: collapse;
+}
+
+#tenantPopUpModal .historyColumn #paymentHistory td,
+#tenantPopUpModal .historyColumn #requisitionHistory td {
+    font-size: 10px;
+    font-weight: 400;
+    text-align: left;
+    padding: 5px;
+    border: solid black 1px;
+    border-collapse: collapse;
+}
+
+#tenantPopUpModal .historyColumn #paymentHistory table th:nth-child(1),
+#tenantPopUpModal .historyColumn #paymentHistory table th:nth-child(2),
+#tenantPopUpModal .historyColumn #paymentHistory table th:nth-child(3),
+#tenantPopUpModal .historyColumn #paymentHistory table th:nth-child(4),
+#tenantPopUpModal .historyColumn #paymentHistory table th:nth-child(5),
+#tenantPopUpModal .historyColumn #paymentHistory table th:nth-child(6),
+#tenantPopUpModal .historyColumn #paymentHistory table th:nth-child(7),
+#tenantPopUpModal .historyColumn #paymentHistory table th:nth-child(8),
+#tenantPopUpModal .historyColumn #paymentHistory table th:nth-child(9),
+#tenantPopUpModal .historyColumn #paymentHistory table th:nth-child(10) {
+    width: 10%;
+}
+
+#tenantPopUpModal .historyColumn #requisitionHistory table th:nth-child(1),
+#tenantPopUpModal .historyColumn #requisitionHistory table th:nth-child(2),
+#tenantPopUpModal .historyColumn #requisitionHistory table th:nth-child(3),
+#tenantPopUpModal .historyColumn #requisitionHistory table th:nth-child(4),
+#tenantPopUpModal .historyColumn #requisitionHistory table th:nth-child(5),
+#tenantPopUpModal .historyColumn #requisitionHistory table th:nth-child(6){
+    width: 20%;
+}
+
+#tenantPopUpModal .historyColumn #requisitionHistory {
+    width: 100%;
+    height: 48%;
+    border-bottom: solid black 1px;
+    overflow-y: scroll;
+}
+
+
 
 .reqInfor h3, .reqInfor p {
     font-size: 15px;
@@ -635,7 +707,7 @@ a {
     width: 700px;
     height: 550px;
     margin: auto;
-    margin-top: 180px;
+    margin-top: 50px;
     background-color: aliceblue;
     padding: 10px;
 }

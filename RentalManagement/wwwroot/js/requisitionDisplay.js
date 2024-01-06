@@ -38,9 +38,6 @@ $('.reqActionButton').click(function () {
 
 $(document).ready(function () {
 
-    // $('.actionButton').click(function () {
-    //     $('#popUpModal').show();
-    // });
     $('.reqActionButton').click(function () {
         // var tenantId = $(this).data('req-id');
         var reqPM = document.getElementById('reqPopUpModal');
@@ -76,6 +73,34 @@ $(document).ready(function () {
         footer.style.marginTop = '0';
     });
 
+
+    // hide pop when other buttons (categories) are clicked
+    $('#tenantButton').click(function ()) {
+        $('#reqPopUpModal').hide();
+        var footer = document.querySelector('footer');
+        footer.style.marginTop = '0';
+    }
+    $('#roomButton').click(function ()) {
+        $('#reqPopUpModal').hide();
+        var footer = document.querySelector('footer');
+        footer.style.marginTop = '0';
+    }
+    $('#reportsButton').click(function ()) {
+        $('#reqPopUpModal').hide();
+        var footer = document.querySelector('footer');
+        footer.style.marginTop = '0';
+    }
+    $('#feedbackButton').click(function ()) {
+        $('#reqPopUpModal').hide();
+        var footer = document.querySelector('footer');
+        footer.style.marginTop = '0';
+    }
+    $('#appButton').click(function ()) {
+        $('#reqPopUpModal').hide();
+        var footer = document.querySelector('footer');
+        footer.style.marginTop = '0';
+    }
+    
 
 
 

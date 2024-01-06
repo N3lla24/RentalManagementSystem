@@ -1,4 +1,4 @@
-﻿@model RentalManagement.ViewModel.ReqVM
+@model RentalManagement.Models.Requisition
 
 @{
     ViewData["Title"] = "Create";
@@ -6,132 +6,107 @@
 }
 
 
-@using (Html.BeginForm("Create", "Requisition"))
-{
-    @Html.AntiForgeryToken()
-    <h4>Requisition</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-    <input type="hidden" asp-for="TenantId" />
+<form action="@Url.Action("Create", "Requisition")" method="post" id="requisitionForm">
+    @* @Html.AntiForgeryToken()
+    <!-- Other form fields -->
+    <label for="TenantId">TenantId:</label>
+    <input type="number" id="TenantId" name="TenantId" /> *@
+    <input type="hidden" id="TenantId" name="TenantId" />
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Requisition_Type, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Requisition_Type, new SelectList(new[] { "REQUEST SERVICE", "REQUEST ITEM" }), "Select Request Type", new { @class = "form-control" })
-        </div>
-    </div>
-    <div>
-        @Html.LabelFor(model => model.Requisition_Status_Remarks, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Requisition_Status_Remarks, new { htmlAttributes = new { @class = "form-control required", placeholder = "Enter Request Description" } })
-        </div>
-    </div>
+    <label for="Requisition_Type">Requisition Type:</label>
+    <select id="Requisition_Type" name="Requisition_Type">
+        <option value="REQUEST_ITEM">REQUEST ITEM</option>
+        <option value="REQUEST_SERVICE">REQUEST SERVICE</option>
+        <!-- Add other options as needed -->
+    </select>
 
+    <div id="itemSection" style="display:none;">
+        <!-- Fields for Request Item -->
+        <label for="Req_Item_Name">Item Name:</label>
+        <input type="text" id="Req_Item_Name" name="RequisitionItems[0].Req_Item_Name" />
 
-    @Html.LabelFor(model => model.Requisition_DueDate, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.Requisition_DueDate, new { htmlAttributes = new { @class = "form-control required", type = "date", placeholder = "Enter Due Date Of Your Request" } })
+        <label for="Req_Item_Quantity">Item Quantity:</label>
+        <input type="text" id="Req_Item_Quantity" name="RequisitionItems[0].Req_Item_Quantity" />
 
-    </div>
-    <div class="form-group" id="serviceFields" style="display:none;">
-
-        @Html.LabelFor(model => model.ReqServ[0].Req_Serv_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ReqServ[0].Req_Serv_Name, new { htmlAttributes = new { @class = "form-control required", placeholder = "Enter Request Service" } })
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="button" id="addservbtn" class="btn btn-primary">Add Field</button>
-            </div>
-        </div>
-
-
-    </div>
-    <div class="form-group" id="itemFields" style="display:none;">
-
-        @Html.LabelFor(model => model.ReqItem[0].Req_Item_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ReqItem[0].Req_Item_Name, new { htmlAttributes = new { @class = "form-control required", placeholder = "Enter Request Item" } })
-        </div>
-
-
-        @Html.LabelFor(model => model.ReqItem[0].Req_Item_Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ReqItem[0].Req_Item_Quantity, new { htmlAttributes = new { @class = "form-control required", placeholder = "Enter Request Item Quantity" } })
-        </div>
-
-        @Html.LabelFor(model => model.ReqItem[0].Req_Item_Units, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ReqItem[0].Req_Item_Units, new { htmlAttributes = new { @class = "form-control required", placeholder = "Enter Request Item Units" } })
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="button" id="additembtn" class="btn btn-primary">Add Field</button>
-            </div>
-        </div>
-
+        <label for="Req_Item_Units">Item Unit/s:</label>
+        <input type="text" id="Req_Item_Units" name="RequisitionItems[0].Req_Item_Units" />
+        <!-- Add more fields for Request Item as needed -->
+        <button type="button" class="addItemButton">Add Item</button>
     </div>
 
+    <div id="serviceSection" style="display:none;">
+        <!-- Fields for Request Service -->
+        <label for="Req_Serv_Name">Service Name:</label>
+        <input type="text" id="Req_Serv_Name" name="RequisitionServices[0].Req_Serv_Name" />
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-success" />
-        </div>
+        <!-- Add more fields for Request Service as needed -->
+        <button type="button" class="addServiceButton">Add Service</button>
     </div>
-}
-@section scripts {
-    <script>
+    <input type="hidden" id="Requisition_CreatedAt" name="Requisition_CreatedAt" />
+    <input type="hidden" id="Requisition_Status" name="Requisition_Status" value="Pending" />
 
-        $(document).ready(function () {
-            $("#Requisition_Type").change(function () {
-                if ($(this).val() == "REQUEST ITEM") {
-                    $("#itemFields").show();
-                    $("#serviceFields").hide();
-                } else if ($(this).val() == "REQUEST SERVICE") {
-                    $("#serviceFields").show();
-                    $("#itemFields").hide();
-                } else {
-                    $('#serviceFields').hide();
-                    $('#itemFields').hide();
+    <label for="Requisition_DueDate">Due Date:</label>
+    <input type="date" id="Requisition_DueDate" name="Requisition_DueDate" />
 
-                }
-            });
+    <label for="Requisition_Status">Remarks:</label>
+    <input type="text" id="Req_Item_Remarks" name="Req_Item_Remarks" />
 
-            //dynamic fields for add more service and item
-            $("#addservbtn").click(function () {
-                var index = $("#serviceFields div").length;
-                var newField = '<div>' +
-                    '<label for="ReqServ[' + index + '].Req_Serv_Name">Service Name</label>' +
-                    '<input type="text" name="ReqServ[' + index + '].Req_Serv_Name" class="form-control" />' +
-                    '<button type="button" class="btn btn-danger remove-field">Remove</button>' +
-                    '</div>';
-                $("#serviceFields").append(newField);
-            });
+    <button type="submit">Submit</button>
+</form>
 
-            $("#additembtn").click(function () {
-                var index = $("#itemFields div").length;
-                var newField = '<div>' +
-                    '<label for="ReqItem[' + index + '].Req_Item_Name">Item Name</label>' +
-                    '<input type="text" name="ReqItem[' + index + '].Req_Item_Name" class="form-control" />' +
-                    '<label for="ReqItem[' + index + '].Req_Item_Quantity">Quantity</label>' +
-                    '<input type="number" name="ReqItem[' + index + '].Req_Item_Quantity" class="form-control" />' +
-                    '<label for="ReqItem[' + index + '].Req_Item_Units">Units</label>' +
-                    '<input type="text" name="ReqItem[' + index + '].Req_Item_Units" class="form-control" />' +
-                    '<button type="button" class="btn btn-danger remove-field">Remove</button>' +
-                    '</div>';
-                $("#itemFields").append(newField);
-            });
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $('#Requisition_Type').change(function () {
+            var selectedType = $(this).val();
+            if (selectedType === 'REQUEST_ITEM') {
+                $('#itemSection').show();
+                $('#serviceSection').hide();
+            } else if (selectedType === 'REQUEST_SERVICE') {
+                $('#itemSection').hide();
+                $('#serviceSection').show();
+            } else {
+                $('#itemSection').hide();
+                $('#serviceSection').hide();
+            }
+        });
+        var itemCount = 1;
+        $('.addItemButton').click(function () {
+            var newItemField = '<div class="itemField">' +
+                '<label for="Req_Item_Name_' + itemCount + '">Item Name:</label>' +
+                '<input type="text" id="Req_Item_Name_' + itemCount + '" name="RequisitionItems[' + itemCount + '].Req_Item_Name" />' +
+
+                '<label for="Req_Item_Quantity_' + itemCount + '">Item Quantity:</label>' +
+                '<input type="text" id="Req_Item_Quantity_' + itemCount + '" name="RequisitionItems[' + itemCount + '].Req_Item_Quantity" />' +
+
+                '<label for="Req_Item_Units_' + itemCount + '">Item Unit/s:</label>' +
+                '<input type="text" id="Req_Item_Units_' + itemCount + '" name="RequisitionItems[' + itemCount + '].Req_Item_Units" />' +
+
+
+                '<input type="hidden" name="RequisitionItems[' + itemCount + '].RequisitionId" value="' + $('#RequisitionId').val() + '" />' +
+                '</div>';
+
+            $('#itemSection').append(newItemField);
+            itemCount++;
         });
 
-        $("#itemFields, #serviceFields").on("click", ".remove-field", function () {
-            $(this).parent().remove();
+        var serviceCount = 1;
+        $('.addServiceButton').click(function () {
+            var newServiceField = '<div class="serviceField">' +
+                '<label for="Req_Serv_Name_' + serviceCount + '">Service Name:</label>' +
+                '<input type="text" id="Req_Serv_Name_' + serviceCount + '" name="RequisitionServices[' + serviceCount + '].Req_Serv_Name" />' +
+
+                '<input type="hidden" name="RequisitionServices[' + serviceCount + '].RequisitionId" value="' + $('#RequisitionId').val() + '" />' +
+                '</div>';
+
+            $('#serviceSection').append(newServiceField);
+            serviceCount++;
+        });
+        $('#requisitionForm').submit(function () {
+            $('#Requisition_CreatedAt').val(new Date().toISOString());
         });
 
-
-    </script>
-}
+    });
+</script>

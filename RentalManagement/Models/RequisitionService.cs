@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentalManagement.Models
@@ -13,10 +13,10 @@ namespace RentalManagement.Models
         [StringLength(300, MinimumLength = 2, ErrorMessage = "Name must be more than 2 characters and maximum of 300 characters.")]
         public string? Req_Serv_Name { get; set; }
 
-
         [ForeignKey("Requisition")]
         public int? RequisitionId { get; set; }
+
         public virtual Requisition? Requisition { get; set; }
-        
+
     }
 }
