@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentalManagement.Data;
 using RentalManagement.Models;
 using RentalManagement.ViewModel;
+using System.Linq;
 
 namespace RentalManagement.Controllers
 {
@@ -17,7 +20,7 @@ namespace RentalManagement.Controllers
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult Details(int id)
         {
             // Retrieve the requisition details from the database based on the provided id
@@ -46,66 +49,64 @@ namespace RentalManagement.Controllers
         public ActionResult Create()
         {
             // Initialize your ViewModel and pass it to the view
-            var reqVM = new ReqVM();
-            return View(reqVM);
+            var requisition = new RentalManagement.Models.Requisition();
+
+            // Your logic to populate the requisition model
+
+            return View(requisition);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(ReqVM vm)
+        public ActionResult Create(Requisition requisition)
         {
-            
-                if (!ModelState.IsValid)
+            try
+            {
+                var loggedInTenantId = HttpContext.Session.GetInt32("TenantId");
+
+                if (!loggedInTenantId.HasValue)
                 {
-                    // Log or inspect ModelState errors
-                    var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    foreach (var error in errors)
+                    // Redirect or handle the case where TenantId is not in the session
+                    return RedirectToAction("Login");
+                }
+
+                requisition.TenantId = loggedInTenantId.Value;
+                // Handle the dynamic fields here
+                if (requisition.Requisition_Type == "REQUEST_ITEM")
+                {
+                    // Save RequisitionItems data to the database
+                    foreach (var item in requisition.RequisitionItems)
                     {
-                        Console.WriteLine($"ModelState Error: {error.ErrorMessage}");
+                        // Ensure each item is associated with the correct Requisition
+                        item.RequisitionId = requisition.RequisitionId;
+                        _context.RequisitionItem.Add(item);
                     }
+                    requisition.RequisitionServices = null;
 
-                    return View(vm);
                 }
-                var tenantId = HttpContext.Session.GetInt32("TenantId");
-                if (!tenantId.HasValue)
+                else if (requisition.Requisition_Type == "REQUEST_SERVICE")
                 {
-                    // If TenantId is not found in session, redirect to login or handle as needed
-                    return RedirectToAction("Index", "Login"); // Redirect to login page
-                }
-
-
-                Requisition requisition = new Requisition
-                {
-                    Requisition_Type = vm.Requisition_Type,
-                    Requisition_Status_Remarks = vm.Requisition_Status_Remarks,
-                    Requistition_CreatedAt = vm.Requistition_CreatedAt != DateTime.MinValue ? vm.Requistition_CreatedAt : DateTime.Now,
-                    Requisition_DueDate = vm.Requisition_DueDate,
-                    Requisition_Status = vm.Requisition_Status,
-                    TenantId = vm.TenantId
-                };
-
-                if (vm.Requisition_Type == "REQUEST ITEM" && vm.ReqItem != null)
-                {
-                    requisition.RequisitionItems = vm.ReqItem.Select(item => new RequisitionItem
+                    // Save RequisitionServices data to the database
+                    foreach (var service in requisition.RequisitionServices)
                     {
-                        Req_Item_Name = item.Req_Item_Name,
-                        Req_Item_Quantity = item.Req_Item_Quantity,
-                        Req_Item_Units = item.Req_Item_Units
-                    }).ToList();
-
+                        // Ensure each service is associated with the correct Requisition
+                        service.RequisitionId = requisition.RequisitionId;
+                        _context.RequisitionService.Add(service);
+                    }
+                    requisition.RequisitionItems = null;
                 }
-                else if (vm.Requisition_Type == "REQUEST SERVICE" && vm.ReqServ != null)
-                {
-                    requisition.RequisitionServices = vm.ReqServ.Select(service => new RequisitionService
-                    {
-                        Req_Serv_Name = service.Req_Serv_Name
-                    }).ToList();
-
-                }
-
+                // Save Requisition data to the database
                 _context.Requisition.Add(requisition);
                 _context.SaveChanges();
-                return RedirectToAction("Details", "Requisition");
-            
+
+                return RedirectToAction("Details");
+            }
+            catch (Exception ex)
+            {
+                // Handle errors
+                ModelState.AddModelError(string.Empty, "Error processing the request: " + ex.Message);
+                return View("Index", requisition);
+            }
         }
 
 
