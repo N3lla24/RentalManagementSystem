@@ -155,7 +155,7 @@ namespace RentalManagement.Controllers
                         Tenant_FirstName = applicants.Applicants_FirstName,
                         Tenant_MiddleName = applicants.Applicants_MiddleName,
                         Tenant_LastName = applicants.Applicants_LastName,
-                        Tenant_UserName = 'N/A',
+                        Tenant_UserName = "N/A",
                         Tenant_Email = applicants.Applicants_Email,
                         Tenant_PhoneNumber = applicants.Applicants_PhoneNumber,
                         Tenant_Password = "N/A",
