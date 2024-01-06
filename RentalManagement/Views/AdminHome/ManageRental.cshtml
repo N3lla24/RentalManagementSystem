@@ -1,4 +1,4 @@
-﻿@* @model RentalManagement.Models.RentalViewModel;
+﻿@model RentalManagement.Models.RentalViewModel;
 
 @{
     Layout = null;
@@ -198,25 +198,18 @@
                             </tr>
                         </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Ronel</td>
-                            <td>Delig</td>
-                            <td>
-                                <button class="tenantActionButton" data-tenant-id="@tenant.TenantID">Details</button>
-                            </td>
-                        </tr>
                         @foreach (var tenant in Model.Tenant)
                         {
                             <tr>
-                                <td>@Tenant.TenantID</td>
-                                <td>@Tenant.Tenant_FirstName</td>
-                                <td>@Tenant.Tenant_LastName</td>
+                                <td>@tenant.TenantId</td>
+                                <td>@tenant.Tenant_FirstName</td>
+                                <td>@tenant.Tenant_LastName</td>
                                 <td>
-                                    <button class="tenantActionButton" data-tenant-id="@tenant.TenantID">Details</button>                                    
+                                    <button class="tenantActionButton" data-tenant-id="@tenant.TenantId">Details</button>
                                 </td>
                             </tr>
                         }
+
                     </tbody>
                 </table>
             </div>
@@ -240,27 +233,26 @@
                             <td>Ronel</td>
                             <td>Service</td>
                             <td>
-                                <button class="reqActionButton" data-req-id="@requisition.RequisitonID">Details</button>
+                               @*  <button class="reqActionButton" data-req-id="@requisition.RequisitonID">Details</button> *@
                             </td>
                         </tr>
-                        @*
+  
                         @foreach (var requisition in Model.Requisition)
                         {
                             <tr>
-                                <td>@Requisition.RequisitionID</td>
-                                <td>@Requisition.Requisition_Type</td>
-                                <td>@Requisition.Requistition_CreatedAt.ToString("yyyy-MM-dd")</td>
+                                <td>@requisition.RequisitionId</td>
+                                <td>@requisition.Requisition_Type</td>
+                                <td>@requisition.Requistition_CreatedAt.ToString("yyyy-MM-dd")</td>
                                 <td>
-                                    <button class="actionButton" data-req-id="@requisition.RequisitionID">Details</button>
+                                    <button class="actionButton" data-req-id="@requisition.RequisitionId">Details</button>
                                 </td>
                             </tr>
-                        }*@
-                        
-
-             @*        </tbody>
+                        }
+                        </tbody>
                 </table>
             </div>
 
+            @*
             <div class="roomDisplay">
                 <div class="roomSearch">
                     <input type="search" placeholder="Search rooms" /><i class="fas fa-search"></i>
@@ -280,9 +272,9 @@
                             <td><img src="~/images/logosolo.svg" alt=""></td>
                             <td>101</td>
                             <td>
-@*                                 <button class="roomActionButton" data-room-id="@Room.RoomID">Details</button>
- *@                            </td>
-                       @*  </tr>
+                                 <button class="roomActionButton" data-room-id="@Room.RoomID">Details</button>
+                            </td>
+                    </tr>
                         @foreach (var Room in Model)
                         {
                             <tr>
@@ -296,9 +288,7 @@
                         }
                     </tbody>
                 </table>
-            </div> *@
-
-            @* <div class="reportsDisplay">
+            </div>  <div class="reportsDisplay">
                 <canvas id="myChart" width="400" height="400"></canvas>
 
             </div>
@@ -316,8 +306,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody> *@
-                        @*
+                    <tbody> 
                         @foreach (var feedback in Model)
                         {
                                 <tr>
@@ -329,8 +318,8 @@
                                     </td>
                                 </tr>
                         }
-                   @*      *@
-             @*        </tbody>
+                   
+                   </tbody>
                 </table>
             </div>
 
@@ -347,8 +336,8 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>  *@*
-                        @*
+                    <tbody>  
+                        
                         @foreach (var application in Model)
                         {
                                 <tr>
@@ -360,14 +349,14 @@
                                     </td>
                                 </tr>
                         }
-                       *@
-      @*               </tbody>
+                       
+                    </tbody>
                 </table>
-            </div>
+            </div>*@
 
         </div>
-    </section>  *@
-@* 
+    </section>  
+
 
 
 
@@ -425,19 +414,16 @@
                 </div>
             </div>
         </div>
-    </footer> *@
+    </footer> 
 
     @*<script src="~/js/tenantlist.js"></script>*@
-@*     <script src="~/js/tenantDisplay.js"></script>
+    <script src="~/js/tenantDisplay.js"></script>
     <script src="~/js/manageRental.js"></script>
     <script src="~/js/reportsDashboard.js"></script>
     <script src="~/js/requisitionDisplay.js"></script>
     <script src="~/js/RequisitionApiDisplay.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <script>
-       
-    </script>
 
 </body>
-</html>  *@
+</html>  
