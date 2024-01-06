@@ -24,6 +24,11 @@ namespace RentalManagement.Controllers
             return View();
         }
 
+        public IActionResult ManageSupplier()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> ManageRental()
         {
             try

@@ -1,0 +1,398 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Kerwin's Apartment</title>
+    <link rel="icon" type="image/x-icon" href="~/images/logo2.svg">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/adminHome.css">
+    <link rel="stylesheet" href="~/css/supplier.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="~/js/manageSupplier.js"></script>
+
+</head>
+
+<body id="bodyCont">
+
+    <section id="header">
+        <div class="navbar">
+            <a href="#home" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+            <div class="dropdown nbItem">
+                <button class="dropbtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">Tenant Sign In</a>
+                    <a href="#">Admin Sign In</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="supplierCont">
+        <div class="supplierContainer">
+            <div class="scCol1">
+                <div id="editModal">
+                    <!-- Editable fields -->
+                    <p id="check"></p>
+                    <p>Supplier Name</p>
+                    <input type="text" id="SupplierNameInput" readonly>
+                    <p>Supplier Email</p>
+                    <input type="text" id="SupplierEmailInput" readonly>
+                    <p>Supplier Phone</p>
+                    <input type="text" id="SupplierPhoneInput" readonly>
+                    <p>Supplier Address</p>
+                    <input type="text" id="SupplierAddressInput" readonly>
+                    <!-- Edit buttons -->
+                    <button id="editButton">Edit</button>
+                    <button id="deleteButton">Delete</button>
+                </div>
+
+                <!-- Pop-up form -->
+                <div id="addSupplierForm">
+                    <h2>Add Supplier Form</h2>
+                    <p>Supplier Name</p>
+                    <p id="supplierNameError" style="color: red; font-size: 10px;"></p>
+                    <input type="text" id="SupplierName" required>
+                    <p>Supplier Email</p>
+                    <p id="supplierEmailError" style="color: red; font-size: 10px;"></p>
+                    <input type="text" id="SupplierEmail" required>
+                    <p>Supplier Phone</p>
+                    <p id="supplierPhoneError" style="color: red; font-size: 10px;"></p>
+                    <input type="text" id="SupplierPhone" required>
+                    <p>Supplier Address</p>
+                    <p id="supplierAddressError" style="color: red; font-size: 10px;"></p>
+                    <input type="text" id="SupplierAddress" required>
+
+                    <button id="submitSupplier">Submit</button>
+                    <button id="closeForm">Close</button>
+                </div>
+            </div>
+            <div class="scCol2">
+                <div class="addSupp">
+                    <button id="addSupButton">Add Supplier</button>
+                </div>
+                <div class="displaySupp">
+                    <div class="supplierSearch">
+                        <input type="search" placeholder="Search supplier" /><i class="fas fa-search"></i>
+                    </div>
+
+                    <table id="supplierTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>Supplier ID</th>
+                                <th>Supplier Name</th>
+                                <th>Supplier Email</th>
+                                <th>Supplier Phone</th>
+                                <th>Supplier Address</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="supplierTableBody">
+                            <!-- Data will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <div class="footer-columns">
+            <div class="column" id="col">
+                <img src="images/logo.svg" alt="">
+                <h2>Kerwin's Apartment</h2>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column">
+                <h4>About</h4>
+                <p>About us</p>
+                <p>Rental Information</p>
+                <p>Rent Rates and Policies</p>
+                <p>Terms and Condition</p>
+                <p>Community Information</p>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column" id="col">
+                <h4>Contact us</Canvas></h4>
+                <p>+63 9123456789</p>
+                <p>kerwin.rental@kerwin.com.ph</p>
+                <p>Paknaan, Mandaue City, Cebu 6014</p>
+                <p>Kerwin's Apartment</p><br>
+                <h4>Follow us</h4>
+                <a href="https://www.facebook.com/edsel.lucanas">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com/">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.pinterest.com/">
+                    <i class="fa-brands fa-pinterest"></i>
+                </a>
+                <a href="https://www.youtube.com/">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+
+
+    </footer>
+
+    <footer id="foot2">
+        <div class="footCont">
+            <div class="footCont2">
+                <div class="column2">
+                    <p>Web Application developed by <b>DPMS 2023</b></p>
+                    <p>Delig • Pila • Monares • Salas</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="tenantList.js"></script>
+    <script src="manageRental.js"></script>
+    <script>
+        var data = [50, 75, 120, 100, 150, 2, 11];
+
+        var svg = d3.select("#chartContainer1")
+            .append("svg")
+            .attr("width", 400)
+            .attr("height", 200);
+
+        svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", function (d, i) { return i * 80; })
+            .attr("y", function (d) { return 200 - d; })
+            .attr("width", 75)
+            .attr("height", function (d) { return d; })
+            .attr("fill", "steelblue");
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var addSupplierForm = document.getElementById("addSupplierForm");
+            var supplierTableBody = document.querySelector("#supplierTableBody");
+
+            // Function to fetch and display suppliers
+            function loadSuppliers() {
+                $.ajax({
+                    url: '/Suppliers/GetSuppliersJson', // Update the URL
+                    type: 'GET',
+                    success: function (suppliers) {
+                        supplierTableBody.innerHTML = '';
+
+                        suppliers.forEach(function (supplier) {
+                            var row = supplierTableBody.insertRow();
+
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            var cell3 = row.insertCell(2);
+                            var cell4 = row.insertCell(3);
+                            var cell5 = row.insertCell(4);
+                            var cell6 = row.insertCell(5);
+
+                            cell1.innerHTML = supplier.suppliersId;
+                            cell2.innerHTML = supplier.suppliers_Name;
+                            cell3.innerHTML = supplier.suppliers_Email;
+                            cell4.innerHTML = supplier.suppliers_PhoneNumber;
+                            cell5.innerHTML = supplier.suppliers_Address;
+                            cell6.innerHTML = '<button class="actionButton" data-supplier-id="' + supplier.suppliersId + '">Details</button>';
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Error loading suppliers:', error);
+                    }
+                });
+            }
+
+            loadSuppliers();
+
+            document.getElementById("addSupButton").addEventListener("click", function () {
+                addSupplierForm.style.display = "block";
+                makeDraggable(addSupplierForm);
+            });
+
+            document.getElementById("editButton").addEventListener("click", function () {
+                // Check if the button is in "Edit" mode or "Save" mode
+                if (this.innerHTML === "Edit") {
+                    logMessage("Entering enableEditing");
+                    enableEditing();
+                } else {
+                    logMessage("Entering saveChanges");
+                    saveChanges();
+                }
+            });
+
+            // Add event listener for "Details" button
+            supplierTableBody.addEventListener("click", function (event) {
+                var target = event.target;
+                if (target.classList.contains("actionButton") && target.innerText === "Details") {
+                    // Extract supplier ID from the data-supplier-id attribute
+                    var supplierId = target.getAttribute("data-supplier-id");
+                    showDetails(supplierId);
+                }
+            });
+
+            document.getElementById("closeForm").addEventListener("click", function () {
+                addSupplierForm.style.display = "none";
+            });
+
+            document.getElementById("submitSupplier").addEventListener("click", function () {
+
+                // Retrieve input values from the form
+                var supplierData = {
+                    suppliers_Name: document.getElementById("SupplierName").value,
+                    suppliers_Email: document.getElementById("SupplierEmail").value,
+                    suppliers_PhoneNumber: document.getElementById("SupplierPhone").value,
+                    suppliers_Address: document.getElementById("SupplierAddress").value
+                };
+                addSupplier(supplierData);
+            });
+
+            function showDetails(supplierId) {
+                // Fetch details of the selected supplier
+                $.ajax({
+                    url: '/Suppliers/GetSupplierDetails/' + supplierId, // Update the URL
+                    type: 'GET',
+                    success: function (supplierDetails) {
+                        // Display the details in the edit modal
+                        populateEditModal(supplierDetails);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Error loading supplier details:', error);
+                    }
+                });
+            }
+
+            function populateEditModal(supplierDetails) {
+                // Set the values of input fields in the edit modal
+                document.getElementById("SupplierNameInput").value = supplierDetails.suppliers_Name;
+                document.getElementById("SupplierEmailInput").value = supplierDetails.suppliers_Email;
+                document.getElementById("SupplierPhoneInput").value = supplierDetails.suppliers_PhoneNumber;
+                document.getElementById("SupplierAddressInput").value = supplierDetails.suppliers_Address;
+
+                // Show the edit modal
+                document.getElementById("editModal").style.display = "block";
+
+                // Make input fields non-editable by default
+                setFieldsEditable(false);
+            }
+
+            function setFieldsEditable(editable) {
+                // Set the "readonly" attribute based on the editable parameter
+                document.getElementById("SupplierNameInput").readOnly = !editable;
+                document.getElementById("SupplierEmailInput").readOnly = !editable;
+                document.getElementById("SupplierPhoneInput").readOnly = !editable;
+                document.getElementById("SupplierAddressInput").readOnly = !editable;
+
+                // Update the style based on the editable parameter (optional)
+                var editButton = document.getElementById("editButton");
+                if (editable) {
+                    editButton.innerHTML = "Save"; // Change button text to "Save"
+                    editButton.onclick = saveChanges; // Set the click event for saving changes
+                } else {
+                    editButton.innerHTML = "Edit"; // Change button text back to "Edit"
+                    editButton.onclick = enableEditing; // Set the click event for enabling editing
+                }
+            }
+
+            function enableEditing() {
+                setFieldsEditable(true);
+            }
+
+            function saveChanges() {
+                // Implement the logic to save changes to the server
+                // ...
+
+                // After saving changes, make fields non-editable again
+                setFieldsEditable(false);
+            }
+
+            function logMessage(message) {
+                // Create a new paragraph element
+                var logParagraph = document.createElement("p");
+                logParagraph.textContent = message;
+
+                // Append the paragraph to a container (replace 'logContainer' with the actual ID of your container)
+                document.getElementById("check").appendChild(logParagraph);
+            }
+
+            function addSupplier(supplierData) {
+                $.ajax({
+                    url: '/Suppliers/AddSupplier',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(supplierData),
+                    success: function () {
+                        loadSuppliers();
+                        addSupplierForm.style.display = "none";
+                        // Reset the form after successful submission
+                        document.getElementById("SupplierName").value = "";
+                        document.getElementById("SupplierEmail").value = "";
+                        document.getElementById("SupplierPhone").value = "";
+                        document.getElementById("SupplierAddress").value = "";
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Error adding supplier:', error);
+                        // Handle the error and display a message to the user if needed
+                    }
+                });
+            }
+
+            function makeDraggable(element) {
+                var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+                // Exclude input fields from being draggable
+                var excludeElements = ['input', 'textarea'];
+
+                element.onmousedown = dragMouseDown;
+
+                function dragMouseDown(e) {
+                    if (!excludeElements.includes(e.target.tagName.toLowerCase())) {
+                        e = e || window.event;
+                        e.preventDefault();
+                        // get the mouse cursor position at startup:
+                        pos3 = e.clientX;
+                        pos4 = e.clientY;
+                        document.onmouseup = closeDragElement;
+                        // call a function whenever the cursor moves:
+                        document.onmousemove = elementDrag;
+                    }
+                }
+
+                function elementDrag(e) {
+                    e = e || window.event;
+                    e.preventDefault();
+                    // calculate the new cursor position:
+                    pos1 = pos3 - e.clientX;
+                    pos2 = pos4 - e.clientY;
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    // set the element's new position:
+                    element.style.top = (element.offsetTop - pos2) + "px";
+                    element.style.left = (element.offsetLeft - pos1) + "px";
+                }
+
+                function closeDragElement() {
+                    // stop moving when the mouse button is released:
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
