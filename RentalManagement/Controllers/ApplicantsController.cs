@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -76,7 +77,57 @@ namespace RentalManagement.Controllers
             {
                 return NotFound();
             }
+            //Format Number
+            if (applicants.Applicants_PhoneNumber.Length >= 4)
+            {
+                // Extract the first four digits and the rest of the phone number
+                string firstFourDigits = applicants.Applicants_PhoneNumber.Substring(0, 4);
+                string restOfNumber = applicants.Applicants_PhoneNumber.Substring(4);
 
+                // Mask characters in the rest of the phone number with asterisks
+                string maskedNumber = new string('*', restOfNumber.Length);
+
+                // Combine the masked phone number
+                string formattedPhoneNumber = $"{firstFourDigits}{maskedNumber}";
+
+                // You can perform additional actions or validations here if needed
+
+                // Return the formatted phone number
+                applicants.Applicants_PhoneNumber = formattedPhoneNumber;
+            }
+
+            // Format Email
+            string[] emailParts = applicants.Applicants_Email.Split('@');
+            if (emailParts.Length == 2)
+            {
+                string username = emailParts[0];
+                string domain = emailParts[1];
+
+                // Mask characters in the username, keeping the first character visible
+                string maskedUsername = username.Length > 1
+                    ? $"{username[0]}{new string('*', username.Length - 1)}"
+                    : username;
+
+                // Mask characters in the domain, keeping the first character of each part visible
+                string[] domainParts = domain.Split('.');
+                for (int i = 0; i < domainParts.Length; i++)
+                {
+                    domainParts[i] = domainParts[i].Length > 1
+                        ? $"{domainParts[i][0]}{new string('*', domainParts[i].Length - 1)}"
+                        : domainParts[i];
+                }
+
+                // Join the masked domain parts back together
+                string maskedDomain = string.Join(".", domainParts);
+
+                // Assign the formatted email to a variable
+                string formattedEmail = $"{maskedUsername}@{maskedDomain}";
+
+                // You can perform additional actions or validations here if needed
+
+                // Return the formatted email
+                applicants.Applicants_Email =  formattedEmail;
+            }
             return View(applicants);
         }
 

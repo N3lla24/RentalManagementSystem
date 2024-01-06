@@ -1,7 +1,7 @@
 ﻿@model RentalManagement.Models.Tenant;
 
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Forgot Password";
     Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
 <!DOCTYPE html>
@@ -30,28 +30,46 @@
                 <h4 class="card-title">Tenant Login</h4>
             </div>
             <div class="card-body" style="background-color:#65451F;">
-                @if (ViewData["LoginErrorMessage"] != null)
+                @if (ViewData["Success"] != null)
                 {
-                    <div class="alert alert-dismissible alert-danger" style="margin-block:10px">
-                        <strong>Failed Login! </strong>Incorrect Username or Password.
+                    <div class="alert alert-dismissible alert-success" style="margin-block:10px">
+                        <strong>Successfulli Retrieved Account! </strong><a href="@Url.Action("Index", "Login")">Back to Login</a>
                     </div>
                 }
-                <form asp-action="Index">
+                @if (ViewData["Errormessage"] != null)
+                {
+                    <div class="alert alert-dismissible alert-danger" style="margin-block:10px">
+                        <strong>Failed Retrieving Password! </strong>Incorrect Retrieval Details
+                    </div>
+                }
+                <form asp-action="Recover">
                     <div class="form-group">
-                        <label class="form-label mt-4">Login Details</label>
+                        <label class="form-label mt-4">Recovery Details</label>
                         <div class="form-floating mb-3">
-                            <input asp-for="Tenant_UserName" type="string" class="form-control" placeholder="UserName">
-                            <label for="floatingInput">Username</label>
+                            <input asp-for="Tenant_Email" type="text" class="form-control" placeholder="Email">
+                            <label for="floatingInput">Email Address</label>
                         </div>
-                        <div class="form-floating">
-                            <input asp-for="Tenant_Password" type="password" class="form-control" placeholder="Password" autocomplete="off">
-                            <label for="floatingPassword">Password</label>
+                        <div class="form-floating mb-3">   
+                            <input asp-for="Tenant_PhoneNumber" type="text" class="form-control" placeholder="PhoneNumber">
+                            <label for="floatingInput">PhoneNumber</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="Tenant_UnitNumber" type="number" class="form-control" placeholder="Unit Number">
+                            <label for="floatingInput">Unit Number</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="Tenant_RoomNumber" type="number" class="form-control" placeholder="Room Number">
+                            <label for="floatingInput">Room Number</label>
                             <div class="d-flex justify-content-sm-end">
-                                <button type="button" value="ForgotPassword" onclick="navtoforgetpass()" class="btn btn-light" style="margin-top:15px; font-size: 15px">Forgot Password?</button>
+                                <button type="button" value="ForgotPassword" onclick="navtologin()" class="btn btn-light" style="margin-top:15px; font-size: 15px">Back to Login</button>
                             </div>
                         </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="Tenant_Password" type="password" class="form-control" placeholder="New Pass">
+                            <label for="floatingInput">New Password</label>
+                        </div>
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn btn-success" style="font-size: 20px">
+                            <input type="submit" value="Recover" class="btn btn-success" style="font-size: 20px">
                         </div>
                         <div style="margin-top:10px;">
                             <label class="form-label mt-4">No Account Yet?</label><br />
@@ -117,10 +135,9 @@
             </div>
         </div>
     </footer>
-
     <script>
-        function navtoforgetpass(){
-            window.location.href = '/Login/ForgotPass';
+        function navtologin() {
+            window.location.href = '/Login';
         }
     </script>
 </body>

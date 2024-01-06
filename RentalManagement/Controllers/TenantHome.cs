@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RentalManagement.Data;
 using RentalManagement.Models;
+using RentalManagement.Services;
 using System.Diagnostics;
 
 namespace RentalManagement.Controllers
@@ -27,7 +28,7 @@ namespace RentalManagement.Controllers
         }
 
         //Get Account Details for Settings
-        public async Task<IActionResult> Settings()
+        public IActionResult Settings()
         {
 
             if (GetId() == null || _context.Tenant == null)
@@ -35,7 +36,7 @@ namespace RentalManagement.Controllers
                 return  RedirectToAction("Index", "TenantHome");
             }
 
-            var tenant = await _context.Tenant.FindAsync(GetId());
+            var tenant = _context.Tenant.Find(GetId());
             if (tenant == null)
             {
                 return RedirectToAction("Index", "TenantHome");
@@ -43,6 +44,40 @@ namespace RentalManagement.Controllers
             return View(tenant);
         }
 
+
+        public async Task<IActionResult> Edit([Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName,Tenant_UserName,Tenant_Email,Tenant_PhoneNumber,Tenant_Password,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
+        {
+            Tenant currenttenant = await _context.Tenant.FirstOrDefaultAsync(q => q.TenantId == GetId());
+
+            if (currenttenant != null)
+            {
+                currenttenant.Tenant_Password = Hashing.HashPass(tenant.Tenant_Password);
+                try
+                {
+                    _context.Update(currenttenant);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TenantExists())
+                    {
+                        ViewData["SuccessfulEdit"] = null;
+                        ViewData["ErrorEdit"] = "Not Found";
+                        return View("Settings");
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                ViewData["ErrorEdit"] = null;
+                ViewData["SuccessfulEdit"] = "Edit Successfully";
+                return View("Settings");
+            }
+            ViewData["SuccessfulEdit"] = null;
+            ViewData["ErrorEdit"] = "Edit Failed";
+            return View("Settings");
+        }
         //Get Account Notifications
         public async Task<IActionResult> Notifications(int? id)
         {
