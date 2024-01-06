@@ -456,15 +456,13 @@ namespace RentalManagement.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Req_Item_ID"), 1L, 1);
 
                     b.Property<string>("Req_Item_Name")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("Req_Item_Quantity")
+                    b.Property<int?>("Req_Item_Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("Req_Item_Units")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -487,7 +485,6 @@ namespace RentalManagement.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Req_Serv_ID"), 1L, 1);
 
                     b.Property<string>("Req_Serv_Name")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -764,7 +761,7 @@ namespace RentalManagement.Migrations
             modelBuilder.Entity("RentalManagement.Models.RequisitionItem", b =>
                 {
                     b.HasOne("RentalManagement.Models.Requisition", "Requisition")
-                        .WithMany()
+                        .WithMany("RequisitionItems")
                         .HasForeignKey("RequisitionId");
 
                     b.Navigation("Requisition");
@@ -773,7 +770,7 @@ namespace RentalManagement.Migrations
             modelBuilder.Entity("RentalManagement.Models.RequisitionService", b =>
                 {
                     b.HasOne("RentalManagement.Models.Requisition", "Requisition")
-                        .WithMany()
+                        .WithMany("RequisitionServices")
                         .HasForeignKey("RequisitionId");
 
                     b.Navigation("Requisition");
@@ -798,6 +795,13 @@ namespace RentalManagement.Migrations
                     b.Navigation("Tenant");
 
                     b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("RentalManagement.Models.Requisition", b =>
+                {
+                    b.Navigation("RequisitionItems");
+
+                    b.Navigation("RequisitionServices");
                 });
 #pragma warning restore 612, 618
         }

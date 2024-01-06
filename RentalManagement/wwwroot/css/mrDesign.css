@@ -388,6 +388,14 @@ a {
     height: 100%;
 }
 
+.tenantDisplay,
+.reqDisplay,
+.roomDisplay,
+.feedDisplay,
+.appDisplay {
+    overflow-y: scroll;
+}
+
 .mrButtonChoices button {
     width: 100%;
     height: 15.5%;
@@ -525,14 +533,15 @@ a {
 .mrcLanding td {
     font-size: 13px;
     font-weight: 500;
-    
 }
 
-.reqDisplay #reqTable td:nth-child(4) {
+.reqDisplay #reqTable td:nth-child(4),
+.tenantDisplay #tenantTable td:nth-child(4) {
     text-align: center;
 }
 
-.reqDisplay #reqTable td:nth-child(4) button {
+.reqDisplay #reqTable td:nth-child(4) button,
+.tenantDisplay #tenantTable td:nth-child(4) button {
     background-color: #503514;
     text-align: center;
     padding: 5px 10px;
@@ -542,7 +551,8 @@ a {
     transition: 0.3s ease;
 }
 
-.reqDisplay #reqTable td:nth-child(4) button:hover {
+.reqDisplay #reqTable td:nth-child(4) button:hover,
+.tenantDisplay #tenantTable td:nth-child(4) button:hover {
     background-color: #77542a;
 }
 

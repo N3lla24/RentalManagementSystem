@@ -1,24 +1,15 @@
-﻿@model RentalManagement.Models.Tenant;
-
-@{
-    ViewData["Title"] = "Tenant HomePage";
-    Layout = null;
-    
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RentalManagement</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RentalManagement.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/reqs.css" asp-append-version="true" />
 
-    <title>Kerwin's Apartment</title>
-    <link rel="icon" type="image/x-icon" href="images/logo2.svg">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/css/home.css">
-    <script src="home.js"></script>
 </head>
-
 <body id="bodyCont">
     <section id="header">
         <div class="navbar">
@@ -35,41 +26,16 @@
         </div>
     </section>
 
-    <div>
-
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
-
-    <section id="accdetails">
-        <b>Tenant: </b>&nbsp; @Html.DisplayFor(model => model.Tenant_FirstName)
-        <br>
-        <b>Tenant ID: </b>&nbsp; @Html.DisplayFor(model => model.TenantId)
-        <br>
-        <b>Room Number: </b>&nbsp; @Html.DisplayFor(model => model.Tenant_RoomNumber)
-        <br>
-    </section>
-
-    <section id="accdetails">
-        <section id="buttonCont">
-            <button>Pay Rent Bills</button> @*href for changing pages or url.action*@
-            <button onclick="window.location.href='@Url.Action("Create", "Requisition")'">Request Item or Service</button>
-            <button>Send Feedback</button>
-        </section>
-
-    </section>
-
-
-    <section id="backTopCont">
-        <a href="#">
-            <div class="backTop">
-                <p>Back to Top&nbsp;&nbsp;<i class="fa-solid fa-arrow-up"></i></p>
-            </div>
-        </a>
-    </section>
 
     <footer>
         <div class="footer-columns">
             <div class="column" id="col">
-                <img src="images/logo.svg" alt="">
+                <img src="~/images/logo.svg" alt="">
                 <h2>Kerwin's Apartment</h2>
             </div>
             <div class="colBorder"></div>
@@ -121,5 +87,10 @@
         </div>
     </footer>
 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

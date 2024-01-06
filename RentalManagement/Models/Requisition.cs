@@ -34,6 +34,7 @@ namespace RentalManagement.Models
         public int? TenantId { get; set; }
 
         public virtual Tenant? Tenant { get; set; }
-
+        public List<RequisitionItem>? RequisitionItems { get; set; }
+        public List<RequisitionService>? RequisitionServices { get; set; }
     }
 }
