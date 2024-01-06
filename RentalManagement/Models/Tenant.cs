@@ -25,7 +25,7 @@ namespace RentalManagement.Models
         public string Tenant_LastName { get; set; }
 
         [Required(ErrorMessage = "User Name is required.")]
-        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Username must only contain: Alphabet letters, Numeric Numbers, _ and - Symbols")]
+        [RegularExpression(@"^[a-zA-Z0-9\s&',.-]+$", ErrorMessage = "Username must only contain: Alphabet letters, Numeric Numbers, (& ' , . - ) Symbols")]
         [StringLength(50, MinimumLength = 5, ErrorMessage = "Username characters must be more than 5 and maximum of 50 characters.")]
         public string Tenant_UserName { get; set; }
 

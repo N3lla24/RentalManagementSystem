@@ -314,7 +314,7 @@
                    </tbody>
                 </table>
             </div>
-            @*
+            
             <div class="appDisplay">
                 <div class="appSearch">
                     <input type="search" placeholder="Search applications" /><i class="fas fa-search"></i>
@@ -325,26 +325,28 @@
                             <th>Application ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>  
                         
-                        @foreach (var application in Model)
+                        @foreach (var application in Model.Applicants)
                         {
                                 <tr>
-                                    <td>@application.ApplicationID</td>
-                                    <td>@application.ApplicationFName</td>
-                                    <td>@application.ApplicationLName</td>
+                                    <td>@application.ApplicationId</td>
+                                    <td>@application.Applicants_FirstName</td>
+                                    <td>@application.Applicants_LastName</td>
+                                    <td>@application.Application_Status</td>
                                     <td>
-                                        <button class="actionButton" data-tenant-id="@application.ApplicationID">Details</button>
+                                    <a asp-action="AppDetails" asp-route-id="@application.ApplicationId">Details</a>
                                     </td>
                                 </tr>
                         }
                        
                     </tbody>
                 </table>
-            </div>*@
+            </div>
 
         </div>
     </section>  

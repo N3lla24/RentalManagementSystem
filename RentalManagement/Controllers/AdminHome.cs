@@ -35,7 +35,7 @@ namespace RentalManagement.Controllers
                 var applicants = await _context.Applicants.ToListAsync();
                 var payment = await _context.PaymentDetail.ToListAsync();
 
-                if (tenant != null && requisition != null && room != null && feedback != null && payment != null/* && applicants != null*/)
+                if (tenant != null && requisition != null && room != null && feedback != null && payment != null && applicants != null)
                 {
                     var tenantDisplayList = tenant.Select(tenant => new TenantDisplay
                     {
@@ -70,6 +70,22 @@ namespace RentalManagement.Controllers
 
                     }).ToList();
 
+                    var appDisplayList = applicants.Select(applicants => new ApplicationDisplay
+                    {
+                        ApplicationId = applicants.ApplicationId,
+                        Applicants_FirstName = applicants.Applicants_FirstName,
+                        Applicants_MiddleName = applicants.Applicants_MiddleName,
+                        Applicants_LastName = applicants.Applicants_LastName,
+                        Applicants_Email = applicants.Applicants_Email,
+                        Applicants_PhoneNumber = applicants.Applicants_PhoneNumber,
+                        Applicants_Address = applicants.Applicants_Address,
+                        Application_RoomNumber = applicants.Application_RoomNumber,
+                        Application_UnitNumber = applicants.Application_UnitNumber,
+                        Application_Status = applicants.Application_Status,
+                        Applicant_CreatedAt = applicants.Applicant_CreatedAt,
+                        Applicant_UpdatedAt = applicants.Applicant_UpdatedAt,
+                    }).ToList();
+
                     var monthlyTotals = payment
                     .GroupBy(p => p.Pay_CreatedAt.ToString("yyyy-MM"))
                     .Select(g => new ReportsDisplay
@@ -85,8 +101,9 @@ namespace RentalManagement.Controllers
                         Requisition = requisitionDisplayList,
                         Room = roomDisplayList,
                         Feedback = feedbackDisplayList,
-                        Reports = monthlyTotals
-
+                        Reports = monthlyTotals,
+                        Applicants = appDisplayList
+                        
                     };
 
 
@@ -105,6 +122,23 @@ namespace RentalManagement.Controllers
             }
         }
 
+
+        public async Task<IActionResult> AppDetails(int? id)
+        {
+            if (id == null || _context.Applicants == null)
+            {
+                return NotFound();
+            }
+
+            var applicants = await _context.Applicants
+                .FirstOrDefaultAsync(m => m.ApplicationId == id);
+            if (applicants == null)
+            {
+                return NotFound();
+            }
+
+            return View(applicants);
+        }
 
         public IActionResult Logout()
         {

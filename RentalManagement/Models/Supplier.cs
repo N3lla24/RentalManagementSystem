@@ -9,7 +9,7 @@ namespace RentalManagement.Models
         public int SuppliersId { get; set; }
 
 
-        [RegularExpression(@"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$", ErrorMessage = "Username must only contain: Alphabet letters, Numeric Numbers, _ and - Symbols")]
+        [RegularExpression(@"^[a-zA-Z0-9\s&',.-]+", ErrorMessage = "Supplier Name must only contain: Alphabet letters, Numeric Numbers, (& ' , . - ) Symbols")]
         [StringLength(200, MinimumLength = 2, ErrorMessage = "Invalid Name")]
         [Required(ErrorMessage = "Supplier Name is required.")]
         public string Suppliers_Name { get; set; }

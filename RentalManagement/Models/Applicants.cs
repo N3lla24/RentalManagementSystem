@@ -47,10 +47,13 @@ namespace RentalManagement.Models
 
 
         [Required(ErrorMessage = "Application Status is required.")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "Username characters must be more than 2 and maximum of 100 characters.")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Status must be more than 2 characters and maximum of 100 characters.")]
         public string Application_Status { get; set; }
 
-        
+
+        [StringLength(300, MinimumLength = 2, ErrorMessage = "Status Remarks must be more than 2 characters and maximum of 300 characters.")]
+        public string? Application_StatusRemark { get; set; }
+
 
 
 

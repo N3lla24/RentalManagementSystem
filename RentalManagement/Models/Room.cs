@@ -13,7 +13,7 @@ namespace RentalManagement.Models
         public int Room_Num { get; set; }
 
         [Required(ErrorMessage = "Room Status is required.")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "Username characters must be more than 2 and maximum of 100 characters.")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Room Status must be more than 2 characters and maximum of 100 characters.")]
         public string? Room_Status { get; set; }
 
         public int Room_Capacity { get; set; }

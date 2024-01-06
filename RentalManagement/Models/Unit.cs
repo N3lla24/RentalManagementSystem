@@ -13,7 +13,7 @@ namespace RentalManagement.Models
         public int Unit_Num { get; set; }
 
         [Required(ErrorMessage = "Unit Status is required.")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "Username characters must be more than 2 and maximum of 100 characters.")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Unit Status characters must be more than 2 and maximum of 100 characters.")]
         public string? Unit_Status { get; set; }
 
         public DateTime Unit_CreatedAt { get; set; }

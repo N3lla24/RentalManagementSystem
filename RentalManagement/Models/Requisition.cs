@@ -9,7 +9,7 @@ namespace RentalManagement.Models
         public int RequisitionId { get; set; }
 
 
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Username characters must be more than 2 and maximum of 50 characters.")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Requisition Type must be more than 2 and maximum of 50 characters.")]
         [Required(ErrorMessage = "Requisition Type is required.")]
         public string Requisition_Type { get; set; }
 
@@ -17,9 +17,12 @@ namespace RentalManagement.Models
         public DateTime Requistition_CreatedAt { get; set; }
 
 
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "Username characters must be more than 2 and maximum of 100 characters.")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Requisition Status characters must be more than 2 and maximum of 100 characters.")]
         [Required(ErrorMessage = "Requisition Status is required.")]
         public string Requisition_Status { get; set; }
+
+        [StringLength(300, MinimumLength = 2, ErrorMessage = "Requisition Status characters must be more than 2 and maximum of 300 characters.")]
+        public string? Requisition_StatusRemarks { get; set; }
 
 
         [StringLength(300, MinimumLength = 10, ErrorMessage = "Requisition Description must be more than 10 characters & maximum of 300 characters.")]

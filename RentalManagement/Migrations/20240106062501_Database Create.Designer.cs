@@ -12,8 +12,8 @@ using RentalManagement.Data;
 namespace RentalManagement.Migrations
 {
     [DbContext(typeof(RentalManagementContext))]
-    [Migration("20240106003202_dbUpdate")]
-    partial class dbUpdate
+    [Migration("20240106062501_Database Create")]
+    partial class DatabaseCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,6 +93,10 @@ namespace RentalManagement.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Application_StatusRemark")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("Application_UnitNumber")
                         .HasColumnType("int");
@@ -330,6 +334,10 @@ namespace RentalManagement.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("PurchaseOrder_StatusRemarks")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
                     b.Property<string>("PurchaseOrder_Type")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -425,6 +433,10 @@ namespace RentalManagement.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Requisition_StatusRemarks")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Requisition_Status_Remarks")
                         .IsRequired()

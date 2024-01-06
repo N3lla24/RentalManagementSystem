@@ -38,6 +38,7 @@ namespace RentalManagement.Migrations
                     Application_RoomNumber = table.Column<int>(type: "int", nullable: false),
                     Application_UnitNumber = table.Column<int>(type: "int", nullable: false),
                     Application_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Application_StatusRemark = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     Applicant_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Applicant_UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -138,7 +139,8 @@ namespace RentalManagement.Migrations
                         name: "FK_FAQ_Applicants_ApplicationId",
                         column: x => x.ApplicationId,
                         principalTable: "Applicants",
-                        principalColumn: "ApplicationId");
+                        principalColumn: "ApplicationId",
+                        onDelete:ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,7 +162,8 @@ namespace RentalManagement.Migrations
                         name: "FK_Feedback_Tenant_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenant",
-                        principalColumn: "TenantId");
+                        principalColumn: "TenantId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,7 +191,8 @@ namespace RentalManagement.Migrations
                         name: "FK_PaymentDetail_Tenant_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenant",
-                        principalColumn: "TenantId");
+                        principalColumn: "TenantId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,6 +204,7 @@ namespace RentalManagement.Migrations
                     Requisition_Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Requistition_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Requisition_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Requisition_StatusRemarks = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     Requisition_Status_Remarks = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Requisition_DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TenantId = table.Column<int>(type: "int", nullable: true)
@@ -211,7 +216,8 @@ namespace RentalManagement.Migrations
                         name: "FK_Requisition_Tenant_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenant",
-                        principalColumn: "TenantId");
+                        principalColumn: "TenantId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -239,7 +245,8 @@ namespace RentalManagement.Migrations
                         name: "FK_Invoice_Tenant_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenant",
-                        principalColumn: "TenantId");
+                        principalColumn: "TenantId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -270,7 +277,8 @@ namespace RentalManagement.Migrations
                         name: "FK_Room_Tenant_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenant",
-                        principalColumn: "TenantId");
+                        principalColumn: "TenantId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Room_Unit_UnitId",
                         column: x => x.UnitId,
@@ -285,6 +293,7 @@ namespace RentalManagement.Migrations
                     PurchaseOrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PurchaseOrder_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PurchaseOrder_StatusRemarks = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     PurchaseOrder_Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PurchaseOrder_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SuppliersId = table.Column<int>(type: "int", nullable: true),
@@ -299,12 +308,14 @@ namespace RentalManagement.Migrations
                         name: "FK_PurchaseOrder_Requisition_RequisitionId",
                         column: x => x.RequisitionId,
                         principalTable: "Requisition",
-                        principalColumn: "RequisitionId");
+                        principalColumn: "RequisitionId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PurchaseOrder_Supplier_SuppliersId1",
                         column: x => x.SuppliersId1,
                         principalTable: "Supplier",
-                        principalColumn: "SuppliersId");
+                        principalColumn: "SuppliersId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -325,7 +336,8 @@ namespace RentalManagement.Migrations
                         name: "FK_RequisitionItem_Requisition_RequisitionId",
                         column: x => x.RequisitionId,
                         principalTable: "Requisition",
-                        principalColumn: "RequisitionId");
+                        principalColumn: "RequisitionId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -344,7 +356,8 @@ namespace RentalManagement.Migrations
                         name: "FK_RequisitionService_Requisition_RequisitionId",
                         column: x => x.RequisitionId,
                         principalTable: "Requisition",
-                        principalColumn: "RequisitionId");
+                        principalColumn: "RequisitionId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -365,7 +378,8 @@ namespace RentalManagement.Migrations
                         name: "FK_PurchaseItem_PurchaseOrder_PurchaseOrderId",
                         column: x => x.PurchaseOrderId,
                         principalTable: "PurchaseOrder",
-                        principalColumn: "PurchaseOrderId");
+                        principalColumn: "PurchaseOrderId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -384,7 +398,8 @@ namespace RentalManagement.Migrations
                         name: "FK_PurchaseService_PurchaseOrder_PurchaseOrderId",
                         column: x => x.PurchaseOrderId,
                         principalTable: "PurchaseOrder",
-                        principalColumn: "PurchaseOrderId");
+                        principalColumn: "PurchaseOrderId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -405,7 +420,8 @@ namespace RentalManagement.Migrations
                         name: "FK_ReceivingMemo_PurchaseOrder_PurchaseId",
                         column: x => x.PurchaseId,
                         principalTable: "PurchaseOrder",
-                        principalColumn: "PurchaseOrderId");
+                        principalColumn: "PurchaseOrderId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
