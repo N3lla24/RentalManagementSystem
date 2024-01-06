@@ -11,9 +11,10 @@ namespace RentalManagement.Models
         public List<FeedbackDisplay> Feedback { get; set; }
         public List<ApplicationDisplay> Applicants { get; set; }
 
-       /* public List<RoomDisplay> Room { get; set; }
-        public List<FeedbackDisplay> Feedback { get; set; }*/
-        
+        public List<PaymentDetail> PaymentHistory { get; set; }
+        public List<Requisition> RequisitionHistory { get; set; }
+
+       
 
     }
 

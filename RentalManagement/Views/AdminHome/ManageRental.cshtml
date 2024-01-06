@@ -77,25 +77,87 @@
 
     <section class="manageRentalContainer">
         <div class="popUpModal" id="tenantPopUpModal">
-            <i class="fa-solid fa-circle-xmark" id="reqX"></i>
+            <i class="fa-solid fa-circle-xmark" id="tenantX"></i>
             <div class="pmCol2">
                 <div class="infoColumn">
+                    <p>Tenant: <span id="tenantNameSpan"></span></p>
+                    <p>Tenant Username: <span id="tenantUsernameSpan"></span></p>
+                    <p>Tenant Email: <span id="tenantEmailSpan"></span></p>
+                    <p>Tenant Phone Number: <span id="tenantPhoneSpan"></span></p>
+                    <p>Tenant Unit Number: <span id="tenantUnitNumberSpan"></span></p>
+                    <p>Tenant Room Number: <span id="tenantRoomNumberSpan"></span></p>
                     <button id="editButton">Edit</button>
                     <button id="closeButton">Close</button>
                     <div id="editModal" style="display: none;">
-                        <input type="file" id="tenantImageInput" accept="image/*">
-                        <input type="text" id="firstNameInput" placeholder="First Name">
-                        <input type="text" id="middleNameInput" placeholder="Middle Name">
-                        <input type="text" id="lastNameInput" placeholder="Last Name">
-                        <input type="text" id="phoneNumberInput" placeholder="Phone Number">
+                        <input type="text" id="roomNumberInput" placeholder="Room Number">
                         <button id="discardButton">Discard</button>
                         <button id="updateButton">Update</button>
                     </div>
                 </div>
                 <div class="historyColumn">
                     <div class="scrollableDiv" id="paymentHistory">
+                        <p>PAYMENT HISTORY</p>
+                        <table id="paymentHistoryTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Payment ID</th>
+                                    <th>Due Date</th>
+                                    <th>Rent</th>
+                                    <th>Utility</th>
+                                    <th>Garbage</th>
+                                    <th>Aircon</th>
+                                    <th>Internet</th>
+                                    <th>Refrigerator</th>
+                                    <th>Washing</th>
+                                    <th>Payed At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var ph in Model.PaymentHistory)
+                                {
+                                    <tr>
+                                        <td>@ph.Pay_ID</td>
+                                        <td>@ph.Pay_DueDate</td>
+                                        <td>@ph.Pay_RentPrice</td>
+                                        <td>@ph.Pay_UtilityFee</td>
+                                        <td>@ph.Pay_GarbageFee</td>
+                                        <td>@ph.Pay_AirconFee</td>
+                                        <td>@ph.Pay_InternetFee</td>
+                                        <td>@ph.Pay_RefrigeratorFee</td>
+                                        <td>@ph.Pay_WashingFee</td>
+                                        <td>@ph.Pay_CreatedAt</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                     <div class="scrollableDiv" id="requisitionHistory">
+                        <p>REQUISITION HISTORY</p>
+                        <table id="requisitionHistoryTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Requisition ID</th>
+                                    <th>Type</th>
+                                    <th>Request Date</th>
+                                    <th>Status</th>
+                                    <th>Due Date</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var rh in Model.RequisitionHistory)
+                                {
+                                    <tr>
+                                        <td>@rh.RequisitionId</td>
+                                        <td>@rh.Requisition_Type</td>
+                                        <td>@rh.Requistition_CreatedAt</td>
+                                        <td>@rh.Requisition_Status</td>
+                                        <td>@rh.Requisition_DueDate</td>
+                                        <td>@rh.Requisition_Status_Remarks</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div> 
             </div>
@@ -174,12 +236,12 @@
 
         <div class="mrcLanding">
             <div class="mrButtonChoices">
-                <button class="displayButton" data-target="tenantDisplay">Tenant List</button>
-                <button class="displayButton" data-target="reqDisplay">Requisition Forms</button>
-                <button class="displayButton" data-target="roomDisplay">Rental Room Details</button>
-                <button class="displayButton" data-target="reportsDisplay">Reports & Analytics</button>
-                <button class="displayButton" data-target="feedDisplay">Feedback & Suggestions</button>
-                <button class="displayButton" data-target="appDisplay">Rental Applications</button>
+                <button class="displayButton" id="tenantButton" data-target="tenantDisplay">Tenant List</button>
+                <button class="displayButton" id="reqButton" data-target="reqDisplay">Requisition Forms</button>
+                <button class="displayButton" id="roomButton" data-target="roomDisplay">Rental Room Details</button>
+                <button class="displayButton" id="reportsButton" data-target="reportsDisplay">Reports & Analytics</button>
+                <button class="displayButton" id="feedbackButton" data-target="feedDisplay">Feedback & Suggestions</button>
+                <button class="displayButton" id="appButton" data-target="appDisplay">Rental Applications</button>
             </div>
             <div class="tenantDisplay">
                 <div class="tenantSearch">
@@ -206,6 +268,7 @@
                                 </td>
                             </tr>
                         }
+
 
                     </tbody>
                 </table>
