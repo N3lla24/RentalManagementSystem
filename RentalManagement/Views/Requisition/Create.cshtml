@@ -6,48 +6,41 @@
 }
 
 
-<form action="@Url.Action("Create", "Requisition")" method="post" id="requisitionForm">
-    @* @Html.AntiForgeryToken()
-    <!-- Other form fields -->
-    <label for="TenantId">TenantId:</label>
-    <input type="number" id="TenantId" name="TenantId" /> *@
-    <input type="hidden" id="TenantId" name="TenantId" />
-
+<form action="@Url.Action("Create", "Requisition")" method="post" id="requisitionForm" onsubmit="return validateForm()">
+    
 
     <label for="Requisition_Type">Requisition Type:</label>
-    <select id="Requisition_Type" name="Requisition_Type">
+    <select id="Requisition_Type" name="Requisition_Type" required>
+        <option value="" disabled selected>Select a type</option>
         <option value="REQUEST_ITEM">REQUEST ITEM</option>
         <option value="REQUEST_SERVICE">REQUEST SERVICE</option>
-        <!-- Add other options as needed -->
     </select>
 
     <div id="itemSection" style="display:none;">
-        <!-- Fields for Request Item -->
         <label for="Req_Item_Name">Item Name:</label>
-        <input type="text" id="Req_Item_Name" name="RequisitionItems[0].Req_Item_Name" />
+        <input type="text" id="Req_Item_Name" name="RequisitionItems[0].Req_Item_Name" required />
 
         <label for="Req_Item_Quantity">Item Quantity:</label>
-        <input type="text" id="Req_Item_Quantity" name="RequisitionItems[0].Req_Item_Quantity" />
+        <input type="text" id="Req_Item_Quantity" name="RequisitionItems[0].Req_Item_Quantity" required />
 
         <label for="Req_Item_Units">Item Unit/s:</label>
-        <input type="text" id="Req_Item_Units" name="RequisitionItems[0].Req_Item_Units" />
-        <!-- Add more fields for Request Item as needed -->
+        <input type="text" id="Req_Item_Units" name="RequisitionItems[0].Req_Item_Units" required />
+
         <button type="button" class="addItemButton">Add Item</button>
     </div>
 
     <div id="serviceSection" style="display:none;">
-        <!-- Fields for Request Service -->
         <label for="Req_Serv_Name">Service Name:</label>
-        <input type="text" id="Req_Serv_Name" name="RequisitionServices[0].Req_Serv_Name" />
+        <input type="text" id="Req_Serv_Name" name="RequisitionServices[0].Req_Serv_Name" required />
 
-        <!-- Add more fields for Request Service as needed -->
         <button type="button" class="addServiceButton">Add Service</button>
     </div>
+
     <input type="hidden" id="Requisition_CreatedAt" name="Requisition_CreatedAt" />
     <input type="hidden" id="Requisition_Status" name="Requisition_Status" value="Pending" />
 
     <label for="Requisition_DueDate">Due Date:</label>
-    <input type="date" id="Requisition_DueDate" name="Requisition_DueDate" />
+    <input type="date" id="Requisition_DueDate" name="Requisition_DueDate" required />
 
     <label for="Requisition_Status">Remarks:</label>
     <input type="text" id="Req_Item_Remarks" name="Req_Item_Remarks" />
@@ -58,6 +51,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+    
+
     $(document).ready(function () {
         $('#Requisition_Type').change(function () {
             var selectedType = $(this).val();
@@ -86,10 +81,14 @@
 
 
                 '<input type="hidden" name="RequisitionItems[' + itemCount + '].RequisitionId" value="' + $('#RequisitionId').val() + '" />' +
+                '<button type="button" class="removeItemButton">Remove</button>' +
                 '</div>';
 
             $('#itemSection').append(newItemField);
             itemCount++;
+        });
+        $(document).on('click', '.removeItemButton', function () {
+            $(this).closest('.itemField').remove();
         });
 
         var serviceCount = 1;
@@ -99,10 +98,14 @@
                 '<input type="text" id="Req_Serv_Name_' + serviceCount + '" name="RequisitionServices[' + serviceCount + '].Req_Serv_Name" />' +
 
                 '<input type="hidden" name="RequisitionServices[' + serviceCount + '].RequisitionId" value="' + $('#RequisitionId').val() + '" />' +
+                '<button type="button" class="removeServiceButton">Remove</button>' +
                 '</div>';
 
             $('#serviceSection').append(newServiceField);
             serviceCount++;
+        });
+        $(document).on('click', '.removeServiceButton', function () {
+            $(this).closest('.serviceField').remove();
         });
         $('#requisitionForm').submit(function () {
             $('#Requisition_CreatedAt').val(new Date().toISOString());
