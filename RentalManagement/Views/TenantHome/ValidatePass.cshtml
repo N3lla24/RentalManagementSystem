@@ -1,10 +1,9 @@
 ﻿@model RentalManagement.Models.Tenant;
 
 @{
-    Layout = null;
-
+    ViewData["Title"] = "Change Password";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,52 +14,49 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/home.css">
-    <script src="home.js"></script>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
 </head>
-
-<body id="bodyCont" style="background-color:#FEEAD1">
+<body style="background-color: #FEEAD1">
     <section id="header">
         <div class="navbar">
-
-            <a asp-action="Logout" style="margin-top:12px" id="Logout">Logout</a>
-            <div class="dropdown nbItem">
-                <button class="dropbtn">
-                    <i class="fas fa-sign-in-alt"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="@Url.Action("Index", "TenantHome")">Home</a>
-                    <a href="@Url.Action("Settings", "TenantHome")">Account Settings</a>
-                </div>
-            </div>
+            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
         </div>
     </section>
 
-    <div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-    <section id="detailsCont">
-        <p>STIL ON WORKS</p>
-        <br>
-        <p>Est dolores recusandae qui harum mollitia vel dolore placeat cum animi odio qui repellat tenetur non laborum sunt et illo maiores. Vel officiis consequuntur ea explicabo facilis rem nisi optio. Sit consequatur quasi sed laudantium numquam vel error explicabo qui nostrum quae. Quo exercitationem dolores et fuga autem et autem harum. Et neque magnam qui vitae voluptatem qui facilis doloremque. Et veritatis ipsum aut corporis Quis est laborum error non veritatis animi qui autem repudiandae. Aut alias mollitia qui dolor quis eos perspiciatis nulla. Et nihil enim eum incidunt nemo aut beatae magnam qui exercitationem quaerat. Eos mollitia quia ad illum dolores ab nisi magni et neque quia in voluptates quis est placeat dolor et consectetur quaerat. </p>
-        <br>
-        <p>Et fugit deserunt ab vero dolor qui porro provident qui repellat placeat aut commodi cupiditate ab minus repellendus. Et ipsa minima non rerum iure et ullam commodi hic architecto iste aut vero accusantium et dolore temporibus aut quam velit. Ad adipisci minus eos ipsam praesentium ut magni amet est omnis natus ut molestiae omnis quo alias quaerat qui quisquam odio. Aut enim aliquid in perspiciatis voluptate non impedit sunt. Est repellat vitae et rerum voluptatibus sit dolorum eveniet. Quo voluptatem fuga et quia iure sed voluptatem recusandae et porro iusto est veniam dolor vel consequatur exercitationem. Qui quaerat quae qui dolorem nihil sed harum ratione sed adipisci autem sit quasi nobis ab repellat similique et provident impedit! </p>
-    </section>
-
-    <section id="backTopCont">
-        <a href="#">
-            <div class="backTop">
-                <p>Back to Top&nbsp;&nbsp;<i class="fa-solid fa-arrow-up"></i></p>
+    <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
+        <h1>Validate Password</h1>
+        <hr />
+        <div class="row">
+            <label class="control-label">Before chaging password, we need to verify if it's you first.</label>
+            <br/>
+            <div class="col-md-4">
+                <form asp-action="ValidatePass">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Tenant_Password" class="control-label">Enter Password</label>
+                        <input asp-for="Tenant_Password" type="password" id="pass2" class="form-control" autocomplete="off" required />
+                    </div>
+                    <br />
+                    <input type="submit" value="Validate" class="btn btn-primary" />
+                </form>
             </div>
-        </a>
+            @if (ViewData["ValidationError"] != null)
+            {
+                <div class="alert alert-dismissible alert-danger" style="margin-block:30px">
+                    <strong>Wrong Password!</strong> Try again inputting correct password.
+                </div>
+            }
+            @if (ViewData["ValidationSuccess"] != null)
+            {
+                <script>
+                    alert("Validation is Successful, You can Change Password");
+                </script>
+            }
+        </div>
+        <hr />
+        <div>
+            <a href="@Url.Action("Settings", "TenantHome")">Back to Settings</a>
+        </div>
     </section>
 
     <footer>
@@ -103,8 +99,6 @@
                 </a>
             </div>
         </div>
-
-
     </footer>
 
     <footer id="foot2">
@@ -119,4 +113,4 @@
     </footer>
 
 </body>
-</html>
+</html>    

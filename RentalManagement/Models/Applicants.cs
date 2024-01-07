@@ -30,7 +30,7 @@ namespace RentalManagement.Models
         public string Applicants_Email { get; set; }
 
 
-        [RegularExpression(@"^09\d{9}$", ErrorMessage = "Password must have: * 8 minimum char long * Atleast 1 Uppercase Character * Atleast 1 Special Character * Atleast 1 Numerical Character")]
+        [RegularExpression(@"^09\d{9}$", ErrorMessage = "Please enter Philippine phone number format")]
         [Required(ErrorMessage = "Phone Number is required.")]
         public string Applicants_PhoneNumber { get; set; }
 

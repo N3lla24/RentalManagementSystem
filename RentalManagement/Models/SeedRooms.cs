@@ -20,7 +20,7 @@ namespace RentalManagement.Models
                     new Room
                     {
                         Room_Num = 101,
-                        Room_Status = "Unoccupied",
+                        Room_Status = "Occupied",
                         Room_Capacity = 5,
                         Room_Price = 12000,
                         UnitId = 1,
@@ -28,14 +28,30 @@ namespace RentalManagement.Models
                     new Room
                     {
                         Room_Num = 102,
-                        Room_Status = "Unoccupied",
+                        Room_Status = "Occupied",
                         Room_Capacity = 5,
                         Room_Price = 12000,
                         UnitId = 1,
                     },
                     new Room
                     {
-                        Room_Num = 203,
+                        Room_Num = 103,
+                        Room_Status = "Occupied",
+                        Room_Capacity = 5,
+                        Room_Price = 12000,
+                        UnitId = 1,
+                    },
+                    new Room
+                    {
+                        Room_Num = 104,
+                        Room_Status = "Occupied",
+                        Room_Capacity = 5,
+                        Room_Price = 12000,
+                        UnitId = 1,
+                    },
+                    new Room
+                    {
+                        Room_Num = 105,
                         Room_Status = "Unoccupied",
                         Room_Capacity = 5,
                         Room_Price = 12000,
@@ -48,6 +64,30 @@ namespace RentalManagement.Models
                         Room_Capacity = 5,
                         Room_Price = 12000,
                         UnitId = 2,
+                    },
+                    new Room
+                    {
+                        Room_Num = 202,
+                        Room_Status = "Unoccupied",
+                        Room_Capacity = 5,
+                        Room_Price = 12000,
+                        UnitId = 2,
+                    },
+                    new Room
+                    {
+                        Room_Num = 203,
+                        Room_Status = "Unoccupied",
+                        Room_Capacity = 5,
+                        Room_Price = 12000,
+                        UnitId = 2,
+                    },
+                    new Room
+                    {
+                        Room_Num = 301,
+                        Room_Status = "Unoccupied",
+                        Room_Capacity = 5,
+                        Room_Price = 12000,
+                        UnitId = 3,
                     }
                 );
                 context.SaveChanges();

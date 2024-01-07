@@ -26,6 +26,9 @@ namespace RentalManagement.Controllers
             return View();
         }
 
+        //Recover Process
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Recover([Bind("Tenant_Email, Tenant_PhoneNumber, Tenant_RoomNumber, Tenant_UnitNumber, Tenant_Password")] Tenant tenant)
         {
             Tenant existingacc = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_Email == tenant.Tenant_Email && q.Tenant_PhoneNumber == tenant.Tenant_PhoneNumber && q.Tenant_RoomNumber == tenant.Tenant_RoomNumber && q.Tenant_UnitNumber == tenant.Tenant_UnitNumber);
@@ -66,6 +69,7 @@ namespace RentalManagement.Controllers
             return RedirectToAction("Create", "Tenants");
         }
 
+        //Login Checking
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(Tenant tenant)

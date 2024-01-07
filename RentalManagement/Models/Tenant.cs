@@ -12,6 +12,7 @@ namespace RentalManagement.Models
 
         [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$", ErrorMessage = "Input Valid Name")]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "Input Valid Name")]
+        [Required(ErrorMessage = "First Name is required.")]
         public string Tenant_FirstName { get; set; }
 
 
@@ -22,6 +23,7 @@ namespace RentalManagement.Models
 
         [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$", ErrorMessage = "Input Valid Name")]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "Input Valid Name")]
+        [Required(ErrorMessage = "Last Name is required.")]
         public string Tenant_LastName { get; set; }
 
         [Required(ErrorMessage = "User Name is required.")]

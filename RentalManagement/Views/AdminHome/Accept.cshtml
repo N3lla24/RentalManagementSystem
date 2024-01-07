@@ -1,7 +1,7 @@
 ﻿@model RentalManagement.Models.Applicants
 
 @{
-    ViewData["Title"] = "Application Rejection";
+    ViewData["Title"] = "Application Accept";
     Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
 <!DOCTYPE html>
@@ -23,7 +23,7 @@
         </div>
     </section>
     <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
-        <h1 style="color: red">Rejection</h1>
+        <h1 style="color: red">Accept Applicant</h1>
         <h4>Applicant</h4>
         <hr />
         <div style="padding-left: 30px">
@@ -86,12 +86,12 @@
             </dl>
         </div>
         <hr />
-        <form asp-action="RejectForm">
+        <form asp-action="AcceptConfirmed">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <fieldset style="margin-left:50px; width:85%">
                 <div class="form-group">
                     <input asp-for="ApplicationId" type="number" value="@Model.ApplicationId" hidden/>
-                    <label asp-for="Application_StatusRemark" class="control-label">Rejection Reason or Remarks</label>
+                    <label asp-for="Application_StatusRemark" class="control-label">Acception Reason or Remarks</label>
                     <textarea asp-for="Application_StatusRemark" type="text" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="Application_StatusRemark" class="text-danger"></span>
                 </div>

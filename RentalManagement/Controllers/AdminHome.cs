@@ -89,6 +89,7 @@ namespace RentalManagement.Controllers
                         Application_RoomNumber = applicants.Application_RoomNumber,
                         Application_UnitNumber = applicants.Application_UnitNumber,
                         Application_Status = applicants.Application_Status,
+                        Application_StatusRemarks = applicants.Application_StatusRemark,
                         Applicant_CreatedAt = applicants.Applicant_CreatedAt,
                         Applicant_UpdatedAt = applicants.Applicant_UpdatedAt,
                     }).ToList();
@@ -178,35 +179,70 @@ namespace RentalManagement.Controllers
 
         public async Task<IActionResult> Accept(int? id)
         {
-            if (id == null || _context.Applicants == null)
-            {
-                return NotFound();
-            }
             var applicants = await _context.Applicants
                 .FirstOrDefaultAsync(m => m.ApplicationId == id);
             if (applicants == null)
             {
-                return View(applicants);
+                return NotFound();
             }
-            applicants.Application_Status = "Accept";
-            _context.Tenant.AddRange(
-                    new Tenant
-                    {
-                        Tenant_FirstName = applicants.Applicants_FirstName,
-                        Tenant_MiddleName = applicants.Applicants_MiddleName,
-                        Tenant_LastName = applicants.Applicants_LastName,
-                        Tenant_UserName = "N/A",
-                        Tenant_Email = applicants.Applicants_Email,
-                        Tenant_PhoneNumber = applicants.Applicants_PhoneNumber,
-                        Tenant_Password = "N/A",
-                        Tenant_RoomNumber = applicants.Application_RoomNumber,
-                        Tenant_UnitNumber = applicants.Application_UnitNumber,
-                        Tenant_CreatedAt = DateTime.Now,
-                        Tenant_UpdatedAt = DateTime.Now,
-                    }
-                );
-            _context.SaveChanges();
             return View(applicants);
+        }
+
+
+        public async Task<IActionResult> AcceptConfirmed([Bind("ApplicationId, Application_StatusRemark")] Applicants applicants)
+        {
+            
+            try
+            {
+                Applicants matchapp = await _context.Applicants.FirstOrDefaultAsync(m => m.ApplicationId == applicants.ApplicationId);
+                if (matchapp == null)
+                {
+                    return Content("An unexpected error occurred. Please try again later.");
+                }
+                try
+                {
+                    var room = _context.Room.FirstOrDefault(r => r.UnitId == matchapp.Application_UnitNumber && r.Room_Num == matchapp.Application_RoomNumber);
+                    if (room is null) { return Content("An unexpected error occurred. Please try again later."); }
+                    room.Room_Status = "Occupied";
+                    _context.Update(room);
+                }
+                catch (Exception ex)
+                {
+                    return Content("An unexpected error occurred. Please try again later.");
+                }
+                if (matchapp == null)
+                {
+                    return Content("An unexpected error occurred. Please try again later.");
+                }
+                matchapp.Application_Status = "Accept";
+                matchapp.Application_StatusRemark = applicants.Application_StatusRemark;
+                matchapp.Applicant_UpdatedAt = DateTime.Now;
+                _context.Update(matchapp);
+                _context.Tenant.AddRange(
+                        new Tenant
+                        {
+                            Tenant_FirstName = matchapp.Applicants_FirstName,
+                            Tenant_MiddleName = matchapp.Applicants_MiddleName,
+                            Tenant_LastName = matchapp.Applicants_LastName,
+                            Tenant_UserName = "N/A",
+                            Tenant_Email = matchapp.Applicants_Email,
+                            Tenant_PhoneNumber = matchapp.Applicants_PhoneNumber,
+                            Tenant_Password = "N/A",
+                            Tenant_RoomNumber = matchapp.Application_RoomNumber,
+                            Tenant_UnitNumber = matchapp.Application_UnitNumber,
+                            Tenant_CreatedAt = DateTime.Now,
+                            Tenant_UpdatedAt = DateTime.Now,
+                        }
+                    );
+                await _context.SaveChangesAsync();
+                return RedirectToAction("ManageRental", "AdminHome");
+                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occurred while processing the application.");
+                return Content("An unexpected error occurred. Please try again later.");
+            }
         }
 
         public async Task<IActionResult> Reject(int? id)
@@ -220,17 +256,55 @@ namespace RentalManagement.Controllers
             return View(applicants);
         }
 
-        public async Task<IActionResult> RejectForm([Bind("ApplicationId,Applicants_FirstName,Applicants_MiddleName,Applicants_LastName,Applicants_Email,Applicants_PhoneNumber,Applicants_Address, Application_RoomNumber, Application_UnitNumber, Applicant_CreatedAt,Applicant_UpdatedAt")] Applicants applicants)
+        public async Task<IActionResult> RejectForm([Bind("ApplicationId, Application_StatusRemark")] Applicants applicants)
         {
 
             Applicants matchapp = await _context.Applicants.FirstOrDefaultAsync(m => m.ApplicationId == applicants.ApplicationId);
-            if (applicants != null)
+            if (matchapp == null) { return Content("Application Not Found"); }
+            if (matchapp != null)
             {
-                matchapp.Application_Status = "Reject";
-                matchapp.Application_StatusRemark = applicants.Application_StatusRemark;
-                return RedirectToAction("ManageRental", "AdminHome");
+                try
+                {
+                    matchapp.Application_Status = "Reject";
+                    matchapp.Application_StatusRemark = applicants.Application_StatusRemark;
+                    matchapp.Applicant_UpdatedAt = DateTime.Now;
+                    _context.Update(matchapp);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("ManageRental", "AdminHome");
+                }
+                catch
+                {
+                    return Content("An unexpected error occurred. Please try again later.");
+                }
+
             }
             return View(applicants);
+        }
+
+        //Delete Rejected Applicant
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_context.Applicants == null)
+            {
+                return Problem("The Applicant can't be found. No Applicants in the database.");
+            }
+            try
+            {
+                var applicant = await _context.Applicants.FindAsync(id);
+                if (applicant == null)
+                {
+                    return Content("An unexpected error occurred. Please try again later.");  
+                }
+                _context.Applicants.Remove(applicant);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return Content("An unexpected error occurred. Please try again later.");
+            }
         }
 
         public IActionResult Logout()

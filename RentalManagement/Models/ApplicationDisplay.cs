@@ -15,6 +15,7 @@ namespace RentalManagement.Models
         public int Application_RoomNumber { get; set; }
         public int Application_UnitNumber { get; set; }
         public string Application_Status { get; set; }
+        public string Application_StatusRemarks { get; set; }
         public DateTime Applicant_CreatedAt { get; set; }
         public DateTime? Applicant_UpdatedAt { get; set; }
     }

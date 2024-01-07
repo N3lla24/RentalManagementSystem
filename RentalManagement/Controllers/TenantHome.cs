@@ -33,7 +33,7 @@ namespace RentalManagement.Controllers
 
             if (GetId() == null || _context.Tenant == null)
             {
-                return  RedirectToAction("Index", "TenantHome");
+                return RedirectToAction("Index", "TenantHome");
             }
 
             var tenant = _context.Tenant.Find(GetId());
@@ -44,16 +44,24 @@ namespace RentalManagement.Controllers
             return View(tenant);
         }
 
-
-        public async Task<IActionResult> Edit([Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName,Tenant_UserName,Tenant_Email,Tenant_PhoneNumber,Tenant_Password,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Settings([Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName,Tenant_UserName,Tenant_Email,Tenant_PhoneNumber,Tenant_Password,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
         {
             Tenant currenttenant = await _context.Tenant.FirstOrDefaultAsync(q => q.TenantId == GetId());
 
             if (currenttenant != null)
             {
-                currenttenant.Tenant_Password = Hashing.HashPass(tenant.Tenant_Password);
                 try
                 {
+                    currenttenant.Tenant_FirstName = tenant.Tenant_FirstName;
+                    currenttenant.Tenant_MiddleName = tenant.Tenant_MiddleName;
+                    currenttenant.Tenant_LastName = tenant.Tenant_LastName;
+                    currenttenant.Tenant_UserName = tenant.Tenant_UserName;
+                    currenttenant.Tenant_Email = tenant.Tenant_Email;
+                    currenttenant.Tenant_PhoneNumber = tenant.Tenant_PhoneNumber;
+                    currenttenant.Tenant_UpdatedAt = tenant.Tenant_UpdatedAt;
+
                     _context.Update(currenttenant);
                     await _context.SaveChangesAsync();
                 }
@@ -63,7 +71,7 @@ namespace RentalManagement.Controllers
                     {
                         ViewData["SuccessfulEdit"] = null;
                         ViewData["ErrorEdit"] = "Not Found";
-                        return View("Settings");
+                        return View();
                     }
                     else
                     {
@@ -72,20 +80,102 @@ namespace RentalManagement.Controllers
                 }
                 ViewData["ErrorEdit"] = null;
                 ViewData["SuccessfulEdit"] = "Edit Successfully";
-                return View("Settings");
+                return View();
             }
             ViewData["SuccessfulEdit"] = null;
             ViewData["ErrorEdit"] = "Edit Failed";
-            return View("Settings");
+            return View(currenttenant);
         }
-        //Get Account Notifications
-        public async Task<IActionResult> Notifications(int? id)
-        {
-            /*return _context.Tenant != null ?
-                         View(await _context.Tenant.ToListAsync()) :
-                         Problem("No Notifications Yet");*/
-            return View();
 
+        public IActionResult ChangePass()
+        {
+
+            if (GetId() == null || _context.Tenant == null)
+            {
+                return RedirectToAction("Index", "TenantHome");
+            }
+
+            var tenant = _context.Tenant.Find(GetId());
+            if (tenant == null)
+            {
+                return RedirectToAction("Index", "TenantHome");
+            }
+            return View(tenant);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePass([Bind("Tenant_Password")] Tenant tenant)
+        {
+            Tenant currenttenant = await _context.Tenant.FirstOrDefaultAsync(q => q.TenantId == GetId());
+
+            if (currenttenant != null)
+            {
+                try
+                {
+                    if(currenttenant.Tenant_Password == Hashing.HashPass(tenant.Tenant_Password))
+                    {
+                        ViewData["SamePass"] = "Same Password";
+                        return View();
+                    }
+                    currenttenant.Tenant_Password = Hashing.HashPass(tenant.Tenant_Password);
+                    _context.Update(currenttenant);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TenantExists())
+                    {
+                        ViewData["ChangePassSuccessful"] = null;
+                        ViewData["ChangePassFail"] = "Not Found";
+                        return View();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                ViewData["ChangePassFail"] = null;
+                ViewData["ChangePassSuccessful"] = "Changed Successfully";
+                return View();
+            }
+            ViewData["ChangePassSuccessful"] = null;
+            ViewData["ChangePassFail"] = "Changing Failed";
+            return View();
+        }
+
+        public IActionResult ValidatePass()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ValidatePass([Bind("Tenant_Password")] Tenant tenant)
+        {
+            try
+            {
+                var pass = Hashing.HashPass(tenant.Tenant_Password);
+                if (pass == null)
+                {
+                    ViewData["ValidationError"] = "ErrorPass";
+                    return View();
+                }
+                Tenant currenttenant = await _context.Tenant.FirstOrDefaultAsync(q => q.TenantId == GetId() && q.Tenant_Password == Hashing.HashPass(tenant.Tenant_Password));
+
+                if (currenttenant == null)
+                {
+                    ViewData["ValidationError"] = "ErrorPass";
+                    return View();
+                }
+                ViewData["ValidationSuccess"] = "ValidateComp";
+                return RedirectToAction("ChangePass", "TenantHome");
+            }
+            catch 
+            {
+                ViewData["ValidationError"] = "ErrorPass";
+                return View();
+            }
         }
 
         public IActionResult Logout()

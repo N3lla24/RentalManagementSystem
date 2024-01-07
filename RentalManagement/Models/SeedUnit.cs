@@ -20,28 +20,28 @@ namespace RentalManagement.Models
                     new Unit
                     {
                         Unit_Num = 1,
-                        Unit_Status = "Unoccupied",
+                        Unit_Status = "N/A",
                         Unit_CreatedAt = DateTime.Now,
                         Unit_UpdatedAt = DateTime.Now,
                     },
                     new Unit
                     {
                         Unit_Num = 2,
-                        Unit_Status = "Unoccupied",
+                        Unit_Status = "N/A",
                         Unit_CreatedAt = DateTime.Now,
                         Unit_UpdatedAt = DateTime.Now,
                     },
                     new Unit
                     {
                         Unit_Num = 3,
-                        Unit_Status = "Unoccupied",
+                        Unit_Status = "N/A",
                         Unit_CreatedAt = DateTime.Now,
                         Unit_UpdatedAt = DateTime.Now,
                     },
                     new Unit
                     {
                         Unit_Num = 4,
-                        Unit_Status = "Unoccupied",
+                        Unit_Status = "N/A",
                         Unit_CreatedAt = DateTime.Now,
                         Unit_UpdatedAt = DateTime.Now,
                     }

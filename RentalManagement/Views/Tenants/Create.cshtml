@@ -24,7 +24,30 @@
         </div>
     </section>
 
-    <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
+    <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 30px">
+        <h1>Tenant Registration</h1>
+        <hr />
+        <h3>Details</h3>
+        @if (ViewData["ExistingUser"] != null)
+        {
+            <div class="alert alert-dismissible alert-danger">
+                <strong>Existing User!</strong> Please Login or contact us <a href="#" class="alert-link">here</a> if you have problems registering.
+            </div>
+        }
+        @if (ViewData["UserNotFound"] != null)
+        {
+            <div class="alert alert-dismissible alert-danger">
+                <strong>Account Not Found!</strong> Send an Application <a href="@Url.Action("Create", "Applicants")" class="alert-link"> here</a> first.
+                <br><strong>Or wait for confirmation of your Application Form</strong>
+            </div>
+        }
+        @if (ViewData["Successful"] != null)
+        {
+            <script>
+                alert("Succesfully Registered, Redirecting to Login");
+                window.location.href = '/Login';
+            </script>
+        }
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <fieldset style="margin-left:50px; width:85%">
@@ -59,25 +82,7 @@
                         <span asp-validation-for="Tenant_Password" class="text-danger"></span>
                     </div>
                 </div>
-                @if (ViewData["ExistingUser"] != null)
-                {
-                    <div class="alert alert-dismissible alert-danger">
-                        <strong>Existing User!</strong> Please Login or contact us<a href="#" class="alert-link">here</a> if you have not yet registered.
-                    </div>
-                }
-                @if (ViewData["UserNotFound"] != null)
-                {
-                    <div class="alert alert-dismissible alert-danger">
-                        <strong>Account Not Found!</strong> Send an Application <a href="@Url.Action("Create", "Applicants")" class="alert-link"> here</a> first.
-                        <br><strong>Or wait for confirmation of your Application Form</strong>
-                    </div>
-                }
-                @if (ViewData["Successful"] != null)
-                {
-                    <script>alert("Succesfully Registered, Redirecting to Login");
-                        window.location.href = '/Login';
-                    </script>
-                }
+                
                 <div class="form-group">
                     <input type="submit" value="Register" class="btn btn-primary" />
                 </div>

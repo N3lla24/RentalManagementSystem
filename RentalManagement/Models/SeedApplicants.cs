@@ -43,8 +43,8 @@ namespace RentalManagement.Models
                        Applicants_Address = "Guizo, Mandaue City, Cebu",
                        Applicant_CreatedAt = DateTime.Now,
                        Applicant_UpdatedAt = DateTime.Now,
-                       Application_RoomNumber = 945,
-                       Application_UnitNumber = 589,
+                       Application_RoomNumber = 202,
+                       Application_UnitNumber = 2,
                        Application_Status = "Pending"
                    }
                 );

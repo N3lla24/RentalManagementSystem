@@ -10,11 +10,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Kerwin's Apartment</title>
-    <link rel="icon" type="image/x-icon" href="images/logo2.svg">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/home.css">
+    <script src="home.js"></script>
 </head>
 <body style="background-color: #FEEAD1">
     <section id="header">
@@ -24,6 +23,7 @@
     </section>
 
     <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
+        <h1 style="color: white">Available Rooms</h1>
         <div style="border-radius:5px">
             <table class="table" style="background-color:antiquewhite">
                 <thead>
@@ -39,6 +39,9 @@
                         </th>
                         <th>
                             Room Status
+                        </th>
+                        <th>
+                            Unit ID
                         </th>
                         <th></th>
                     </tr>
@@ -60,6 +63,9 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Room_Status)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UnitId)
                                 </td>
                                 <td>
                                     <a asp-action="RoomDetails" asp-route-id="@item.RoomId">Details</a> |

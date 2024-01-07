@@ -28,7 +28,19 @@
         <hr />
         <div class="row">
             <div class="col-md-4">
-                <form asp-action="Edit">
+                <form asp-action="Settings">
+                    @if (ViewData["ErrorEdit"] != null)
+                    {
+                        <script>
+                            alert("Edit Failed! Editing your details meet errors. Double check your inputs.");
+                        </script>
+                    }
+                    @if (ViewData["SuccessfulEdit"] != null)
+                    {
+                        <script>
+                            alert("Succesfully Edited your Details");
+                        </script>
+                    }
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="TenantId" />
                     <fieldset style="margin-left:80px; width:250%">
@@ -63,38 +75,18 @@
                         </div>
                         <br />
                         <div class="form-group">
-                            <label class="control-label">New Password</label>
-                            <input class="form-control" type="password" id="pass1" value="" required autocomplete="off" />
-                            <span asp-validation-for="Tenant_Password" class="text-danger"></span>
-                        </div>
-                        <br />
-                        <div class="form-group">
-                            <label asp-for="Tenant_Password" class="control-label">Input the Password again</label>
-                            <input asp-for="Tenant_Password" type="password" id="pass2" class="form-control" value="" onchange="compare()" autocomplete="off" />
-                            <span asp-validation-for="Tenant_Password" id="errormsg" class="text-danger"></span>
+                            <label asp-for="Tenant_UserName" class="control-label"></label>
+                            <input asp-for="Tenant_UserName" class="form-control" />
+                            <span asp-validation-for="Tenant_UserName" class="text-danger"></span>
                         </div>
                         <br />
                         <div class="form-group" hidden>
                             <label asp-for="Tenant_UpdatedAt" class="control-label"></label>
-                            <input asp-for="Tenant_UpdatedAt" class="form-control" type="date" value="@DateTime.Now" hidden />
-                            <span id="passerrormsg" class="text-danger"></span>
+                            <input asp-for="Tenant_UpdatedAt" class="form-control" type="datetime" value="@DateTime.Now.ToString()" />
                         </div>
-                        <br />
                         <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <input type="submit" value="Save Changes" class="btn btn-primary" />
                         </div>
-                        @if (ViewData["ErrorEdit"] != null)
-                        {
-                            <script>
-                                alert("Edit Failed! Editing your details meet errors. Double check your inputs.");
-                            </script>
-                        }
-                        @if (ViewData["SuccessfulEdit"] != null)
-                        {
-                            <script>
-                                alert("Succesfully Edited your Details");
-                            </script>
-                        }
                     </fieldset>
                 </form>
             </div>
@@ -102,7 +94,7 @@
         <br />
         <hr />
         <div>
-            <a asp-action="Index">Back to List</a>
+            <a asp-action="Index">Back to Home</a> | <a href="@Url.Action("ValidatePass", "TenantHome")">Change Password</a>
         </div>
     </section>
 
@@ -168,20 +160,6 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        function compare(){
-            var pass1 = document.getElementById("pass1").value;
-            var pass2 = document.getElementById("pass2").value;
-            if(pass1 != pass2){
-                document.getElementById("errormsg").value = "Passwords doesn't match."
-            }
-        }
-    </script>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @section Scripts {
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
