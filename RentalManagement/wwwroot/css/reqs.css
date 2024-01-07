@@ -1,4 +1,4 @@
-﻿* {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -153,29 +153,96 @@ body {
         vertical-align: middle;
     }
 
+.btn-go-to-home {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #765827;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.row dt {
+    font-weight: bold;
+}
+
+.row dd {
+    margin-bottom: 15px;
+}
+
+.container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #FEEAD1;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+    .table th,
+    .table td {
+        padding: 12px;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table tbody + tbody {
+        border-top: 2px solid #dee2e6;
+    }
+
+.container button {
+    padding: 15px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+    .container button:hover {
+        background-color: #8d6e3d;
+    }
+
+dl.row {
+    margin-bottom: 20px;
+}
+
+
+
 #requisitionForm {
     max-width: 500px;
     margin: 0 auto;
     font-family: 'Spartan', sans-serif;
-    background-color: #FEEAD1; /* Match the body background color */
-    padding: 20px; /* Add padding for better spacing */
+    background-color: #FEEAD1; 
+    padding: 20px; 
     margin-top: 10px;
-    border: 1px solid #ccc; /* Add a border for better separation */
-    border-radius: 10px; /* Add border radius for rounded corners */
+    border: 1px solid #ccc; 
+    border-radius: 10px; 
 }
 
 label {
     display: block;
-    margin-bottom: 10px; /* Increase margin for better spacing */
+    margin-bottom: 10px; 
     font-weight: bold;
-    color: #65451F; /* Match the label color */
+    color: #65451F; 
 }
 
 input,
 select,
 button {
     width: 100%;
-    padding: 12px; /* Adjust padding for better input/button size */
+    padding: 12px; 
     margin-bottom: 15px;
     box-sizing: border-box;
     border: 1px solid #ccc;
@@ -183,14 +250,14 @@ button {
 }
 
 button {
-    background-color: #765827; /* Match the button background color */
+    background-color: #765827; 
     color: aliceblue;
     cursor: pointer;
     font-size: 18px;
 }
 
     button:hover {
-        background-color: #8d6e3d; /* Match the button hover color */
+        background-color: #8d6e3d; 
     }
 
 #itemSection,
@@ -205,7 +272,7 @@ button {
 .addServiceButton {
     background-color: #008CBA;
     color: white;
-    padding: 12px 15px; /* Adjust padding for better button size */
+    padding: 12px 15px; 
     border: none;
     cursor: pointer;
     border-radius: 4px;
@@ -217,12 +284,12 @@ button {
     }
 
 #requisitionForm input[type="date"] {
-    padding: 12px; /* Adjust padding for better input size */
+    padding: 12px;
 }
 
 #requisitionForm input[type="text"] {
-    width: 100%; /* Make text inputs take full width */
-    padding: 12px; /* Adjust padding for better input size */
+    width: 100%; 
+    padding: 12px; 
     margin-bottom: 15px;
     box-sizing: border-box;
     border: 1px solid #ccc;
@@ -236,7 +303,7 @@ button {
 #requisitionForm button[type="submit"] {
     background-color: #765827;
     color: aliceblue;
-    padding: 15px 20px; /* Adjust padding for better button size */
+    padding: 15px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
