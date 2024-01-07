@@ -153,6 +153,102 @@ body {
         vertical-align: middle;
     }
 
+#requisitionForm {
+    max-width: 500px;
+    margin: 0 auto;
+    font-family: 'Spartan', sans-serif;
+    background-color: #FEEAD1; /* Match the body background color */
+    padding: 20px; /* Add padding for better spacing */
+    margin-top: 10px;
+    border: 1px solid #ccc; /* Add a border for better separation */
+    border-radius: 10px; /* Add border radius for rounded corners */
+}
+
+label {
+    display: block;
+    margin-bottom: 10px; /* Increase margin for better spacing */
+    font-weight: bold;
+    color: #65451F; /* Match the label color */
+}
+
+input,
+select,
+button {
+    width: 100%;
+    padding: 12px; /* Adjust padding for better input/button size */
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #765827; /* Match the button background color */
+    color: aliceblue;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+    button:hover {
+        background-color: #8d6e3d; /* Match the button hover color */
+    }
+
+#itemSection,
+#serviceSection {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.addItemButton,
+.addServiceButton {
+    background-color: #008CBA;
+    color: white;
+    padding: 12px 15px; /* Adjust padding for better button size */
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+    .addItemButton:hover,
+    .addServiceButton:hover {
+        background-color: #00506b;
+    }
+
+#requisitionForm input[type="date"] {
+    padding: 12px; /* Adjust padding for better input size */
+}
+
+#requisitionForm input[type="text"] {
+    width: 100%; /* Make text inputs take full width */
+    padding: 12px; /* Adjust padding for better input size */
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#requisitionForm label[for="Req_Item_Remarks"] {
+    vertical-align: top;
+}
+
+#requisitionForm button[type="submit"] {
+    background-color: #765827;
+    color: aliceblue;
+    padding: 15px 20px; /* Adjust padding for better button size */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+    #requisitionForm button[type="submit"]:hover {
+        background-color: #8d6e3d;
+    }
+
+
 footer {
     background-color: #65451F;
     color: aliceblue;
