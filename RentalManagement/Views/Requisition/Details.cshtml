@@ -16,6 +16,7 @@ else
             @foreach (var requisition in Model)
             {
                 <div class="col-md-6 mb-4">
+                    <button onclick="window.location.href='@Url.Action("Index", "TenantHome")'">Back Home</button>
                     <div class="container border p-3" style="min-height: 400px; max-height: 1000px; overflow-y: auto;">
                         <h2>Requisition Details</h2>
                         <dl class="row">
