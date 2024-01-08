@@ -243,7 +243,25 @@ namespace RentalManagement.Controllers
             }
             
         }
-
+        public async Task<IActionResult> DetailsRequisition(int? id)
+        {
+            if (id == null || _context.Requisition == null)
+            {
+                return NotFound();
+            }
+        
+            var requisition = await _context.Requisition
+                .Include(m => m.Tenant)
+                .Include(m => m.RequisitionItems)
+                .Include(m => m.RequisitionServices)
+                .FirstOrDefaultAsync(m => m.RequisitionId == id);
+            if (requisition == null)
+            {
+                return NotFound();
+            }
+        
+            return View(requisition);
+        }
         //Get Applicants Details
         public async Task<IActionResult> AppDetails(int? id)
         {
