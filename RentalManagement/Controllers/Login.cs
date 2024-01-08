@@ -74,10 +74,21 @@ namespace RentalManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(Tenant tenant)
         {
-            /*return RedirectToAction("Index", "TenantHome");*/
             if (tenant.Tenant_Password != null && tenant.Tenant_UserName != null)
             {
                 string hashpass = Hashing.HashPass(tenant.Tenant_Password);
+
+                //check if admin is logging in
+                Admin adminuser = await _context.Admin.SingleOrDefaultAsync(q => q.Admin_UserName == tenant.Tenant_UserName && q.Admin_Password == hashpass);
+                if (adminuser != null)
+                {
+                    ViewData["LoginErrorMessage"] = null;
+                    HttpContext.Session.SetInt32("adminid", adminuser.AdminId);
+                    return RedirectToAction("Home", "AdminHome");
+                }
+
+
+                //check if user is logging in
                 Tenant loginuser = await _context.Tenant.SingleOrDefaultAsync(q => q.Tenant_UserName == tenant.Tenant_UserName && q.Tenant_Password == hashpass);
                 if (loginuser != null)
                 {

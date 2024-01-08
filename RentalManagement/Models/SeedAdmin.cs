@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentalManagement.Data;
+using RentalManagement.Services;
 
 namespace RentalManagement.Models
 {
@@ -19,7 +20,9 @@ namespace RentalManagement.Models
                     new Admin
                     {
                         Admin_UserName = "Admin12345",
-                        Admin_Password = "admin/Password123",
+                        Admin_Password = Hashing.HashPass("admin/Password123"),
+                        Admin_Email = "Admin@admin.com",
+                        Admin_PhoneNumber = "09903918672"
                     }
                 );
                 context.SaveChanges();

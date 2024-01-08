@@ -54,6 +54,13 @@ namespace RentalManagement.Controllers
             {
                 try
                 {
+                    Tenant existingusername = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_UserName == tenant.Tenant_UserName && q.TenantId != tenant.TenantId);
+                    Admin existingadminname = await _context.Admin.FirstOrDefaultAsync(q => q.Admin_UserName == tenant.Tenant_UserName);
+                    if (existingusername != null || existingadminname != null)
+                    {
+                        ViewData["ExistingUserName"] = "Existing Username";
+                        return View(currenttenant);
+                    }
                     currenttenant.Tenant_FirstName = tenant.Tenant_FirstName;
                     currenttenant.Tenant_MiddleName = tenant.Tenant_MiddleName;
                     currenttenant.Tenant_LastName = tenant.Tenant_LastName;
@@ -146,6 +153,7 @@ namespace RentalManagement.Controllers
 
         public IActionResult ValidatePass()
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             return View();
         }
 

@@ -60,20 +60,37 @@ namespace RentalManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TenantId,Tenant_FirstName,Tenant_MiddleName,Tenant_LastName,Tenant_UserName,Tenant_Email,Tenant_PhoneNumber,Tenant_Password,Tenant_RoomNumber,Tenant_UnitNumber,Tenant_CreatedAt,Tenant_UpdatedAt")] Tenant tenant)
         {
-            Tenant existingTenant = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_Email == tenant.Tenant_Email && q.Tenant_PhoneNumber == tenant.Tenant_PhoneNumber);
+            Admin existingadmin = await _context.Admin.FirstOrDefaultAsync(a => a.Admin_Email == tenant.Tenant_Email && a.Admin_PhoneNumber == tenant.Tenant_PhoneNumber);
+            if (existingadmin != null) 
+            { 
+                ViewData["ExistingUser"] = "Existing"; return View(tenant); 
+            }
 
-            if (existingTenant == null) { ViewData["UserNotFound"] = "Not Found"; return View(tenant); }
+            Tenant existingTenant = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_Email == tenant.Tenant_Email && q.Tenant_PhoneNumber == tenant.Tenant_PhoneNumber && q.Tenant_RoomNumber == tenant.Tenant_RoomNumber && q.Tenant_UnitNumber == tenant.Tenant_UnitNumber);
 
-            if (existingTenant.Tenant_UserName != "N/A" && existingTenant.Tenant_Password != "N/A") 
+            if (existingTenant == null) 
+            { 
+                ViewData["UserNotFound"] = "Not Found"; return View(tenant);
+            }
+
+            if (existingTenant.Tenant_UserName != "N/A" && existingTenant.Tenant_Password != "N/A")
             {
                 ViewData["ExistingUser"] = "Existing";
-                return View(tenant); 
+                return View(tenant);
+            }
+
+            Tenant existingusername = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_UserName == tenant.Tenant_UserName);
+            Admin existingadminname = await _context.Admin.FirstOrDefaultAsync(q => q.Admin_UserName == tenant.Tenant_UserName);
+            if (existingusername != null || existingadminname != null)
+            {
+                ViewData["ExistingUserName"] = "Existing Username";
+                return View(tenant);
             }
             try
             {
-                ViewData["ExistingUser"] = null;
                 existingTenant.Tenant_UserName = tenant.Tenant_UserName;
                 existingTenant.Tenant_Password = Hashing.HashPass(tenant.Tenant_Password);
+                ViewData["ExistingUser"] = null;
                 Room room = await _context.Room.FirstOrDefaultAsync(q => q.Room_Num == existingTenant.Tenant_RoomNumber && q.UnitId == existingTenant.Tenant_UnitNumber);
                 if (room == null) { return Content("Room and Unit Number not found. Contact the admin"); }
                 room.TenantId = existingTenant.TenantId;

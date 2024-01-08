@@ -19,7 +19,10 @@
 <body style="background-color: #FEEAD1">
     <section id="header">
         <div class="navbar">
-            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+            <a asp-action="Logout" style="margin-top:12px" id="Logout">Logout</a>
+            <div class="dropdown nbItem">
+                <a href="@Url.Action("Index", "TenantHome")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+            </div>
         </div>
     </section>
 

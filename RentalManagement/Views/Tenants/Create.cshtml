@@ -28,10 +28,16 @@
         <h1>Tenant Registration</h1>
         <hr />
         <h3>Details</h3>
+        @if (ViewData["ExistingUserName"] != null)
+        {
+            <div class="alert alert-dismissible alert-danger">
+                <strong>Existing User Name!</strong> Use other username for registration.
+            </div>
+        }
         @if (ViewData["ExistingUser"] != null)
         {
             <div class="alert alert-dismissible alert-danger">
-                <strong>Existing User!</strong> Please Login or contact us <a href="#" class="alert-link">here</a> if you have problems registering.
+                <strong>Existing User!</strong> Please Login <a href="@Url.Action("Index", "Login")" class="alert-link">here</a>.
             </div>
         }
         @if (ViewData["UserNotFound"] != null)
@@ -68,8 +74,22 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label asp-for="Tenant_RoomNumber" class="form-label mt-4">Room Number</label>
+                    <input asp-for="Tenant_RoomNumber" type="number" class="form-control">
+                    <div>
+                        <span asp-validation-for="Tenant_RoomNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tenant_UnitNumber" class="form-label mt-4">Unit Number</label>
+                    <input asp-for="Tenant_UnitNumber" type="number" class="form-control">
+                    <div>
+                        <span asp-validation-for="Tenant_UnitNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label asp-for="Tenant_UserName" class="form-label mt-4">User Name</label>
-                    <input asp-for="Tenant_UserName" type="text" class="form-control" placeholder="Enter email (e.g. email@example.com)">
+                    <input asp-for="Tenant_UserName" type="text" class="form-control" autocomplete="off" >
                     <div>
                         <span asp-validation-for="Tenant_UserName" class="text-danger"></span>
                     </div>

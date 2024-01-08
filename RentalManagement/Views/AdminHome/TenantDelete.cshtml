@@ -17,7 +17,10 @@
 <body style="background-color: #FEEAD1">
     <section id="header">
         <div class="navbar">
-            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+            <a asp-action="Logout" style="margin-top:12px" id="Logout">Logout</a>
+            <div class="dropdown nbItem">
+                <a href="@Url.Action("Settings", "AdminHome")"><i class="fas fa-tools"></i></a>
+            </div>
         </div>
     </section>
     <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">

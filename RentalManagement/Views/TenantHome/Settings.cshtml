@@ -19,22 +19,39 @@
 <body style="background-color: #FEEAD1">
     <section id="header">
         <div class="navbar">
-            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+            <a asp-action="Logout" style="margin-top:12px" id="Logout">Logout</a>
+            <div class="dropdown nbItem">
+                <a href="@Url.Action("Index", "TenantHome")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+            </div>
         </div>
     </section>
 
     <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
         <h1>Edit</h1>
         <hr />
+        @if (ViewData["ExistingUserName"] != null)
+        {
+            <div class="alert alert-dismissible alert-danger">
+                <strong>Existing User Name!</strong> Use other username for registration.
+            </div>
+        }
+        @if (ViewData["ErrorEdit"] != null)
+        {
+            <div class="alert alert-dismissible alert-danger">
+                <strong>Edit Failed!</strong> Editing your details meet errors. Double check your inputs.
+            </div>
+        }
+        @if (ViewData["SuccessfulEdit"] != null)
+        {
+            <div class="alert alert-dismissible alert-success">
+                <strong>Succesfully Edited your Details</strong>
+            </div>
+        }
         <div class="row">
             <div class="col-md-4">
                 <form asp-action="Settings">
-                    @if (ViewData["ErrorEdit"] != null)
-                    {
-                        <script>
-                            alert("Edit Failed! Editing your details meet errors. Double check your inputs.");
-                        </script>
-                    }
+                    
+                    
                     @if (ViewData["SuccessfulEdit"] != null)
                     {
                         <script>
@@ -76,7 +93,7 @@
                         <br />
                         <div class="form-group">
                             <label asp-for="Tenant_UserName" class="control-label"></label>
-                            <input asp-for="Tenant_UserName" class="form-control" />
+                            <input asp-for="Tenant_UserName" class="form-control" autocomplete="off" />
                             <span asp-validation-for="Tenant_UserName" class="text-danger"></span>
                         </div>
                         <br />

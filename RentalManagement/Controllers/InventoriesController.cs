@@ -22,14 +22,16 @@ namespace RentalManagement.Controllers
         // GET: Inventories
         public async Task<IActionResult> Index()
         {
-              return _context.Inventory != null ? 
-                          View(await _context.Inventory.ToListAsync()) :
-                          Problem("Entity set 'RentalManagementContext.Inventory'  is null.");
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
+            return _context.Inventory != null ?
+                        View(await _context.Inventory.ToListAsync()) :
+                        Problem("Entity set 'RentalManagementContext.Inventory'  is null.");
         }
 
         // GET: Inventories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             if (id == null || _context.Inventory == null)
             {
                 return NotFound();
@@ -48,6 +50,7 @@ namespace RentalManagement.Controllers
         // GET: Inventories/Create
         public IActionResult Create()
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             return View();
         }
 
@@ -70,6 +73,7 @@ namespace RentalManagement.Controllers
         // GET: Inventories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             if (id == null || _context.Inventory == null)
             {
                 return NotFound();
@@ -121,6 +125,7 @@ namespace RentalManagement.Controllers
         // GET: Inventories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             if (id == null || _context.Inventory == null)
             {
                 return NotFound();
@@ -150,14 +155,27 @@ namespace RentalManagement.Controllers
             {
                 _context.Inventory.Remove(inventory);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool InventoryExists(int id)
         {
-          return (_context.Inventory?.Any(e => e.InventoryId == id)).GetValueOrDefault();
+            return (_context.Inventory?.Any(e => e.InventoryId == id)).GetValueOrDefault();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("adminid");
+            return RedirectToAction("Index", "Home");
+        }
+
+        private int? GetId()
+        {
+            var id = HttpContext.Session.GetInt32("adminid");
+            if (id is not null) { return id; }
+            return null;
         }
     }
 }

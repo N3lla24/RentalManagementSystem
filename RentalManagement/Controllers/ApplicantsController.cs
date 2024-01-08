@@ -33,18 +33,12 @@ namespace RentalManagement.Controllers
         // GET: Applicants
         public async Task<IActionResult> Indexf(Applicants applicants)
         {
-            if (applicants.Applicants_Email != null && applicants.Applicants_PhoneNumber != null)
+            if (applicants.Applicants_Email != null && applicants.Applicants_PhoneNumber != null && applicants.Application_RoomNumber != null && applicants.Application_UnitNumber != null)
             {
-                Applicants searchapplicant = await _context.Applicants.SingleOrDefaultAsync(q => q.Applicants_Email == applicants.Applicants_Email && q.Applicants_PhoneNumber == applicants.Applicants_PhoneNumber);
+                Applicants searchapplicant = await _context.Applicants.SingleOrDefaultAsync(q => q.Applicants_Email == applicants.Applicants_Email && q.Applicants_PhoneNumber == applicants.Applicants_PhoneNumber && q.Application_RoomNumber == applicants.Application_RoomNumber && q.Application_UnitNumber == applicants.Application_UnitNumber);
                 if (searchapplicant == null)
                 {
                     ViewData["NotFound"] = "Not Found";
-                    return View("Index");
-                }
-
-                if (searchapplicant.Application_Status == "Accept")
-                {
-                    ViewData["ApplicantAccepted"] = "AcceptedApplicant";
                     return View("Index");
                 }
                 if (searchapplicant != null)
@@ -92,6 +86,10 @@ namespace RentalManagement.Controllers
                 if (applicants == null)
                 {
                     return NotFound();
+                }
+                if (applicants.Application_Status == "Accept")
+                {
+                    ViewData["ApplicantAccepted"] = "AcceptedApplicant";
                 }
                 //Format Number
                 if (applicants.Applicants_PhoneNumber.Length >= 4)

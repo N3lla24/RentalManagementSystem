@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RentalManagement.Data;
 using RentalManagement.Models;
 using System.Threading.Tasks;
+using RentalManagement.Services;
 
 namespace RentalManagement.Controllers
 {
@@ -21,16 +22,25 @@ namespace RentalManagement.Controllers
 
         public IActionResult Home()
         {
-            return View();
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
+
+            return _context.Admin != null ?
+                          View(_context.Admin
+                          .FirstOrDefault(m => m.AdminId == GetId())) :
+                          Problem("Entity set 'RentalManagementContext.Admin'  is null.");
         }
 
         public IActionResult ManageSupplier()
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
+
+
             return View();
         }
 
         public async Task<IActionResult> ManageRental()
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             try
             {
                 var tenant = await _context.Tenant.ToListAsync();
@@ -162,6 +172,7 @@ namespace RentalManagement.Controllers
         //Get Tenant Details
         public async Task<IActionResult> TenantDetails(int? id)
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             if (id == null || _context.Tenant == null)
             {
                 return NotFound();
@@ -180,6 +191,7 @@ namespace RentalManagement.Controllers
         //Get Tenant Delete Details
         public async Task<IActionResult> TenantDelete(int? id)
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             if (id == null || _context.Tenant == null)
             {
                 return NotFound();
@@ -200,6 +212,7 @@ namespace RentalManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> TenantDeleteConfirmed(int id)
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             if (_context.Tenant == null)
             {
                 return Problem("Entity set 'RentalManagementContext.Tenant'  is null.");
@@ -234,6 +247,7 @@ namespace RentalManagement.Controllers
         //Get Applicants Details
         public async Task<IActionResult> AppDetails(int? id)
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             if (id == null || _context.Applicants == null)
             {
                 return NotFound();
@@ -251,6 +265,7 @@ namespace RentalManagement.Controllers
 
         public async Task<IActionResult> Accept(int? id)
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             var applicants = await _context.Applicants
                 .FirstOrDefaultAsync(m => m.ApplicationId == id);
             if (applicants == null)
@@ -263,7 +278,7 @@ namespace RentalManagement.Controllers
 
         public async Task<IActionResult> AcceptConfirmed([Bind("ApplicationId, Application_StatusRemark")] Applicants applicants)
         {
-            
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             try
             {
                 Applicants matchapp = await _context.Applicants.FirstOrDefaultAsync(m => m.ApplicationId == applicants.ApplicationId);
@@ -314,6 +329,7 @@ namespace RentalManagement.Controllers
 
         public async Task<IActionResult> Reject(int? id)
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             var applicants = await _context.Applicants
                 .FirstOrDefaultAsync(m => m.ApplicationId == id);
             if (applicants == null)
@@ -325,7 +341,7 @@ namespace RentalManagement.Controllers
 
         public async Task<IActionResult> RejectForm([Bind("ApplicationId, Application_StatusRemark")] Applicants applicants)
         {
-
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             Applicants matchapp = await _context.Applicants.FirstOrDefaultAsync(m => m.ApplicationId == applicants.ApplicationId);
             if (matchapp == null) { return Content("Application Not Found"); }
             if (matchapp != null)
@@ -354,6 +370,7 @@ namespace RentalManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             if (_context.Applicants == null)
             {
                 return Problem("The Applicant can't be found. No Applicants in the database.");
@@ -363,7 +380,7 @@ namespace RentalManagement.Controllers
                 var applicant = await _context.Applicants.FindAsync(id);
                 if (applicant == null)
                 {
-                    return Content("An unexpected error occurred. Please try again later.");  
+                    return Content("An unexpected error occurred. Please try again later.");
                 }
                 _context.Applicants.Remove(applicant);
                 await _context.SaveChangesAsync();
@@ -375,10 +392,178 @@ namespace RentalManagement.Controllers
             }
         }
 
+        //Get Account Details for Settings
+        public IActionResult Settings()
+        {
+
+            if (GetId() == null || _context.Admin == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            var admin = _context.Admin.Find(GetId());
+            if (admin == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            return View(admin);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Settings([Bind("AdminId, Admin_UserName, Admin_Email, Admin_PhoneNumber")] Admin admin)
+        {
+            Admin currentadmin = await _context.Admin.FirstOrDefaultAsync(q => q.AdminId == GetId());
+
+            if (currentadmin != null)
+            {
+                try
+                {
+                    Tenant existingusername = await _context.Tenant.FirstOrDefaultAsync(q => q.Tenant_UserName == admin.Admin_UserName);
+                    Admin existingadminname = await _context.Admin.FirstOrDefaultAsync(q => q.Admin_UserName == admin.Admin_UserName && q.AdminId != admin.AdminId);
+                    if (existingusername != null || existingadminname != null)
+                    {
+                        ViewData["ExistingUserName"] = "Existing Username";
+                        return View(existingadminname);
+                    }
+
+                    currentadmin.Admin_UserName = admin.Admin_UserName;
+                    currentadmin.Admin_Email = admin.Admin_Email;
+                    currentadmin.Admin_PhoneNumber = admin.Admin_PhoneNumber;
+
+                    _context.Update(currentadmin);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AdminExists())
+                    {
+                        ViewData["SuccessfulEdit"] = null;
+                        ViewData["ErrorEdit"] = "Not Found";
+                        return View();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                ViewData["ErrorEdit"] = null;
+                ViewData["SuccessfulEdit"] = "Edit Successfully";
+                return View();
+            }
+            ViewData["SuccessfulEdit"] = null;
+            ViewData["ErrorEdit"] = "Edit Failed";
+            return View(currentadmin);
+        }
+
+
+        public IActionResult ValidatePass()
+        {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ValidatePass([Bind("Admin_Password")] Admin admin)
+        {
+            try
+            {
+                var pass = Hashing.HashPass(admin.Admin_Password);
+                if (pass == null)
+                {
+                    ViewData["ValidationError"] = "ErrorPass";
+                    return View();
+                }
+                Admin currentadmin = await _context.Admin.FirstOrDefaultAsync(q => q.AdminId == GetId() && q.Admin_Password == pass);
+
+                if (currentadmin == null)
+                {
+                    ViewData["ValidationError"] = "ErrorPass";
+                    return View();
+                }
+                ViewData["ValidationSuccess"] = "ValidateComp";
+                return RedirectToAction("ChangePass", "AdminHome");
+            }
+            catch
+            {
+                ViewData["ValidationError"] = "ErrorPass";
+                return View();
+            }
+        }
+
+        public IActionResult ChangePass()
+        {
+
+            if (GetId() == null || _context.Admin == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            var admin = _context.Admin.Find(GetId());
+            if (admin == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            return View(admin);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePass([Bind("Admin_Password")] Admin admin)
+        {
+            Admin currentadmin = await _context.Admin.FirstOrDefaultAsync(q => q.AdminId == GetId());
+
+            if (currentadmin != null)
+            {
+                try
+                {
+                    if (currentadmin.Admin_Password == Hashing.HashPass(admin.Admin_Password))
+                    {
+                        ViewData["SamePass"] = "Same Password";
+                        return View();
+                    }
+                    currentadmin.Admin_Password = Hashing.HashPass(admin.Admin_Password);
+                    _context.Update(currentadmin);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AdminExists())
+                    {
+                        ViewData["ChangePassSuccessful"] = null;
+                        ViewData["ChangePassFail"] = "Not Found";
+                        return View();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                ViewData["ChangePassFail"] = null;
+                ViewData["ChangePassSuccessful"] = "Changed Successfully";
+                return View();
+            }
+            ViewData["ChangePassSuccessful"] = null;
+            ViewData["ChangePassFail"] = "Changing Failed";
+            return View();
+        }
+
+        private bool AdminExists()
+        {
+            return (_context.Admin?.Any(e => e.AdminId == GetId())).GetValueOrDefault();
+        }
+
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("AdminID");
+            HttpContext.Session.Remove("adminid");
             return RedirectToAction("Index", "Home");
+        }
+        private int? GetId()
+        {
+            var id = HttpContext.Session.GetInt32("adminid");
+            if (id is not null) { return id; }
+            return null;
         }
     }
 }

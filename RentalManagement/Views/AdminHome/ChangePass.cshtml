@@ -1,4 +1,4 @@
-﻿@model RentalManagement.Models.Tenant;
+﻿@model RentalManagement.Models.Admin;
 
 @{
     ViewData["Title"] = "Change Password";
@@ -21,7 +21,7 @@
         <div class="navbar">
             <a asp-action="Logout" style="margin-top:12px" id="Logout">Logout</a>
             <div class="dropdown nbItem">
-                <a href="@Url.Action("Index", "TenantHome")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+                <a href="@Url.Action("Home", "AdminHome")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
             </div>
         </div>
     </section>
@@ -34,12 +34,12 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label class="control-label">New Password</label>
-                        <input asp-for="Tenant_Password" type="password" id="newPassword" class="form-control" oninput="checkPasswordMatch()" required autocomplete="off">
-                        <span asp-validation-for="Tenant_Password" class="text-danger"></span>
+                        <input asp-for="Admin_Password" type="password" id="newPassword" class="form-control" oninput="checkPasswordMatch()" required autocomplete="off">
+                    <span asp-validation-for="Admin_Password" class="text-danger"></span>
                     </div>
                     <br />
                     <div class="form-group">
-                        <label asp-for="Tenant_Password" class="control-label">Input the Password again</label>
+                    <label asp-for="Admin_Password" class="control-label">Input the Password again</label>
                         <input type="password" id="confirmPassword" class="form-control" oninput="checkPasswordMatch()" autocomplete="off">
                         <p class="password-match-message" id="passwordMatchMessage"></p>
                     </div>
