@@ -101,8 +101,8 @@
             <a href="@Url.Action("ManageRental", "AdminHome")"><i class="fas fa-arrow-left" href="@Url.Action("ManageRental", "AdminHome")"></i> Back to Home</a>
             @if (Model.Requisition_Status == "Pending")
             {
-                <a asp-action="Accept" asp-route-id="@Model?.RequisitionId" style="margin-left: 70%; color: lawngreen">Accept</a> <i>|</i>
-                <a asp-action="Reject" asp-route-id="@Model?.RequisitionId" style="color: red">Reject</a>
+                <a asp-action="AcceptRequest" asp-route-id="@Model?.RequisitionId" style="margin-left: 70%; color: lawngreen">Accept</a> <i>|</i>
+                <a asp-action="RejectRequest" asp-route-id="@Model?.RequisitionId" style="color: red">Reject</a>
             }
 
         </div>
