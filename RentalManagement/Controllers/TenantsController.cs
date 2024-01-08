@@ -69,12 +69,15 @@ namespace RentalManagement.Controllers
                 ViewData["ExistingUser"] = "Existing";
                 return View(tenant); 
             }
-
-            ViewData["ExistingUser"] = null;
-            existingTenant.Tenant_UserName = tenant.Tenant_UserName;
-            existingTenant.Tenant_Password = Hashing.HashPass(tenant.Tenant_Password);
             try
             {
+                ViewData["ExistingUser"] = null;
+                existingTenant.Tenant_UserName = tenant.Tenant_UserName;
+                existingTenant.Tenant_Password = Hashing.HashPass(tenant.Tenant_Password);
+                Room room = await _context.Room.FirstOrDefaultAsync(q => q.Room_Num == tenant.Tenant_RoomNumber && q.UnitId == tenant.Tenant_UnitNumber);
+                if (room == null) { return Content("Room and Unit Number not found. Contact the admin"); }
+                room.TenantId = existingTenant.TenantId;
+                _context.Update(room);
                 _context.Update(existingTenant);
                 await _context.SaveChangesAsync();
             }

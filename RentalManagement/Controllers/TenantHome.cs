@@ -171,12 +171,50 @@ namespace RentalManagement.Controllers
                 ViewData["ValidationSuccess"] = "ValidateComp";
                 return RedirectToAction("ChangePass", "TenantHome");
             }
-            catch 
+            catch
             {
                 ViewData["ValidationError"] = "ErrorPass";
                 return View();
             }
         }
+
+        // GET: Tenants/Delete/5
+        public async Task<IActionResult> Delete()
+        {
+            if (GetId() == null || _context.Tenant == null)
+            {
+                return RedirectToAction("Index", "TenantHome");
+            }
+
+            var tenant = await _context.Tenant
+                .FirstOrDefaultAsync(m => m.TenantId == GetId());
+            if (tenant == null)
+            {
+                return NotFound();
+            }
+
+            return View(tenant);
+        }
+
+        // POST: Tenants/Delete/
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_context.Tenant == null)
+            {
+                return Problem("Entity set 'RentalManagementContext.Tenant'  is null.");
+            }
+            var tenant = await _context.Tenant.FindAsync(id);
+            if (tenant != null)
+            {
+                _context.Tenant.Remove(tenant);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
 
         public IActionResult Logout()
         {

@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div class="historyColumn">
-                    <div class="scrollableDiv" id="paymentHistory">
+                    @*<div class="scrollableDiv" id="paymentHistory">
                         <p>PAYMENT HISTORY</p>
                         <table id="paymentHistoryTable" class="table">
                             <thead>
@@ -129,7 +129,7 @@
                                 }
                             </tbody>
                         </table>
-                    </div>
+                    </div>*@
                     <div class="scrollableDiv" id="requisitionHistory">
                         <p>REQUISITION HISTORY</p>
                         <table id="requisitionHistoryTable" class="table">
@@ -263,7 +263,7 @@
                                 <td>@tenant.Tenant_FirstName</td>
                                 <td>@tenant.Tenant_LastName</td>
                                 <td>
-                                    <button class="tenantActionButton" data-tenant-id="@tenant.TenantId">Details</button>
+                                    <a asp-action="TenantDetails" asp-route-id="@tenant.TenantId" style="color: green">Details</a>
                                 </td>
                             </tr>
                         }
@@ -401,7 +401,7 @@
                                     <td>@application.Applicants_LastName</td>
                                     <td>@application.Application_Status</td>
                                     <td>
-                                    <a asp-action="AppDetails" asp-route-id="@application.ApplicationId">Details</a>
+                                    <a asp-action="AppDetails" asp-route-id="@application.ApplicationId" style="color: green">Details</a>
                                     </td>
                                 </tr>
                         }

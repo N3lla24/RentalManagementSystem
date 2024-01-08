@@ -29,12 +29,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Inventory_CreatedAt" class="control-label">Date Created</label>
-                <input type="datetime" asp-for="Inventory_CreatedAt" class="form-control" value="@DateTime.Now" disabled />
+                <input type="datetime" asp-for="Inventory_CreatedAt" class="form-control"  value="@DateTime.Now.ToString()" disabled />
                 <span asp-validation-for="Inventory_CreatedAt" class="text-danger"></span>
             </div>
             <div class="form-group" >
                 <label asp-for="Inventory_UpdatedAt" class="control-label" >Date Edited</label>
-                <input type="datetime" asp-for="Inventory_UpdatedAt" class="form-control" value="@DateTime.Now" disabled />
+                <input type="datetime" asp-for="Inventory_UpdatedAt" class="form-control" value="@DateTime.Now.ToString()" disabled />
                 <span asp-validation-for="Inventory_UpdatedAt" class="text-danger"></span>
             </div> <br />
             <div class="form-group">

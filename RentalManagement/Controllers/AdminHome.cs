@@ -38,11 +38,11 @@ namespace RentalManagement.Controllers
                 var room = await _context.Room.ToListAsync();
                 var feedback = await _context.Feedback.ToListAsync();
                 var applicants = await _context.Applicants.ToListAsync();
-                var payment = await _context.PaymentDetail.ToListAsync();
+                /*var payment = await _context.PaymentDetail.ToListAsync();*/
                 var ph = await _context.PaymentDetail.ToListAsync();
                 var rh = await _context.Requisition.ToListAsync();
 
-                if (tenant != null && requisition != null && room != null && feedback != null && payment != null && applicants != null && ph != null && rh != null)
+                if (tenant != null && requisition != null && room != null && feedback != null && /*payment != null &&*/ applicants != null && ph != null && rh != null)
                 {
                     var tenantDisplayList = tenant.Select(tenant => new TenantDisplay
                     {
@@ -94,16 +94,16 @@ namespace RentalManagement.Controllers
                         Applicant_UpdatedAt = applicants.Applicant_UpdatedAt,
                     }).ToList();
 
-                    var monthlyTotals = payment
+                    /*var monthlyTotals = payment
                     .GroupBy(p => p.Pay_CreatedAt.ToString("yyyy-MM"))
                     .Select(g => new ReportsDisplay
                     {
                         Month = g.Key, 
                         TotalFees = g.Sum(p => p.Pay_RentPrice + p.Pay_UtilityFee + p.Pay_GarbageFee + p.Pay_AirconFee + p.Pay_InternetFee + p.Pay_RefrigeratorFee + p.Pay_WashingFee)
                     })
-                    .ToList();
+                    .ToList();*/
 
-                    var paymentHistoryList = ph.Select(ph => new PaymentDetail
+                    /*var paymentHistoryList = ph.Select(ph => new PaymentDetail
                     {
                         Pay_ID = ph.Pay_ID,
                         Pay_DueDate = ph.Pay_DueDate,
@@ -116,7 +116,7 @@ namespace RentalManagement.Controllers
                         Pay_WashingFee = ph.Pay_WashingFee,
                         Pay_UpdatedAt = ph.Pay_UpdatedAt,
 
-                    }).ToList();
+                    }).ToList();*/
 
                     var requisitionHistoryList = rh.Select(rh => new Requisition
                     {
@@ -137,8 +137,8 @@ namespace RentalManagement.Controllers
                         Requisition = requisitionDisplayList,
                         Room = roomDisplayList,
                         Feedback = feedbackDisplayList,
-                        Reports = monthlyTotals,
-                        PaymentHistory = paymentHistoryList,
+                        /*Reports = monthlyTotals,
+                        PaymentHistory = paymentHistoryList,*/
                         RequisitionHistory = requisitionHistoryList,
                         Applicants = appDisplayList
                     };
@@ -159,7 +159,79 @@ namespace RentalManagement.Controllers
             }
         }
 
+        //Get Tenant Details
+        public async Task<IActionResult> TenantDetails(int? id)
+        {
+            if (id == null || _context.Tenant == null)
+            {
+                return NotFound();
+            }
 
+            var tenants = await _context.Tenant
+                .FirstOrDefaultAsync(m => m.TenantId == id);
+            if (tenants == null)
+            {
+                return NotFound();
+            }
+
+            return View(tenants);
+        }
+
+        //Get Tenant Delete Details
+        public async Task<IActionResult> TenantDelete(int? id)
+        {
+            if (id == null || _context.Tenant == null)
+            {
+                return NotFound();
+            }
+
+            var tenants = await _context.Tenant
+                .FirstOrDefaultAsync(m => m.TenantId == id);
+            if (tenants == null)
+            {
+                return NotFound();
+            }
+
+            return View(tenants);
+        }
+
+        // POST: Tenants/Delete/
+        [HttpPost, ActionName("TenantDelete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TenantDeleteConfirmed(int id)
+        {
+            if (_context.Tenant == null)
+            {
+                return Problem("Entity set 'RentalManagementContext.Tenant'  is null.");
+            }
+            try
+            {
+                var tenant = await _context.Tenant.FindAsync(id);
+                if (tenant == null)
+                {
+                    return Content("Tenant can't be found");
+                }
+                var room = await _context.Room.FirstOrDefaultAsync(r => r.Room_Num == tenant.Tenant_RoomNumber && r.UnitId == tenant.Tenant_UnitNumber);
+                if(room == null)
+                {
+                    return Content("Room can't be found");
+                }
+                room.Room_Status = "Unoccupied";
+                room.TenantId = null;
+                _context.Update(room);
+                _context.Tenant.Remove(tenant);
+                await _context.SaveChangesAsync();
+                ViewData["SuccessfulDelete"] = "SuccessDel";
+                return RedirectToAction("ManageRental", "AdminHome");
+            }
+            catch
+            {
+                return Content("An error occured while processing the application. Try again later");
+            }
+            
+        }
+
+        //Get Applicants Details
         public async Task<IActionResult> AppDetails(int? id)
         {
             if (id == null || _context.Applicants == null)
@@ -205,42 +277,37 @@ namespace RentalManagement.Controllers
                     if (room is null) { return Content("An unexpected error occurred. Please try again later."); }
                     room.Room_Status = "Occupied";
                     _context.Update(room);
+                    matchapp.Application_Status = "Accept";
+                    matchapp.Application_StatusRemark = applicants.Application_StatusRemark;
+                    matchapp.Applicant_UpdatedAt = DateTime.Now;
+                    _context.Update(matchapp);
+                    _context.Tenant.AddRange(
+                            new Tenant
+                            {
+                                Tenant_FirstName = matchapp.Applicants_FirstName,
+                                Tenant_MiddleName = matchapp.Applicants_MiddleName,
+                                Tenant_LastName = matchapp.Applicants_LastName,
+                                Tenant_UserName = "N/A",
+                                Tenant_Email = matchapp.Applicants_Email,
+                                Tenant_PhoneNumber = matchapp.Applicants_PhoneNumber,
+                                Tenant_Password = "N/A",
+                                Tenant_RoomNumber = matchapp.Application_RoomNumber,
+                                Tenant_UnitNumber = matchapp.Application_UnitNumber,
+                                Tenant_CreatedAt = DateTime.Now,
+                                Tenant_UpdatedAt = DateTime.Now,
+                            }
+                        );
+                    await _context.SaveChangesAsync();
+                    ViewData["SuccessfulAccept"] = "Successful Accept";
+                    return RedirectToAction("ManageRental", "AdminHome");
                 }
                 catch (Exception ex)
                 {
                     return Content("An unexpected error occurred. Please try again later.");
-                }
-                if (matchapp == null)
-                {
-                    return Content("An unexpected error occurred. Please try again later.");
-                }
-                matchapp.Application_Status = "Accept";
-                matchapp.Application_StatusRemark = applicants.Application_StatusRemark;
-                matchapp.Applicant_UpdatedAt = DateTime.Now;
-                _context.Update(matchapp);
-                _context.Tenant.AddRange(
-                        new Tenant
-                        {
-                            Tenant_FirstName = matchapp.Applicants_FirstName,
-                            Tenant_MiddleName = matchapp.Applicants_MiddleName,
-                            Tenant_LastName = matchapp.Applicants_LastName,
-                            Tenant_UserName = "N/A",
-                            Tenant_Email = matchapp.Applicants_Email,
-                            Tenant_PhoneNumber = matchapp.Applicants_PhoneNumber,
-                            Tenant_Password = "N/A",
-                            Tenant_RoomNumber = matchapp.Application_RoomNumber,
-                            Tenant_UnitNumber = matchapp.Application_UnitNumber,
-                            Tenant_CreatedAt = DateTime.Now,
-                            Tenant_UpdatedAt = DateTime.Now,
-                        }
-                    );
-                await _context.SaveChangesAsync();
-                return RedirectToAction("ManageRental", "AdminHome");
-                
+                }                
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occurred while processing the application.");
                 return Content("An unexpected error occurred. Please try again later.");
             }
         }
@@ -270,6 +337,7 @@ namespace RentalManagement.Controllers
                     matchapp.Applicant_UpdatedAt = DateTime.Now;
                     _context.Update(matchapp);
                     await _context.SaveChangesAsync();
+                    ViewData["SuccessfulRejected"] = "Successful Reject";
                     return RedirectToAction("ManageRental", "AdminHome");
                 }
                 catch
@@ -299,7 +367,7 @@ namespace RentalManagement.Controllers
                 }
                 _context.Applicants.Remove(applicant);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ManageRental", "AdminHome");
             }
             catch
             {

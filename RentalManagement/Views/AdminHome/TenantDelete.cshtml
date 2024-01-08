@@ -1,7 +1,7 @@
-﻿@model RentalManagement.Models.Applicants
+﻿@model RentalManagement.Models.Tenant
 
 @{
-    ViewData["Title"] = "Application Accept";
+    ViewData["Title"] = "Tenant Delete";
     Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
 <!DOCTYPE html>
@@ -9,8 +9,6 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Kerwin's Apartment</title>
-    <link rel="icon" type="image/x-icon" href="images/logo2.svg">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/home.css">
@@ -23,95 +21,76 @@
         </div>
     </section>
     <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
-        <h1 style="color: red">Accept Applicant</h1>
-        <h4>Applicant</h4>
-        <hr />
-        <div style="padding-left: 30px">
-
+        <h1 style="color: red">Delete</h1>
+        <h3>Are you sure to remove this tenant?</h3>
+        <div>
+            <hr />
             <dl class="row">
                 <dt class="col-sm-2">
-                    Name:
+                    Tenant ID
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Applicants_FirstName) @Html.DisplayFor(model => model.Applicants_MiddleName) @Html.DisplayFor(model => model.Applicants_LastName)
+                    @Html.DisplayFor(model => model.TenantId) 
+                </dd>
+                <dt class="col-sm-2">
+                    Name
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Tenant_FirstName) @Html.DisplayFor(model => model.Tenant_MiddleName) @Html.DisplayFor(model => model.Tenant_LastName)
                 </dd>
                 <dt class="col-sm-2">
                     Email Address
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Applicants_Email)
+                    @Html.DisplayFor(model => model.Tenant_Email)
                 </dd>
                 <dt class="col-sm-2">
                     Phone Number
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Applicants_PhoneNumber)
+                    @Html.DisplayFor(model => model.Tenant_PhoneNumber)
                 </dd>
                 <dt class="col-sm-2">
-                    Address:
+                    Room
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Applicants_Address)
+                    @Html.DisplayFor(model => model.Tenant_RoomNumber)
                 </dd>
                 <dt class="col-sm-2">
-                    Room Applied
+                    Unit ID Applied
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Application_RoomNumber)
+                    @Html.DisplayFor(model => model.Tenant_UnitNumber)
                 </dd>
                 <dt class="col-sm-2">
-                    Unit ID
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Application_UnitNumber)
-                </dd>
-                <dt class="col-sm-2">
-                    Application Status
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Application_Status)
-                </dd>
-                <dt class="col-sm-2" width="50px">
                     Applied At
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Applicant_CreatedAt)
+                    @Html.DisplayFor(model => model.Tenant_CreatedAt)
                 </dd>
-                <dt class="col-sm-2" width="50px">
-                    Latest Date Updated
+                <dt class="col-sm-2">
+                    Latest Updated
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Applicant_UpdatedAt)
+                    @Html.DisplayFor(model => model.Tenant_UpdatedAt)
                 </dd>
             </dl>
         </div>
         <hr />
-        <form asp-action="AcceptConfirmed">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <fieldset style="margin-left:50px; width:85%">
-                <div class="form-group">
-                    <input asp-for="ApplicationId" type="number" value="@Model.ApplicationId" hidden/>
-                    <label asp-for="Application_StatusRemark" class="control-label">Acception Reason or Remarks</label>
-                    <textarea asp-for="Application_StatusRemark" type="text" class="form-control" rows="5"></textarea>
-                    <span asp-validation-for="Application_StatusRemark" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Submit" class="btn btn-primary" style="margin-top: 10px" />
-                </div>
-            </fieldset>
-        </form>
-        @if (ViewData["SuccessfulAccept"] != null)
-        {
-            <script>
-                alert("Successfully Accepted Application! Applicant will automatically have Tenant Account for registering");
-                window.location.href = '/AdminHome/ManageRental';
-            </script>
-        }
-        <br/>
         <div>
-            <a href="@Url.Action("ManageRental", "AdminHome")"><i class="fas fa-arrow-left" href="@Url.Action("ManageRental", "AdminHome")"></i> Back to Home</a>
+            <form asp-action="TenantDelete">
+                <input type="hidden" asp-for="TenantId" />
+                <a href="@Url.Action("ManageRental", "AdminHome")"><i class="fas fa-arrow-left" href="@Url.Action("ManageRental", "AdminHome")"></i> Back to Home</a>
+                <input type="submit" value="Delete" class="btn btn-danger" style="margin-left:77%" />
+            </form>
+            @if (ViewData["SuccessfulDelete"] != null)
+            {
+                <script>
+                    alert("Successfully Removed Tenant!");
+                    window.location.href = '/AdminHome/ManageRental';
+                </script>
+            }
         </div>
-
     </section>
 
     <section id="backTopCont">
@@ -177,9 +156,6 @@
         </div>
     </footer>
 </body>
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+
+
 </html>
