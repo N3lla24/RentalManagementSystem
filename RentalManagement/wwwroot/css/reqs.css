@@ -153,6 +153,41 @@ body {
         vertical-align: middle;
     }
 
+
+
+.custom-container {
+    flex: 0 0 48%; 
+    border: 2px solid #765827;
+    margin: 4px 7px 7px 4px;
+    box-sizing: border-box;
+    padding: 10px; 
+    border-radius: 8px; 
+}
+
+    .custom-container > * {
+        box-sizing: border-box;
+    }
+
+    .custom-container h2, .custom-container ul, .custom-container p {
+        margin: 0; 
+    }
+
+
+
+.view-requests-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #65451F;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+    .view-requests-link:hover {
+        background-color: #0056b3;
+    }
+
 .btn-go-to-home {
     display: inline-block;
     padding: 10px 20px;
