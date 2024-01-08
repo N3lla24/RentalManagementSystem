@@ -1,0 +1,195 @@
+﻿@model RentalManagement.Models.Requisition
+
+@{
+    ViewData["Title"] = "Accept Request";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Kerwin's Apartment</title>
+    <link rel="icon" type="image/x-icon" href="images/logo2.svg">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/home.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+</head>
+<body style="background-color: #FEEAD1">
+    <section id="header">
+        <div class="navbar">
+            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+        </div>
+    </section>
+    <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
+        <h1 style="color: red">Accept Applicant</h1>
+        <h4>Applicant</h4>
+        <hr />
+        <div style="padding-left: 30px">
+
+            <dl class="row">
+                <dt class="col-sm-3">
+                    Tenant Name:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Tenant.Tenant_FirstName) @Html.DisplayFor(model => model.Tenant.Tenant_MiddleName) @Html.DisplayFor(model => model.Tenant.Tenant_LastName)
+                </dd>
+                <dt class="col-sm-3">
+                    Request Type:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Requisition_Type)
+                </dd>
+                <dt class="col-sm-3">
+                    Request Status
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Requisition_Status)
+                </dd>
+                <dt class="col-sm-3">
+                    Request Created
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Requisition_CreatedAt)
+                </dd>
+                <dt class="col-sm-3">
+                    Request Due-Date:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Requisition_DueDate)
+                </dd>
+                <dt class="col-sm-3">
+                    Request Remarks
+                </dt>
+                <dd class="col-sm-20">
+                    @Html.DisplayFor(model => model.Requisition_Remarks)
+                </dd>
+                @if (Model.Requisition_Type == "REQUEST_ITEM" && Model.RequisitionItems != null)
+                {
+                    <dt class="col-sm-5">
+                        Request Item Details
+                    </dt>
+                    <dd class="col-sm-10">
+                        @foreach (var item in Model.RequisitionItems)
+                        {
+                            <div>
+                                @item.Req_Item_Name - Quantity: @item.Req_Item_Quantity - Units: @item.Req_Item_Units
+                            </div>
+                        }
+                    </dd>
+                }
+                @if (Model.Requisition_Type == "REQUEST_SERVICE" && Model.RequisitionServices != null)
+                {
+                    <dt class="col-sm-5">
+                        Request Service Details
+                    </dt>
+                    <dd class="col-sm-10">
+                        @foreach (var service in Model.RequisitionServices)
+                        {
+                            <div>
+                                @service.Req_Serv_Name
+                            </div>
+                        }
+                    </dd>
+
+                }
+            </dl>
+        </div>
+        <hr />
+        <form asp-action="AcceptRequest">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <fieldset style="margin-left:50px; width:85%">
+                <div class="form-group">
+                    <input asp-for="RequisitionId" type="number" value="@Model.RequisitionId" hidden />
+                    <input asp-for="Requisition_Status" type="hidden" value="Accept" />
+                    <span asp-validation-for="Requisition_Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-primary" style="margin-top: 10px" />
+                </div>
+            </fieldset>
+        </form>
+        @if (ViewData["SuccessfulAccept"] != null)
+        {
+            <script>
+                alert("Successfully Accepted Application! Applicant will automatically have Tenant Account for registering");
+                window.location.href = '/AdminHome/ManageRental';
+            </script>
+        }
+        <br />
+        <div>
+            <a href="@Url.Action("ManageRental", "AdminHome")"><i class="fas fa-arrow-left" href="@Url.Action("ManageRental", "AdminHome")"></i> Back to Home</a>
+        </div>
+
+    </section>
+
+    <section id="backTopCont">
+        <a href="#">
+            <div class="backTop">
+                <p>Back to Top&nbsp;&nbsp;<i class="fa-solid fa-arrow-up"></i></p>
+            </div>
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-columns">
+            <div class="column" id="col">
+                <img src="images/logo.svg" alt="">
+                <h2>Kerwin's Apartment</h2>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column">
+                <h4>About</h4>
+                <p>About us</p>
+                <p>Rental Information</p>
+                <p>Rent Rates and Policies</p>
+                <p>Terms and Condition</p>
+                <p>Community Information</p>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column" id="col">
+                <h4>Contact us</h4>
+                <p>+63 9123456789</p>
+                <p>kerwin.rental@kerwin.com.ph</p>
+                <p>Paknaan, Mandaue City, Cebu 6014</p>
+                <p>Kerwin's Apartment</p><br>
+                <h4>Follow us</h4>
+                <a href="https://www.facebook.com/">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com/">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.pinterest.com/">
+                    <i class="fa-brands fa-pinterest"></i>
+                </a>
+                <a href="https://www.youtube.com/">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+
+
+    </footer>
+
+    <footer id="foot2">
+        <div class="footCont">
+            <div class="footCont2">
+                <div class="column2">
+                    <p>Web Application developed by <b>DPMS 2023</b></p>
+                    <p>Delig • Pila • Monares • Salas</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+</html>
