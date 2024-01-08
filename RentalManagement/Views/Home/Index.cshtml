@@ -23,13 +23,7 @@
         <div class="navbar">
             <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
             <div class="dropdown nbItem">
-                <button class="dropbtn">
-                    <i class="fas fa-sign-in-alt"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="@Url.Action("Index", "Login")">Tenant Sign In</a>
-                    <a href="@Url.Action("Home", "AdminHome")">Admin Sign In</a>
-                </div>
+                    <a href="@Url.Action("Index", "Login")"><i class="fas fa-sign-in-alt" style="padding-right:10px"></i>Log In</a>
             </div>
         </div>
     </section>
