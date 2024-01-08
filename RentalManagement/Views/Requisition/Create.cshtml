@@ -35,12 +35,12 @@
     </br>
     </br>
 
-    <button onclick="window.location.href='@Url.Action("Details", "Requisition")'">View Requests</button>
+    <a class="view-requests-link" href="@Url.Action("Details", "Requisition")">View Requests</a>
 
     <form action="@Url.Action("Create", "Requisition")" method="post" id="requisitionForm">
         @Html.AntiForgeryToken()
-        <button onclick="window.location.href='@Url.Action("Details", "Requisition")'">View Requests</button>
 
+        
 
         <label for="Requisition_Type">Requisition Type:</label>
         <select id="Requisition_Type" name="Requisition_Type" >
