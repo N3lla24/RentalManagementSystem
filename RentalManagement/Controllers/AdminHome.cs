@@ -245,6 +245,7 @@ namespace RentalManagement.Controllers
         }
         public async Task<IActionResult> DetailsRequisition(int? id)
         {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
             if (id == null || _context.Requisition == null)
             {
                 return NotFound();
