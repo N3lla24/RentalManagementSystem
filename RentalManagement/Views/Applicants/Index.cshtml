@@ -29,6 +29,12 @@
                 <h4 class="card-title">Application Finder</h4>
             </div>
             <div class="card-body" style="background-color:#65451F;">
+                @if (ViewData["NotFound"] != null)
+                {
+                    <div class="alert alert-dismissible alert-danger" style="margin-block:10px">
+                        <strong>Failed Search! </strong>Application not found! Click <a href="@Url.Action("RoomPicking","Applicants")" class="alert-link">here</a> to make a Application.
+                    </div>
+                }
                 @if (ViewData["SearchErrorMessage"] != null)
                 {
                     <div class="alert alert-dismissible alert-danger" style="margin-block:10px">

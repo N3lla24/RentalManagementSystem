@@ -36,6 +36,12 @@ namespace RentalManagement.Controllers
             if (applicants.Applicants_Email != null && applicants.Applicants_PhoneNumber != null)
             {
                 Applicants searchapplicant = await _context.Applicants.SingleOrDefaultAsync(q => q.Applicants_Email == applicants.Applicants_Email && q.Applicants_PhoneNumber == applicants.Applicants_PhoneNumber);
+                if (searchapplicant == null)
+                {
+                    ViewData["NotFound"] = "Not Found";
+                    return View("Index");
+                }
+
                 if (searchapplicant.Application_Status == "Accept")
                 {
                     ViewData["ApplicantAccepted"] = "AcceptedApplicant";
@@ -316,7 +322,7 @@ namespace RentalManagement.Controllers
                 }
                 await _context.SaveChangesAsync();
                 ViewData["Successful"] = "Deleted";
-                return RedirectToAction(nameof(Index));
+                return View("Index");
             }
             catch
             {

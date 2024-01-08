@@ -74,7 +74,7 @@
                 <input type="submit" value="Delete" class="btn btn-danger" /> |
                 <a asp-action="Index">Back to Applicant Finder</a>
             </form>
-        @if (ViewData["Successful"] == null)
+        @if (ViewData["Successful"] != null)
         {
             <script>
                 alert("Successfully Deleted Application! Your Application form has been deleted.");
