@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
     $('#Requisition_Type').change(function () {
         var selectedType = $(this).val();
         if (selectedType === 'REQUEST_ITEM') {
@@ -32,7 +32,10 @@
         $('#itemSection').append(newItemField);
         itemCount++;
     });
-
+    $(document).on('click', '.removeItemButton', function () {
+        var fieldId = $(this).data('field-id');
+        $('#Req_Item_Name_' + fieldId).closest('.itemField').remove();
+    });
     var serviceCount = 1;
     $('.addServiceButton').click(function () {
         var newServiceField = '<div class="serviceField">' +
@@ -46,14 +49,11 @@
         $('#serviceSection').append(newServiceField);
         serviceCount++;
     });
-    $(document).on('click', '.removeItemButton', function () {
-        var fieldId = $(this).data('field-id');
-        $('#itemField_' + fieldId).remove();
-    });
+    
 
     $(document).on('click', '.removeServiceButton', function () {
         var fieldId = $(this).data('field-id');
-        $('#serviceField_' + fieldId).remove();
+        $('#Req_Serv_Name_' + fieldId).closest('.serviceField').remove();
     });
 
 });
