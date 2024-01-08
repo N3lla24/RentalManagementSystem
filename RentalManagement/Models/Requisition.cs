@@ -10,7 +10,6 @@ namespace RentalManagement.Models
 
 
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Requisition Type must be more than 2 and maximum of 50 characters.")]
-        [Required(ErrorMessage = "Requisition Type is required.")]
         public string Requisition_Type { get; set; }
 
         public string Requisition_Remarks { get; set; }
@@ -27,8 +26,6 @@ namespace RentalManagement.Models
 
         public string Requisition_Status { get; set; }
 
-        [StringLength(300, MinimumLength = 2, ErrorMessage = "Requisition Status characters must be more than 2 and maximum of 300 characters.")]
-        public string? Requisition_StatusRemarks { get; set; }
 
 
         [ForeignKey("Tenant")]

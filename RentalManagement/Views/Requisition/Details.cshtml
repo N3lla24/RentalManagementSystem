@@ -1,66 +1,71 @@
-@model IEnumerable<RentalManagement.Models.Requisition>
+@model List<RentalManagement.Models.Requisition>
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/Requisition_Layout.cshtml";
+
 }
+@if (Model.Count == 0)
+{
+    <p>No requests found for this tenant.</p>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var requisition in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <button onclick="window.location.href='@Url.Action("Index", "TenantHome")'">Back Home</button>
+                    <div class="container border p-3" style="min-height: 400px; max-height: 1000px; overflow-y: auto;">
+                        <h2>Requisition Details</h2>
+                        <dl class="row">
+                            <dt class="col-sm-5">Tenant's Name:</dt>
+                            <dd class="col-sm-7">@($"{requisition.Tenant?.Tenant_FirstName} {requisition.Tenant?.Tenant_MiddleName} {requisition.Tenant?.Tenant_LastName}")</dd>
 
-<div class="container">
-    <h2>@ViewData["Title"]</h2>
+                            <dt class="col-sm-5">Request Type:</dt>
+                            <dd class="col-sm-7">@requisition.Requisition_Type</dd>
 
-    @foreach (var requisition in Model)
-    {
-        <div>
-            <h4>Tenant Request Details</h4>
-            <hr />
-            <dl class="row">
-                <dt class="col-sm-3">Tenant Name:</dt>
-                <dd class="col-sm-9">@($"{requisition.Tenant?.Tenant_FirstName} {requisition.Tenant?.Tenant_LastName}")</dd>
-            </dl>
-        </div>
+                            <dt class="col-sm-5">Date Requested:</dt>
+                            <dd class="col-sm-7">@requisition.Requisition_CreatedAt</dd>
 
-        <div class="card mt-3">
-            <div class="card-body">
-                <h5 class="card-title">Requisition ID: @requisition.RequisitionId</h5>
+                            <dt class="col-sm-5">Request Status:</dt>
+                            <dd class="col-sm-7">@requisition.Requisition_Status</dd>
 
-                <dl class="row">
-                    <!-- Add other details as needed -->
-                    @if (requisition.Requisition_Type == "REQUEST ITEM" && requisition.RequisitionItems != null && requisition.RequisitionItems.Any())
-                    {
-                        <dt class="col-sm-3">Requisition Items:</dt>
-                        <dd class="col-sm-9">
-                            <ul>
-                                @foreach (var item in requisition.RequisitionItems)
-                                {
-                                    <li>
-                                        <strong>@item.Req_Item_Name</strong>
-                                        <br />
-                                        Quantity: @item.Req_Item_Quantity, Units: @item.Req_Item_Units
-                                    </li>
-                                }
-                            </ul>
-                        </dd>
-                    }
+                            <dt class="col-sm-5">Request Remarks:</dt>
+                            <dd class="col-sm-7">@requisition.Requisition_Remarks</dd>
+                        </dl>
 
-                    @if (requisition.Requisition_Type == "REQUEST SERVICE" && requisition.RequisitionServices != null && requisition.RequisitionServices.Any())
-                    {
-                        <dt class="col-sm-3">Requisition Services:</dt>
-                        <dd class="col-sm-9">
-                            <ul>
-                                @foreach (var service in requisition.RequisitionServices)
-                                {
-                                    <li>@service.Req_Serv_Name</li>
-                                }
-                            </ul>
-                        </dd>
-                    }
+                        @if (requisition.Requisition_Type == "REQUEST_SERVICE")
+                        {
+                            <h3>Service Details</h3>
+                            <dl class="row">
+                                <dt class="col-sm-5">Requested Service:</dt>
+                                <dd class="col-sm-7">@requisition.RequisitionServices?.FirstOrDefault()?.Req_Serv_Name</dd>
 
-                </dl>
 
-                <div class="mt-3">
-                    <a asp-action="Index" class="btn btn-primary">Back to Request List</a>
+                            </dl>
+                        }
+
+                        @if (requisition.Requisition_Type == "REQUEST_ITEM")
+                        {
+                            <h3>Item Details</h3>
+                            <dl class="row">
+                                <dt class="col-sm-5">Requested Item:</dt>
+                                <dd class="col-sm-7">@requisition.RequisitionItems?.FirstOrDefault()?.Req_Item_Name</dd>
+
+                                <dt class="col-sm-5">Request Item Quantity:</dt>
+                                <dd class="col-sm-7">@requisition.RequisitionItems?.FirstOrDefault()?.Req_Item_Quantity</dd>
+
+                                <dt class="col-sm-5">Request Item Units:</dt>
+                                <dd class="col-sm-7">@requisition.RequisitionItems?.FirstOrDefault()?.Req_Item_Units</dd>
+
+                            </dl>
+                        }
+                        <hr />
+                    </div>
                 </div>
-            </div>
+            }
         </div>
-    }
-</div>
+    </div>
+}
