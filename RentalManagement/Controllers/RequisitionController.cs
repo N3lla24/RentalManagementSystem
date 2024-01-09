@@ -28,26 +28,21 @@ namespace RentalManagement.Controllers
         public IActionResult Details()
         {
             int? tenantId = GetId();
-
+        
             if (!tenantId.HasValue)
             {
-                return NotFound();
+                return NotFound(); 
             }
-
-            var requisition = _context.Requisition
-            .Include(r => r.Tenant)
-            .Include(r => r.RequisitionItems)
-            .Include(r => r.RequisitionServices)
-            .Where(r => r.TenantId == tenantId.Value)
-            .ToList();
-
-            if (requisition == null || requisition.Count == 0)
-            {
-                return View("Index","TenantHome"); 
-            }
-            
-
-            return View(requisition);
+        
+            var requisitions = _context.Requisition
+                .Include(r => r.Tenant)
+                .Include(r => r.RequisitionItems)
+                .Include(r => r.RequisitionServices)
+                .Where(r => r.TenantId == tenantId.Value)
+                .ToList();
+        
+        
+            return View(requisitions);
         }
         
         public async Task<IActionResult> Create()

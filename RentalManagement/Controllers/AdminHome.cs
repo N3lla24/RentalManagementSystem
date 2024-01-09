@@ -62,12 +62,14 @@ namespace RentalManagement.Controllers
 
                     }).ToList();
 
-                    var requisitionDisplayList = requisition.Select(requisition => new RequisitionDisplay
+                    var requisitionDisplayList = requisition
+                        .Where(r => r.Requisition_Status != "Reject")
+                        .Select(requisition => new RequisitionDisplay
                     {
                         RequisitionId = requisition.RequisitionId,
                         Requisition_Type = requisition.Requisition_Type,
                         Requistition_CreatedAt = requisition.Requisition_CreatedAt,
-
+                    
                     }).ToList();
 
                     var roomDisplayList = room.Select(room => new RoomDisplay
@@ -243,7 +245,26 @@ namespace RentalManagement.Controllers
             }
             
         }
-
+        public async Task<IActionResult> DetailsRequisition(int? id)
+        {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
+            if (id == null || _context.Requisition == null)
+            {
+                return NotFound();
+            }
+        
+            var requisition = await _context.Requisition
+                .Include(m => m.Tenant)
+                .Include(m => m.RequisitionItems)
+                .Include(m => m.RequisitionServices)
+                .FirstOrDefaultAsync(m => m.RequisitionId == id);
+            if (requisition == null)
+            {
+                return NotFound();
+            }
+        
+            return View(requisition);
+        }
         //Get Applicants Details
         public async Task<IActionResult> AppDetails(int? id)
         {
@@ -261,6 +282,28 @@ namespace RentalManagement.Controllers
             }
 
             return View(applicants);
+        }
+        public async Task<IActionResult> AcceptRequest(int? id)
+        {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
+            var requisition = await _context.Requisition
+                .Include(m => m.Tenant)
+                .Include(m => m.RequisitionItems)
+                .Include(m => m.RequisitionServices)
+                .FirstOrDefaultAsync(m => m.RequisitionId == id);
+            if (requisition != null)
+            {
+        
+                requisition.Requisition_Status = "Accept";
+                _context.Update(requisition);
+                await _context.SaveChangesAsync();
+        
+                return RedirectToAction("ManageRental", "AdminHome");
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         public async Task<IActionResult> Accept(int? id)
@@ -326,6 +369,30 @@ namespace RentalManagement.Controllers
                 return Content("An unexpected error occurred. Please try again later.");
             }
         }
+
+        public async Task<IActionResult> RejectRequest(int? id)
+        {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
+            var requisition = await _context.Requisition
+                .Include(m => m.Tenant)
+                .Include(m => m.RequisitionItems)
+                .Include(m => m.RequisitionServices)
+                .FirstOrDefaultAsync(m => m.RequisitionId == id);
+            if (requisition != null)
+            {
+        
+                requisition.Requisition_Status = "Reject";
+                _context.Update(requisition);
+                await _context.SaveChangesAsync();
+        
+                return RedirectToAction("ManageRental","AdminHome");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        
 
         public async Task<IActionResult> Reject(int? id)
         {

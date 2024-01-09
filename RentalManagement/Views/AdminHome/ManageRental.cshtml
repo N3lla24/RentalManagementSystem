@@ -288,14 +288,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Ronel</td>
-                            <td>Service</td>
-                            <td>
-                               <button class="reqActionButton"@*  data-req-id="@requisition.RequisitonID" *@>Details</button> 
-                            </td>
-                        </tr>
   
                         @foreach (var requisition in Model.Requisition)
                         {
@@ -304,7 +296,7 @@
                                 <td>@requisition.Requisition_Type</td>
                                 <td>@requisition.Requistition_CreatedAt.ToString("yyyy-MM-dd")</td>
                                 <td>
-                                    <button class="actionButton" data-req-id="@requisition.RequisitionId">Details</button>
+                                    <a asp-action="DetailsRequisition" asp-route-id="@requisition.RequisitionId" style="color: green">Details</a>
                                 </td>
                             </tr>
                         }
