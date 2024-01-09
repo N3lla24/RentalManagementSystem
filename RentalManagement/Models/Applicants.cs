@@ -8,18 +8,18 @@ namespace RentalManagement.Models
         public int ApplicationId { get; set; }
 
 
-        [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$", ErrorMessage = "Input Valid Name")]
+        [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$", ErrorMessage = "Input Valid Name")]
         [StringLength(100, MinimumLength = 1, ErrorMessage ="Input Valid Name")]
         [Required(ErrorMessage = "First Name is required.")]
         public string Applicants_FirstName { get; set; }
 
 
-        [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$", ErrorMessage = "Input Valid Name")]
+        [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$", ErrorMessage = "Input Valid Name")]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "Input Valid Name")]
         public string? Applicants_MiddleName { get; set; }
 
 
-        [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$", ErrorMessage = "Input Valid Name")]
+        [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$", ErrorMessage = "Input Valid Name")]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "Input Valid Name")]
         [Required(ErrorMessage = "Last Name is required.")]
         public string Applicants_LastName { get; set; }

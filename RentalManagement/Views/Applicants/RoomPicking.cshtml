@@ -28,7 +28,7 @@
         <div style="border-radius:5px">
             <table class="table">
                 <thead>
-                    <tr>
+                    <tr class="table-info">
                         <th>
                             Room Number
                         </th>
@@ -54,7 +54,7 @@
                     {
                         foreach (var item in Model.RoomModel)
                         {
-                            <tr>
+                            <tr class ="table-dark">
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Room_Num)
                                 </td>
