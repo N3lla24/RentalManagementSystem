@@ -19,12 +19,19 @@ namespace RentalManagement.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public IActionResult GetSuppliers()
+        {
+            var suppliers = _context.Supplier.ToList();
+            return Json(suppliers);
+        }
+
         // GET: Suppliers
         public async Task<IActionResult> Index()
         {
-            return _context.Supplier != null ?
-                         View(await _context.Supplier.ToListAsync()) :
-                         Problem("Entity set 'RentalManagementContext.Supplier'  is null.");
+              return _context.Supplier != null ? 
+                          View(await _context.Supplier.ToListAsync()) :
+                          Problem("Entity set 'RentalManagementContext.Supplier'  is null.");
         }
 
         // GET: Suppliers/Details/5
@@ -42,42 +49,13 @@ namespace RentalManagement.Controllers
                 return NotFound();
             }
 
-            return View(supplier);
-        }
-
-        // GET: Suppliers/GetSuppliersJson
-        public async Task<JsonResult> GetSuppliersJson()
-        {
-            var suppliers = await _context.Supplier.ToListAsync();
-            return Json(suppliers);
+            return Json(supplier);
         }
 
         // GET: Suppliers/Create
         public IActionResult Create()
         {
             return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddSupplier([FromBody] Supplier supplier)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    _context.Add(supplier);
-                    await _context.SaveChangesAsync();
-                    return Ok(); // Return success status
-                }
-                else
-                {
-                    return BadRequest("Invalid supplier data."); // Return bad request status
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}"); // Return internal server error status
-            }
         }
 
         // POST: Suppliers/Create
@@ -96,8 +74,46 @@ namespace RentalManagement.Controllers
             return View(supplier);
         }
 
+        [HttpPost]
+        public IActionResult InsertSupplier([FromBody] Supplier supplier)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(supplier);
+                    _context.SaveChanges();
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    // Return validation errors to the client
+                    var errors = ModelState.ToDictionary(
+                        kvp => kvp.Key,
+                        kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToList()
+                    );
+
+                    return Json(new { success = false, errors });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it appropriately
+                return Json(new { success = false, error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult CheckNameExists(string name)
+        {
+            // Your logic to check if the name already exists in the database
+            bool exists = _context.Supplier.Any(s => s.Suppliers_Name == name);
+
+        return Json(new { exists });
+        }
+
         // GET: Suppliers/Edit/5
-        public async Task<IActionResult> EditModal(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Supplier == null)
             {
@@ -109,16 +125,6 @@ namespace RentalManagement.Controllers
             {
                 return NotFound();
             }
-            return PartialView("_EditModal", supplier);
-        }
-
-        // GET: Suppliers/GetSupplierDetails/5
-        [HttpGet]
-        public async Task<JsonResult> GetSupplierDetails(int id)
-        {
-            var supplier = await _context.Supplier
-                .FirstOrDefaultAsync(m => m.SuppliersId == id);
-
             return Json(supplier);
         }
 
@@ -127,7 +133,7 @@ namespace RentalManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditModal(int id, [Bind("SuppliersId,Suppliers_Name,Suppliers_Email,Suppliers_PhoneNumber,Suppliers_Address,Supplier_CreatedAt,Supplier_UpdatedAt")] Supplier supplier)
+        public async Task<IActionResult> Edit(int id, [Bind("SuppliersId,Suppliers_Name,Suppliers_Email,Suppliers_PhoneNumber,Suppliers_Address,Supplier_CreatedAt,Supplier_UpdatedAt")] Supplier supplier)
         {
             if (id != supplier.SuppliersId)
             {
@@ -152,95 +158,44 @@ namespace RentalManagement.Controllers
                         throw;
                     }
                 }
-                var updatedSupplier = await _context.Supplier
-                .FirstOrDefaultAsync(m => m.SuppliersId == id);
-
-                return Json(updatedSupplier);
+                return RedirectToAction(nameof(Index));
             }
-            return PartialView("_EditModal", supplier);
+            return Json(supplier);
         }
 
-        // GET: Suppliers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // POST: /Suppliers/DeleteSupplier/1
+        [HttpPost]
+        public JsonResult DeleteSupplier(int id)
         {
-            if (id == null || _context.Supplier == null)
+            try
             {
-                return NotFound();
-            }
+                // Find the supplier by ID
+                var supplier = _context.Supplier.Find(id);
 
-            var supplier = await _context.Supplier
-                .FirstOrDefaultAsync(m => m.SuppliersId == id);
-            if (supplier == null)
+                if (supplier != null)
+                {
+                    // Remove the supplier from the database
+                    _context.Supplier.Remove(supplier);
+                    _context.SaveChanges();
+
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    // Supplier not found
+                    return Json(new { success = false, error = "Supplier not found" });
+                }
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                // Handle exceptions
+                return Json(new { success = false, error = ex.Message });
             }
-
-            return View(supplier);
-        }
-
-        // POST: Suppliers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Supplier == null)
-            {
-                return Problem("Entity set 'RentalManagementContext.Supplier'  is null.");
-            }
-            var supplier = await _context.Supplier.FindAsync(id);
-            if (supplier != null)
-            {
-                _context.Supplier.Remove(supplier);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        // GET: PurchaseOrders/ViewDeliveryRecords/5
-        public async Task<IActionResult> ViewDeliveryRecords(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var deliveryRecord = await _context.ReceivingMemo
-                .Join(_context.PurchaseOrder,
-                    rm => rm.PurchaseId,
-                    po => po.PurchaseOrderId,
-                    (rm, po) => new { rm, po })
-                .Join(_context.PurchaseItem,
-                    combined => combined.po.PurchaseOrderId,
-                    pi => pi.PurchaseItem_Id,
-                    (combined, pi) => new { combined.rm, combined.po, pi })
-                .Join(_context.Supplier,
-                    combined => combined.po.SuppliersId,
-                    s => s.SuppliersId,
-                    (combined, s) => new
-                    {
-                        combined.rm.RM_Date,
-                        combined.rm.RM_Remarks,
-                        combined.rm.RM_Status,
-                        combined.pi.PurchaseItem_Name,
-                        combined.pi.PurchaseItem_Quantity,
-                        combined.pi.PurchaseItem_Unit,
-                        s.Suppliers_Name,
-                        s.Suppliers_Address
-                    })
-                .FirstOrDefaultAsync();
-
-            if (deliveryRecord == null)
-            {
-                return NotFound();
-            }
-
-            return View(deliveryRecord);
         }
 
         private bool SupplierExists(int id)
         {
-            return (_context.Supplier?.Any(e => e.SuppliersId == id)).GetValueOrDefault();
+          return (_context.Supplier?.Any(e => e.SuppliersId == id)).GetValueOrDefault();
         }
     }
 }

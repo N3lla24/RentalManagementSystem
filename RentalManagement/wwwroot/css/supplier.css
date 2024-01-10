@@ -578,6 +578,9 @@ a {
     margin: auto;
     width: 100%;
     padding: 10px;
+    max-height: 80vh; /* Set a maximum height, adjust as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: auto; /* Hide horizontal scrolling */
 }
 
 .displaySupp .supplierSearch i {
@@ -591,6 +594,14 @@ a {
 }
 
 #editModal input[type=text] {
+    width: 100%;
+    border: none;
+    border-radius: 5px 5px 5px 5px;
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+#editModal input[type=number] {
     width: 100%;
     border: none;
     border-radius: 5px 5px 5px 5px;
