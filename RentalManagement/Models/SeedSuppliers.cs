@@ -26,6 +26,7 @@ namespace RentalManagement.Models
                         Suppliers_Address = "Cabancalan, Mandaue City, Cebu",
                         Supplier_CreatedAt = DateTime.Now,
                         Supplier_UpdatedAt = DateTime.Now,
+                        Suppliers_Deactivate = "active",
                     },
                     new Supplier
                     {
@@ -35,6 +36,7 @@ namespace RentalManagement.Models
                         Suppliers_Address = "Banilad, Mandaue City, Cebu",
                         Supplier_CreatedAt = DateTime.Now,
                         Supplier_UpdatedAt = DateTime.Now,
+                        Suppliers_Deactivate = "active",
                     },
                     new Supplier
                     {
@@ -44,6 +46,7 @@ namespace RentalManagement.Models
                         Suppliers_Address = "Labogon, Mandaue City, Cebu",
                         Supplier_CreatedAt = DateTime.Now,
                         Supplier_UpdatedAt = DateTime.Now,
+                        Suppliers_Deactivate = "active",
                     }
                 );
                 context.SaveChanges();

@@ -52,6 +52,8 @@
                     <input type="text" id="SupplierPhoneInput" readonly>
                     <p>Supplier Address</p>
                     <input type="text" id="SupplierAddressInput" readonly>
+                    <p>Status</p>
+                    <input type="text" id="SupplierStatusInput" style="color:green;" readonly>
                 </div>
 
                 <!-- Pop-up form -->
@@ -69,6 +71,8 @@
                     <p>Supplier Address</p>
                     <p id="supplierAddressError" style="color: red; font-size: 10px;"></p>
                     <input type="text" id="SupplierAddress" required>
+                    @* <p>Status</p> *@
+                    @* <input type="text" id="SupplierStatus" value="Active" style="color:green;" readonly>"></p> *@
 
                     <button id="submitSupplier">Submit</button>
                     <button id="closeForm">Close</button>
@@ -91,6 +95,7 @@
                                 <th>Supplier Email</th>
                                 <th>Supplier Phone</th>
                                 <th>Supplier Address</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

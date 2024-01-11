@@ -18,6 +18,7 @@ $(document).ready(function () {
                         '<td>' + supplier.suppliers_Email + '</td>' +
                         '<td>' + supplier.suppliers_PhoneNumber + '</td>' +
                         '<td>' + supplier.suppliers_Address + '</td>' +
+                        '<td>' + supplier.suppliers_Deactivate + '</td>' +
                         '<td><button class="editBtn" style="color: white; background-color: green;" data-id="' + supplier.suppliersId + '">Details</button>' +
                         '<button class="deleteBtn" style="color: white; background-color: red;" data-id="' + supplier.suppliersId + '">Delete</button></td>' +
                         '</tr>'
@@ -56,6 +57,7 @@ $(document).ready(function () {
                 $('#SupplierEmailInput').val(supplier.suppliers_Email);
                 $('#SupplierPhoneInput').val(supplier.suppliers_PhoneNumber);
                 $('#SupplierAddressInput').val(supplier.suppliers_Address);
+                $('#SupplierStatusInput').val(supplier.suppliers_Deactivate);
 
                 // Show the edit modal
                 $('#editModal').show();
@@ -73,6 +75,7 @@ $(document).ready(function () {
             Suppliers_Email: $('#SupplierEmail').val(),
             Suppliers_PhoneNumber: $('#SupplierPhone').val(),
             Suppliers_Address: $('#SupplierAddress').val(),
+            suppliers_Deactivate: 'Active',
         };
 
         // Perform client-side validation
@@ -127,6 +130,7 @@ $(document).ready(function () {
                     $('#addSupplierForm').hide();
                     populateSuppliers();
                 } else {
+                    console.log("Error");
                     // Display server-side validation errors
                     displayValidationErrors(response.errors);
                 }
@@ -257,7 +261,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
 
-                    $('#SupplierID, #SupplierNameInput, #SupplierEmailInput, #SupplierPhoneInput, #SupplierAddressInput').val('');
+                    $('#SupplierID, #SupplierNameInput, #SupplierEmailInput, #SupplierPhoneInput, #SupplierAddressInput, #SupplierStatusInput').val('');
                     // Refresh the supplier table after successful deletion
                     populateSuppliers();
                 } else {

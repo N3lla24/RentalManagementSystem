@@ -543,8 +543,11 @@ a {
         #supplierCont #supplierTable th:nth-child(5) {
             width: 300px;
         }
-
         #supplierCont #supplierTable th:nth-child(6) {
+            width: 80px;
+        }
+
+        #supplierCont #supplierTable th:nth-child(7) {
             width: 80px;
         }
 

@@ -31,11 +31,7 @@ namespace RentalManagement.Models
 
         public string Suppliers_Deactivate { get; set; }
 
-        public string Suppliers_Remarks { get; set; }
-
         public DateTime Supplier_CreatedAt { get; set; }
-
-
 
         public DateTime? Supplier_UpdatedAt { get; set; }
     }
