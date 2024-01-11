@@ -1,0 +1,302 @@
+﻿@model RentalManagement.Models.ApplicationViewModel;
+
+
+@{
+    ViewData["Title"] = "Room Preferences";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/home.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+</head>
+<body style="background-color: #FEEAD1">
+    <section id="header">
+        <div class="navbar">
+            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+        </div>
+    </section>
+
+    <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 30px">
+        <h1>Preferences</h1>
+        <hr />
+
+        <form asp-action="Preference">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <fieldset style="margin-left:50px; width:85%">
+                <div class="form-group">
+                    <label class="control-label">Room Price</label>
+                    <select name="RoomPrice" class="form-select">
+                        <option value="5000">₱ 5,000</option>
+                        <option value="8000">₱ 8,000</option>
+                        <option value="10000">₱ 10,000</option>
+                        <option value="12000">₱ 12,000</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label class="control-label">Room Capacity</label>
+                    <select name="RoomCapacity" class="form-select">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="control-label">Room Color</label>
+                    <select name="RoomColor" class="form-select">
+                        <option value="White">White</option>
+                        <option value="Black">Black</option>
+                        <option value="Orange">Orange</option>
+                        <option value="Red">Red</option>
+                        <option value="Beige">Beige</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="control-label">Room Size</label>
+                    <select name="RoomSize" class="form-select">
+                        <option value="200">200 sq. ft.</option>
+                        <option value="300">300 sq. ft.</option>
+                        <option value="400">400 sq. ft.</option>
+                        <option value="450">450 sq. ft.</option>
+                        <option value="500">500 sq. ft.</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label class="control-label">Room Flooring</label>
+                    <select name="RoomFlooring" class="form-select">
+                        <option value="Tiles">Tiles</option>
+                        <option value="Wooden Tiles">Wooden Tiles</option>
+                        <option value="Wood">Wood</option>
+                        <option value="Cement">Cement</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="control-label">Room Appliance</label>
+                    <select name="RoomAppliance" class="form-select">
+                        <option value="Mini-Fridge">Mini-Fridge</option>
+                        <option value="TV">TV</option>
+                        <option value="Oven">Oven</option>
+                        <option value="Microwave">Microwave</option>
+                        <option value="None">None</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="control-label">Room Furnish</label>
+                    <select name="RoomFurnish" class="form-select">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="control-label">Room WiFi</label>
+                    <select name="RoomWiFi" class="form-select">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" style="margin-top: 10px" />
+                </div>
+            </fieldset>
+        </form>
+        @if (ViewData["RecommendSuccess"] != null)
+        {
+            <p style="margin-top: 20px">The higher recommend score, the more suitable the room is for you.</p>
+            <div style="overflow-x : scroll; border:solid green 2.5px; margin-top: 20px">
+                <table class="table">
+                    <thead>
+                        <tr class="table-info">
+                            <th>
+                                Room Number
+                            </th>
+                            <th>
+                                Room Capacity
+                            </th>
+                            <th>
+                                Room Pricing
+                            </th>
+                            <th>
+                                Room Size
+                            </th>
+                            <th>
+                                Room Color
+                            </th>
+                            <th>
+                                Room Flooring
+                            </th>
+                            <th>
+                                Room Appliance
+                            </th>
+                            <th>
+                                Room Furnished
+                            </th>
+                            <th>
+                                Room WiFi
+                            </th>
+                            <th>
+                                Room Status
+                            </th>
+                            <th>
+                                Unit ID
+                            </th>
+                            <th>
+                                Recommend Score
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var rooms in Model.RecommendRoom)
+                        {
+                            <tr class="table-dark">
+                                <td>
+                                    @rooms.Key.Room_Num
+                                </td>
+                                <td>
+                                    @rooms.Key.Room_Capacity
+                                </td>
+                                <td>
+                                    @rooms.Key.Room_Price Pesos
+                                </td>
+                                <td>
+                                    @rooms.Key.Room_Size sq. ft.
+                                </td>
+                                <td>
+                                    @rooms.Key.Room_Color
+                                </td>
+                                <td>
+                                    @rooms.Key.Room_Flooring
+                                </td>
+                                <td>
+                                    @rooms.Key.Room_Appliance
+                                </td>
+                                <td>
+                                    @rooms.Key.Room_Furnish
+                                </td>
+                                <td>
+                                    @rooms.Key.Room_WiFi
+                                </td>
+                                <td>
+                                    @rooms.Key.Room_Status
+                                </td>
+                                <td>
+                                    @rooms.Key.UnitId
+                                </td>
+                                <td>
+                                    @rooms.Value
+                                </td>
+                                <td>
+                                    <a asp-action="RoomDetails" asp-route-id="@rooms.Key.RoomId">Details</a> |
+                                    <a asp-action="Create" asp-route-id="@rooms.Key.RoomId">Apply for Rent</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p style ="margin-top: 20px">Select your prefered room features</p>
+        }
+        <hr />
+        <div style="margin-top:50px">
+            <a href="@Url.Action("RoomPicking", "Applicants")">Back to Room List</a>
+        </div>
+    </section>
+
+    <section id="backTopCont">
+        <a href="#">
+            <div class="backTop">
+                <p>Back to Top&nbsp;&nbsp;<i class="fa-solid fa-arrow-up"></i></p>
+            </div>
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-columns">
+            <div class="column" id="col">
+                <img src="images/logo.svg" alt="">
+                <h2>Kerwin's Apartment</h2>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column">
+                <h4>About</h4>
+                <p>About us</p>
+                <p>Rental Information</p>
+                <p>Rent Rates and Policies</p>
+                <p>Terms and Condition</p>
+                <p>Community Information</p>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column" id="col">
+                <h4>Contact us</h4>
+                <p>+63 9123456789</p>
+                <p>kerwin.rental@kerwin.com.ph</p>
+                <p>Paknaan, Mandaue City, Cebu 6014</p>
+                <p>Kerwin's Apartment</p><br>
+                <h4>Follow us</h4>
+                <a href="https://www.facebook.com/">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com/">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.pinterest.com/">
+                    <i class="fa-brands fa-pinterest"></i>
+                </a>
+                <a href="https://www.youtube.com/">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+
+
+    </footer>
+
+    <footer id="foot2">
+        <div class="footCont">
+            <div class="footCont2">
+                <div class="column2">
+                    <p>Web Application developed by <b>DPMS 2023</b></p>
+                    <p>Delig • Pila • Monares • Salas</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

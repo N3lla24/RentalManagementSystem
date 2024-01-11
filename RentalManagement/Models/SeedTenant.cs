@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentalManagement.Data;
+using RentalManagement.Services;
 
 namespace RentalManagement.Models
 {
@@ -22,10 +23,10 @@ namespace RentalManagement.Models
                         Tenant_FirstName = "Ronel",
                         Tenant_MiddleName = "Napoles",
                         Tenant_LastName = "Delig",
-                        Tenant_UserName = "N/A",
+                        Tenant_UserName = "nella",
                         Tenant_Email = "ronel@gmail.com",
-                        Tenant_PhoneNumber = "09392719001",
-                        Tenant_Password = "N/A",
+                        Tenant_PhoneNumber = "09876543210",
+                        Tenant_Password = Hashing.HashPass("123/Pass"),
                         Tenant_RoomNumber = 101,
                         Tenant_UnitNumber = 01,
                         Tenant_CreatedAt = DateTime.Now,

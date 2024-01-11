@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentalManagement.Data;
 
@@ -11,9 +12,10 @@ using RentalManagement.Data;
 namespace RentalManagement.Migrations
 {
     [DbContext(typeof(RentalManagementContext))]
-    partial class RentalManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20240110190232_Room Attributes")]
+    partial class RoomAttributes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -597,10 +599,6 @@ namespace RentalManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Suppliers_Deactivate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Suppliers_Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -611,10 +609,6 @@ namespace RentalManagement.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Suppliers_PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Suppliers_Remarks")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

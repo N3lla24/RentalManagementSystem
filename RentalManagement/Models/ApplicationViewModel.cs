@@ -12,6 +12,8 @@
 
         public Applicants Applicants { get; set; }
 
+        public Dictionary<Room, int>? RecommendRoom = new Dictionary<Room, int>();
+
         /*public virtual ApplicantsModel { get; set; }*/
 
     }

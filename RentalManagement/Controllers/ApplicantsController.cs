@@ -328,6 +328,54 @@ namespace RentalManagement.Controllers
             }
         }
 
+
+        public IActionResult Preference()
+        {
+            return View();
+        }
+
+
+        // POST: Preference/Room Recommendation/
+        [HttpPost, ActionName("Preference")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PreferenceShow()
+        {
+            if (_context.Room == null)
+            {
+                return Problem("Entity set 'RentalManagementContext.Applicants'  is null.");
+            }
+            try
+            {
+                ApplicationViewModel obj = new ApplicationViewModel();
+
+                obj.RoomModel = _context.Room.Where(r => r.Room_Status == "Unoccupied").ToList();
+                foreach (var item in obj.RoomModel)
+                {
+                    var score = 0;
+                    int capacity = Convert.ToInt32( Request.Form["RoomCapacity"]);
+                    int size = Convert.ToInt32(Request.Form["RoomSize"]);
+                    int price = Convert.ToInt32(Request.Form["RoomPrice"]);
+                    if (item.Room_Capacity == capacity) { score++; }
+                    if (item.Room_Size == size) { score++; }
+                    if (item.Room_Color == Request.Form["RoomColor"]) { score++; }
+                    if (item.Room_Flooring == Request.Form["RoomFlooring"]) { score++; }
+                    if (item.Room_Appliance == Request.Form["RoomAppliance"]) { score++; }
+                    if (item.Room_Furnish == Request.Form["RoomFurnish"]) { score++; }
+                    if (item.Room_WiFi == Request.Form["RoomWiFi"]) { score++; }
+                    if (item.Room_Price == price) { score++; }
+
+                    obj.RecommendRoom.Add(item, score);
+
+                }
+                ViewData["RecommendSuccess"] = "True";
+                return View(obj);
+            }
+            catch
+            {
+                return Content("An unexpected error occurred. Please try again later.");
+            }
+        }
+
         private bool ApplicantsExists(int id)
         {
           return (_context.Applicants?.Any(e => e.ApplicationId == id)).GetValueOrDefault();

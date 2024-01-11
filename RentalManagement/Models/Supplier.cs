@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Build.ObjectModelRemoting;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace RentalManagement.Models
@@ -28,7 +29,9 @@ namespace RentalManagement.Models
         [Required(ErrorMessage = "Supplier Address is required.")]
         public string Suppliers_Address { get; set; }
 
+        public string Suppliers_Deactivate { get; set; }
 
+        public string Suppliers_Remarks { get; set; }
 
         public DateTime Supplier_CreatedAt { get; set; }
 

@@ -24,7 +24,7 @@
         </div>
     </section>
     <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
-        <h1 style="color: red">Delete</h1>
+        <h1 style="color: red">Deactivate</h1>
         <h3>Are you sure to remove this tenant?</h3>
         <div>
             <hr />
@@ -84,12 +84,12 @@
             <form asp-action="TenantDelete">
                 <input type="hidden" asp-for="TenantId" />
                 <a href="@Url.Action("ManageRental", "AdminHome")"><i class="fas fa-arrow-left" href="@Url.Action("ManageRental", "AdminHome")"></i> Back to Home</a>
-                <input type="submit" value="Delete" class="btn btn-danger" style="margin-left:77%" />
+                <input type="submit" value="Deactivate" class="btn btn-danger" style="margin-left:70%" />
             </form>
             @if (ViewData["SuccessfulDelete"] != null)
             {
                 <script>
-                    alert("Successfully Removed Tenant!");
+                    alert("Successfully Deactivated Tenant!");
                     window.location.href = '/AdminHome/ManageRental';
                 </script>
             }

@@ -62,7 +62,7 @@
                                     @Html.DisplayFor(modelItem => item.Room_Capacity)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Room_Price)
+                                    @Html.DisplayFor(modelItem => item.Room_Price) Pesos
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Room_Status)
@@ -86,10 +86,10 @@
                 </tbody>
             </table>
             <div style="margin-top:50px;">
-                <a href="@Url.Action("Index", "Applicants")" style="color: orangered">Already Have an Application?</a>
+                <a href="@Url.Action("Index", "Applicants")" style="color: orangered">Already Have an Application?</a> |
+                <a href="@Url.Action("Preference", "Applicants")" style="color: orangered">Have Preferences?</a>
             </div>
         </div>
-        
     </section>
 
     <section id="backTopCont">

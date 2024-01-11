@@ -16,6 +16,18 @@ namespace RentalManagement.Models
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Room Status must be more than 2 characters and maximum of 100 characters.")]
         public string? Room_Status { get; set; }
 
+        public string? Room_Color { get; set; }
+
+        public int? Room_Size { get; set; }
+
+        public string? Room_WiFi { get; set; }
+
+        public string? Room_Flooring { get; set; }
+
+        public string? Room_Furnish { get; set; }
+
+        public string? Room_Appliance { get; set; }
+
         public int Room_Capacity { get; set; }
 
         public decimal Room_Price { get; set; }
