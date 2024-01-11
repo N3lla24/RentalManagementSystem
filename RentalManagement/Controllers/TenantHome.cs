@@ -27,6 +27,15 @@ namespace RentalManagement.Controllers
                           Problem("Entity set 'RentalManagementContext.Tenant'  is null.");
         }
 
+        public IActionResult PayRent()
+
+        {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
+            var PAY = new RentalManagement.Models.PaymentDetail();
+
+            return View(PAY);
+        }
+
         //Get Account Details for Settings
         public IActionResult Settings()
         {

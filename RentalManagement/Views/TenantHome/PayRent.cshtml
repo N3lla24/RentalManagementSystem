@@ -1,9 +1,9 @@
-﻿@model RentalManagement.Models.Tenant;
+﻿@model RentalManagement.Models.PaymentDetail;
 
 @{
-    ViewData["Title"] = "Tenant HomePage";
+    ViewData["Title"] = "Tenant Payment";
     Layout = null;
-    
+
 }
 
 <!DOCTYPE html>
@@ -35,31 +35,50 @@
     </section>
 
     <div>
-
     </div>
+    @* <form action="@Url.Action("Create", "Requisition")" method="post" id="requisitionForm">
+        @Html.AntiForgeryToken()
 
-    <section id="accdetails">
-        <b>Tenant ID: </b>&nbsp; @Html.DisplayFor(model => model.TenantId)
-        <br>
-        <b>Tenant Name: </b>&nbsp; @Html.DisplayFor(model => model.Tenant_FirstName) @Html.DisplayFor(model => model.Tenant_MiddleName) @Html.DisplayFor(model => model.Tenant_LastName)
-        <br>
-        <b>Tenant Username: </b>&nbsp; @Html.DisplayFor(model => model.Tenant_UserName)
-        <br>
-        <b>Room Number: </b>&nbsp; @Html.DisplayFor(model => model.Tenant_RoomNumber)
-        <br>
-        <b>Unit ID Number: </b>&nbsp; @Html.DisplayFor(model => model.Tenant_UnitNumber)
-        <br>
-    </section>
 
-    <section id="accdetails">
-        <section id="buttonCont">
-            <button onclick="window.location.href='@Url.Action("PayRent")'">Pay Rent Bills</button>
-            <button onclick="window.location.href='@Url.Action("Create", "Requisition")'">Request Item or Service</button>
-            <button>Send Feedback</button>
-        </section>
 
-    </section>
+        <label for="Requisition_Type">Requisition Type:</label>
+        <select id="Requisition_Type" name="Requisition_Type">
+            <option value="" disabled selected>Select a type</option>
+            <option value="REQUEST_ITEM">REQUEST ITEM</option>
+            <option value="REQUEST_SERVICE">REQUEST SERVICE</option>
+        </select>
 
+        <div id="itemSection" style="display:none;">
+            <label for="Req_Item_Name">Item Name:</label>
+            <input type="text" id="Req_Item_Name" name="RequisitionItems[0].Req_Item_Name" />
+
+            <label for="Req_Item_Quantity">Item Quantity:</label>
+            <input type="text" id="Req_Item_Quantity" name="RequisitionItems[0].Req_Item_Quantity" />
+
+            <label for="Req_Item_Units">Item Unit/s:</label>
+            <input type="text" id="Req_Item_Units" name="RequisitionItems[0].Req_Item_Units" />
+
+            <button type="button" class="addItemButton">Add Item</button>
+        </div>
+
+        <div id="serviceSection" style="display:none;">
+            <label for="Req_Serv_Name">Service Name:</label>
+            <input type="text" id="Req_Serv_Name" name="RequisitionServices[0].Req_Serv_Name" />
+
+            <button type="button" class="addServiceButton">Add Service</button>
+        </div>
+
+        <input type="hidden" id="Requisition_CreatedAt" name="Requisition_CreatedAt" />
+        <input type="hidden" id="Requisition_Status" name="Requisition_Status" value="Pending" />
+
+        <label for="Requisition_DueDate">Due Date:</label>
+        <input type="date" id="Requisition_DueDate" name="Requisition_DueDate" />
+
+        <label for="Requisition_Remarks">Description of Request:</label>
+        <input type="text" id="Requisition_Remarks" name="Requisition_Remarks" />
+
+        <button type="submit">Submit</button>
+    </form> *@
 
     <section id="backTopCont">
         <a href="#">

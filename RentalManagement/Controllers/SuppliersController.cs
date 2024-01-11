@@ -106,10 +106,25 @@ namespace RentalManagement.Controllers
         [HttpPost]
         public JsonResult CheckNameExists(string name)
         {
-            // Your logic to check if the name already exists in the database
             bool exists = _context.Supplier.Any(s => s.Suppliers_Name == name);
 
         return Json(new { exists });
+        }
+
+        [HttpPost]
+        public JsonResult CheckEmailExists(string email)
+        {
+            bool exists = _context.Supplier.Any(s => s.Suppliers_Email == email);
+
+            return Json(new { exists });
+        }
+
+        [HttpPost]
+        public JsonResult CheckPhoneExists(string phone)
+        {
+            bool exists = _context.Supplier.Any(s => s.Suppliers_PhoneNumber == phone);
+
+            return Json(new { exists });
         }
 
         // GET: Suppliers/Edit/5

@@ -1,0 +1,200 @@
+﻿@model IEnumerable<RentalManagement.Models.PaymentDetail>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Kerwin's Apartment</title>
+    <link rel="icon" type="image/x-icon" href="~/images/logo2.svg">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/adminHome.css">
+    <link rel="stylesheet" href="~/css/supplier.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="~/js/manageSupplier.js"></script>
+
+</head>
+
+<body id="bodyCont">
+
+    <section id="header">
+        <div class="navbar">
+            <a asp-action="Logout" style="margin-top:12px" id="Logout">Logout</a>
+            <div class="dropdown nbItem">
+                <button class="dropbtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="@Url.Action("Notifications", "AdminHome")">Notifications</a>
+                    <a href="@Url.Action("Settings", "AdminHome")">Account Settings</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="supplierCont">
+        <div class="supplierContainer">
+            <div class="scCol1">
+                <div id="editModal">
+                    <!-- Editable fields -->
+                    <p>Supplier ID</p>
+                    <input type="number" id="SupplierID" readonly>
+                    <p>Supplier Name</p>
+                    <input type="text" id="SupplierNameInput" readonly>
+                    <p>Supplier Email</p>
+                    <input type="text" id="SupplierEmailInput" readonly>
+                    <p>Supplier Phone</p>
+                    <input type="text" id="SupplierPhoneInput" readonly>
+                    <p>Supplier Address</p>
+                    <input type="text" id="SupplierAddressInput" readonly>
+                </div>
+
+                <!-- Pop-up form -->
+                <div id="addSupplierForm">
+                    <h2>Add Supplier Form</h2>
+                    <p>Supplier Name</p>
+                    <p id="supplierNameError" style="color: red; font-size: 10px;"></p>
+                    <input type="text" id="SupplierName" required>
+                    <p>Supplier Email</p>
+                    <p id="supplierEmailError" style="color: red; font-size: 10px;"></p>
+                    <input type="text" id="SupplierEmail" required>
+                    <p>Supplier Phone</p>
+                    <p id="supplierPhoneError" style="color: red; font-size: 10px;"></p>
+                    <input type="number" id="SupplierPhone" required>
+                    <p>Supplier Address</p>
+                    <p id="supplierAddressError" style="color: red; font-size: 10px;"></p>
+                    <input type="text" id="SupplierAddress" required>
+
+                    <button id="submitSupplier">Submit</button>
+                    <button id="closeForm">Close</button>
+                </div>
+            </div>
+            <div class="scCol2">
+                <div class="addSupp">
+                    <button id="addSupButton">Add Supplier</button>
+                </div>
+                <div class="displaySupp">
+                    <div class="supplierSearch">
+                        <input type="search" placeholder="Search supplier" /><i class="fas fa-search"></i>
+                    </div>
+
+                    <table id="supplierTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>Supplier ID</th>
+                                <th>Supplier Name</th>
+                                <th>Supplier Email</th>
+                                <th>Supplier Phone</th>
+                                <th>Supplier Address</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="supplierTableBody">
+                            <!-- Data will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>src = "~/js/manageSupplier.js"</script>
+
+    <footer>
+        <div class="footer-columns">
+            <div class="column" id="col">
+                <img src="images/logo.svg" alt="">
+                <h2>Kerwin's Apartment</h2>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column">
+                <h4>About</h4>
+                <p>About us</p>
+                <p>Rental Information</p>
+                <p>Rent Rates and Policies</p>
+                <p>Terms and Condition</p>
+                <p>Community Information</p>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column" id="col">
+                <h4>Contact us</Canvas></h4>
+                <p>+63 9123456789</p>
+                <p>kerwin.rental@kerwin.com.ph</p>
+                <p>Paknaan, Mandaue City, Cebu 6014</p>
+                <p>Kerwin's Apartment</p><br>
+                <h4>Follow us</h4>
+                <a href="https://www.facebook.com/edsel.lucanas">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com/">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.pinterest.com/">
+                    <i class="fa-brands fa-pinterest"></i>
+                </a>
+                <a href="https://www.youtube.com/">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+
+
+    </footer>
+
+    <footer id="foot2">
+        <div class="footCont">
+            <div class="footCont2">
+                <div class="column2">
+                    <p>Web Application developed by <b>DPMS 2023</b></p>
+                    <p>Delig • Pila • Monares • Salas</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        var data = [50, 75, 120, 100, 150, 2, 11];
+
+        var svg = d3.select("#chartContainer1")
+            .append("svg")
+            .attr("width", 400)
+            .attr("height", 200);
+
+        svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", function (d, i) { return i * 80; })
+            .attr("y", function (d) { return 200 - d; })
+            .attr("width", 75)
+            .attr("height", function (d) { return d; })
+            .attr("fill", "steelblue");
+    </script>
+
+    <script>
+        var data = [50, 75, 120, 100, 150, 2, 11];
+
+        var svg = d3.select("#chartContainer1")
+            .append("svg")
+            .attr("width", 400)
+            .attr("height", 200);
+
+        svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", function (d, i) { return i * 80; })
+            .attr("y", function (d) { return 200 - d; })
+            .attr("width", 75)
+            .attr("height", function (d) { return d; })
+            .attr("fill", "steelblue");
+    </script>
+</body>
+</html>

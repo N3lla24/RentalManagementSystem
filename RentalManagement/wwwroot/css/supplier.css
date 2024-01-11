@@ -488,8 +488,6 @@ a {
         background-color: transparent;
         height: 90%;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
-        overflow-x: auto;
-        overflow-y: auto;
     }
 
 #addSupButton {
@@ -516,9 +514,6 @@ a {
 
 #supplierCont #supplierTable {
     width: 100%;
-    table-layout: fixed;
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
     #supplierCont #supplierTable th, #supplierCont #supplierTable td {

@@ -18,8 +18,8 @@ $(document).ready(function () {
                         '<td>' + supplier.suppliers_Email + '</td>' +
                         '<td>' + supplier.suppliers_PhoneNumber + '</td>' +
                         '<td>' + supplier.suppliers_Address + '</td>' +
-                        '<td><button class="editBtn" data-id="' + supplier.suppliersId + '">Edit</button>' + 
-                        '<button class="deleteBtn" data-id="' + supplier.suppliersId + '">Delete</button></td>' +
+                        '<td><button class="editBtn" style="color: white; background-color: green;" data-id="' + supplier.suppliersId + '">Details</button>' +
+                        '<button class="deleteBtn" style="color: white; background-color: red;" data-id="' + supplier.suppliersId + '">Delete</button></td>' +
                         '</tr>'
                     );
                 });
@@ -89,6 +89,24 @@ $(document).ready(function () {
         } else {
             // Clear any previous error message
             $('#supplierNameError').text('');
+        }
+
+        var phoneExists = await checkPhoneExists(formData.Suppliers_PhoneNumber.trim());
+        if (phoneExists) {
+            $('#supplierPhoneError').text('Supplier phone already exists in the database.');
+            return;
+        } else {
+            // Clear any previous error message
+            $('#supplierPhoneError').text('');
+        }
+
+        var emailExists = await checkEmailExists(formData.Suppliers_Email.trim());
+        if (emailExists) {
+            $('#supplierEmailError').text('Supplier email already exists in the database.');
+            return;
+        } else {
+            // Clear any previous error message
+            $('#supplierEmailError').text('');
         }
 
         // Show confirmation dialog before inserting into the database
@@ -180,6 +198,47 @@ $(document).ready(function () {
         return exists;
     }
 
+    async function checkEmailExists(email) {
+        var exists = false;
+
+        await $.ajax({
+            url: '/Suppliers/CheckEmailExists',
+            type: 'POST',
+            data: { email: email },
+            async: true,
+            success: function (response) {
+                exists = response.exists;
+            },
+            error: function (error) {
+                console.error('Error checking supplier email:', error);
+            }
+        });
+
+        return exists;
+    }
+
+    async function checkPhoneExists(phone) {
+        var exists = false;
+        if (typeof phone === 'number') {
+            phone = phone.toString();
+        }
+
+        await $.ajax({
+            url: '/Suppliers/CheckPhoneExists',
+            type: 'POST',
+            data: { phone: phone },
+            async: true,
+            success: function (response) {
+                exists = response.exists;
+            },
+            error: function (error) {
+                console.error('Error checking supplier phone:', error);
+            }
+        });
+
+        return exists;
+    }
+
         // Function to display server-side validation errors
         function displayValidationErrors(errors) {
             // Display server-side validation errors in the specified <p> elements
@@ -197,6 +256,8 @@ $(document).ready(function () {
             type: 'POST',
             success: function (response) {
                 if (response.success) {
+
+                    $('#SupplierID, #SupplierNameInput, #SupplierEmailInput, #SupplierPhoneInput, #SupplierAddressInput').val('');
                     // Refresh the supplier table after successful deletion
                     populateSuppliers();
                 } else {
