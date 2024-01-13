@@ -36,45 +36,6 @@
         </div>
     </section>
 
-    <div class="reqConfirmPopUp">
-        <div class="rcpDetails">
-            <h3>Requested Items or Service</h3>
-            <div class="rcpItems">
-                <table>
-                    <tbody>
-                        <td>
-                            <p>Product 1</p>
-                        </td>
-                        <td>
-                            <select id="item1DD" onchange="handleSelectChange(this)">
-                                <option value="default" selected disabled>Select item in inventory</option>
-                                <option value="option1">Soap</option>
-                                <option value="option2">Cleaning Product</option>
-                                <option value="option3">Grocery</option>
-                                <option value="option4">Clothes</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input type="text" name="" id="numericInput" disabled oninput="handleNumericInputChange()">
-                        </td>
-                    </tbody>
-                </table>
-            </div>
-            <button class="rcpContinue">Continue</button>
-            <button class="rcpCancel">Cancel</button>
-        </div>
-    </div>
-
-    <div class="reqRejectPopUp">
-        <div class="rrpDetails">
-            <h3>Are you sure you want to reject this requisition form?</h3>
-            <span>Note: This can't be undone.</span><br><br><br>
-            <button class="rrpCancel">Cancel</button>
-            <button class="rrpProceed">Proceed</button>
-        </div>
-    </div>
-
-
     <section class="manageRentalContainer">
         <div class="mrcLanding">
             <div class="mrButtonChoices">
@@ -83,7 +44,7 @@
                 <button class="displayButton" id="roomButton" data-target="roomDisplay">Rental Room Details</button>
                 <button class="displayButton" id="reportsButton" data-target="reportsDisplay">Reports & Analytics</button>
                 <button class="displayButton" id="invoiceDisplay" data-target="invoiceDisplay">Invoices</button>
-                <button class="displayButton" id="appButton" data-target="appDisplay">Rental Applications</button>
+                <button class="displayButton" id="appButton" data-target="appDisplay">Rental Applications History</button>
             </div>
             <div class="tenantDisplay">
                 <div class="tenantSearch">
@@ -110,8 +71,6 @@
                                 </td>
                             </tr>
                         }
-
-
                     </tbody>
                 </table>
             </div>
