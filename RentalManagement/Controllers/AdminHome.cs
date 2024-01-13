@@ -46,13 +46,12 @@ namespace RentalManagement.Controllers
                 var tenant = await _context.Tenant.ToListAsync();
                 var requisition = await _context.Requisition.ToListAsync();
                 var room = await _context.Room.ToListAsync();
-                var feedback = await _context.Feedback.ToListAsync();
                 var applicants = await _context.Applicants.ToListAsync();
-                /*var payment = await _context.PaymentDetail.ToListAsync();*/
+                var invoice = await _context.Invoice.ToListAsync();
                 var ph = await _context.PaymentDetail.ToListAsync();
                 var rh = await _context.Requisition.ToListAsync();
 
-                if (tenant != null && requisition != null && room != null && feedback != null && /*payment != null &&*/ applicants != null && ph != null && rh != null)
+                if (tenant != null && requisition != null && room != null && invoice != null && applicants != null && ph != null && rh != null)
                 {
                     var tenantDisplayList = tenant.Select(tenant => new TenantDisplay
                     {
@@ -81,11 +80,13 @@ namespace RentalManagement.Controllers
 
                     }).ToList();
 
-                    var feedbackDisplayList = feedback.Select(feedback => new FeedbackDisplay
+                    var invoiceDisplayList = invoice.Select(invoice => new InvoiceDisplay
                     {
-                        FeedbackId = feedback.FeedbackId,
-                        Feedback_Email = feedback.Feedback_Email,
-                        Feedback_Content = feedback.Feedback_Content,
+                        Inv_ID = invoice.Inv_ID,
+                        Inv_CreatedAt = invoice.Inv_CreatedAt,
+                        Inv_Method = invoice.Inv_Method,
+                        Inv_Status = invoice.Inv_Status,
+                        Inv_ProofPayment = invoice.Inv_ProofPayment,
 
                     }).ToList();
 
@@ -148,9 +149,9 @@ namespace RentalManagement.Controllers
                         Tenant = tenantDisplayList,
                         Requisition = requisitionDisplayList,
                         Room = roomDisplayList,
-                        Feedback = feedbackDisplayList,
                         /*Reports = monthlyTotals,
                         PaymentHistory = paymentHistoryList,*/
+                        Invoice = invoiceDisplayList,
                         RequisitionHistory = requisitionHistoryList,
                         Applicants = appDisplayList
                     };

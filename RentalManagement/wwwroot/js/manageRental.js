@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
     // Initially show the tenantDisplay and hide others
     $('.tenantDisplay').show();
-    $('.reqDisplay, .roomDisplay, .reportsDisplay, .feedDisplay, .appDisplay').hide();
+    $('.reqDisplay, .roomDisplay, .reportsDisplay, .invoiceDisplay, .appDisplay').hide();
 
     $('.displayButton').click(function () {
         // Hide all displays
-        $('.tenantDisplay, .reqDisplay, .roomDisplay, .reportsDisplay, .feedDisplay, .appDisplay').hide();
+        $('.tenantDisplay, .reqDisplay, .roomDisplay, .reportsDisplay, .invoiceDisplay, .appDisplay').hide();
 
         $('#reqPopUpModal').hide();
         var footer = document.querySelector('footer')

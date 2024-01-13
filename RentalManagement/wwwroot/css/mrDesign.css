@@ -201,7 +201,7 @@ a {
 .reqDisplay,
 .roomDisplay,
 .reportsDisplay,
-.feedDisplay,
+.invoiceDisplay,
 .appDisplay {
     width: 80%;
     padding: 10px;
@@ -228,7 +228,7 @@ a {
 
 .tenantSearch, .reqSearch,
 .roomSearch, .reportsSearch,
-.feedSearch, .appSearch {
+.invoiceSearch, .appSearch {
     margin-bottom: 10px;
 }
 
@@ -237,7 +237,7 @@ a {
 .reqDisplay .reqSearch input[type=search],
 .roomDisplay .roomSearch input[type=search],
 .reportsDisplay .reportsSearch input[type=search],
-.feedDisplay .feedSearch input[type=search],
+.invoiceDisplay .invoiceSearch input[type=search],
 .appDisplay .appSearch input[type=search] {
     width: 95%;
     height: 30px;
@@ -250,7 +250,7 @@ a {
 .reqDisplay .reqSearch i,
 .roomDisplay .roomSearch i,
 .reportsDisplay .reportsSearch i,
-.feedDisplay .feedSearch i,
+.invoiceDisplay .invoiceSearch i,
 .appDisplay .appSearch i {
     width: 5%;
     height: 30px;
@@ -266,7 +266,7 @@ a {
     .reqDisplay .reqSearch i:hover,
     .roomDisplay .roomSearch i:hover,
     .reportsDisplay .reportsSearch i:hover,
-    .feedDisplay .feedSearch i:hover,
+    .invoiceDisplay .invoiceSearch i:hover,
     .appDisplay .appSearch i:hover {
         background-color: #8b6536;
     }
@@ -275,7 +275,7 @@ a {
 .mrcLanding #reqTable,
 .mrcLanding #roomTable,
 .mrcLanding #reportsTable,
-.mrcLanding #feedTable,
+.mrcLanding #invoiceTable,
 .mrcLanding #appTable {
     width: 100%;
     border-collapse: collapse;
@@ -285,7 +285,7 @@ a {
     .mrcLanding #reqTable th, .mrcLanding #reqTable td,
     .mrcLanding #roomTable th, .mrcLanding #roomTable td,
     .mrcLanding #reportsTable th, .mrcLanding #reportsTable td,
-    .mrcLanding #feedTable th, .mrcLanding #feedTable td,
+    .mrcLanding #invoiceTable th, .mrcLanding #invoiceTable td,
     .mrcLanding #appTable th, .mrcLanding #appTable td {
         border: 1px solid black;
         padding: 8px;
@@ -295,7 +295,7 @@ a {
     .mrcLanding #reqTable th,
     .mrcLanding #roomTable th,
     .mrcLanding #reportsTable th,
-    .mrcLanding #feedTable th,
+    .mrcLanding #invoiceTable th,
     .mrcLanding #appTable th {
         font-size: 13px;
     }
@@ -304,13 +304,13 @@ a {
         .mrcLanding #reqTable th:nth-child(1),
         .mrcLanding #roomTable th:nth-child(1),
         .mrcLanding #reportsTable th:nth-child(1),
-        .mrcLanding #feedTable th:nth-child(1),
+        .mrcLanding #invoiceTable th:nth-child(1),
         .mrcLanding #appTable th:nth-child(1),
         .mrcLanding #tenantTable th:nth-child(4),
         .mrcLanding #reqTable th:nth-child(4),
         .mrcLanding #roomTable th:nth-child(4),
         .mrcLanding #reportsTable th:nth-child(4),
-        .mrcLanding #feedTable th:nth-child(4),
+        .mrcLanding #invoiceTable th:nth-child(4),
         .mrcLanding #appTable th:nth-child(4) {
             width: 10%;
         }
@@ -319,13 +319,13 @@ a {
         .mrcLanding #reqTable th:nth-child(2),
         .mrcLanding #roomTable th:nth-child(2),
         .mrcLanding #reportsTable th:nth-child(2),
-        .mrcLanding #feedTable th:nth-child(2),
+        .mrcLanding #invoiceTable th:nth-child(2),
         .mrcLanding #appTable th:nth-child(2),
         .mrcLanding #tenantTable th:nth-child(3),
         .mrcLanding #reqTable th:nth-child(3),
         .mrcLanding #roomTable th:nth-child(3),
         .mrcLanding #reportsTable th:nth-child(3),
-        .mrcLanding #feedTable th:nth-child(3),
+        .mrcLanding #invoiceTable th:nth-child(3),
         .mrcLanding #appTable th:nth-child(3) {
             width: 35%;
         }
@@ -364,11 +364,11 @@ a {
 .reqDisplay,
 .roomDisplay,
 .reportsDisplay,
-.feedDisplay,
+.invoiceDisplay,
 .appDisplay {
     width: 80%;
     padding: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09); 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
     background-color: #FFF9F2;
     height: 300px;
     height: 100%;
@@ -377,7 +377,7 @@ a {
 .tenantDisplay,
 .reqDisplay,
 .roomDisplay,
-.feedDisplay,
+.invoiceDisplay,
 .appDisplay {
     overflow-y: scroll;
 }
@@ -400,7 +400,7 @@ a {
 
 .tenantSearch, .reqSearch,
 .roomSearch, .reportsSearch,
-.feedSearch, .appSearch {
+.invoiceSearch, .appSearch {
     margin-bottom: 10px;
 }
 
@@ -409,7 +409,7 @@ a {
 .reqDisplay .reqSearch input[type=search],
 .roomDisplay .roomSearch input[type=search],
 .reportsDisplay .reportsSearch input[type=search],
-.feedDisplay .feedSearch input[type=search],
+.invoiceDisplay .invoiceSearch input[type=search],
 .appDisplay .appSearch input[type=search] {
     width: 95%;
     height: 30px;
@@ -422,67 +422,67 @@ a {
 .reqDisplay .reqSearch i,
 .roomDisplay .roomSearch i,
 .reportsDisplay .reportsSearch i,
-.feedDisplay .feedSearch i,
+.invoiceDisplay .invoiceSearch i,
 .appDisplay .appSearch i {
     width: 5%;
     height: 30px;
     text-align: center;
-    background-color:#65451F;
+    background-color: #65451F;
     padding: 5px;
     color: aliceblue;
     border-radius: 0 5px 5px 0;
     transition: 0.3s ease;
 }
 
-.tenantDisplay .tenantSearch i:hover,
-.reqDisplay .reqSearch i:hover,
-.roomDisplay .roomSearch i:hover,
-.reportsDisplay .reportsSearch i:hover,
-.feedDisplay .feedSearch i:hover,
-.appDisplay .appSearch i:hover {
-    background-color:#8b6536;
-}
+    .tenantDisplay .tenantSearch i:hover,
+    .reqDisplay .reqSearch i:hover,
+    .roomDisplay .roomSearch i:hover,
+    .reportsDisplay .reportsSearch i:hover,
+    .invoiceDisplay .invoiceSearch i:hover,
+    .appDisplay .appSearch i:hover {
+        background-color: #8b6536;
+    }
 
 .mrcLanding #tenantTable,
 .mrcLanding #reqTable,
 .mrcLanding #roomTable,
 .mrcLanding #reportsTable,
-.mrcLanding #feedTable,
+.mrcLanding #invoiceTable,
 .mrcLanding #appTable {
     width: 100%;
     border-collapse: collapse;
 }
 
-.mrcLanding #tenantTable th, .mrcLanding #tenantTable td,
-.mrcLanding #reqTable th, .mrcLanding #reqTable td,
-.mrcLanding #roomTable th, .mrcLanding #roomTable td,
-.mrcLanding #reportsTable th, .mrcLanding #reportsTable td,
-.mrcLanding #feedTable th, .mrcLanding #feedTable td,
-.mrcLanding #appTable th, .mrcLanding #appTable td  {
-    border: 1px solid black;
-    padding: 8px;
-}
+    .mrcLanding #tenantTable th, .mrcLanding #tenantTable td,
+    .mrcLanding #reqTable th, .mrcLanding #reqTable td,
+    .mrcLanding #roomTable th, .mrcLanding #roomTable td,
+    .mrcLanding #reportsTable th, .mrcLanding #reportsTable td,
+    .mrcLanding #invoiceTable th, .mrcLanding #invoiceTable td,
+    .mrcLanding #appTable th, .mrcLanding #appTable td {
+        border: 1px solid black;
+        padding: 8px;
+    }
 
-.mrcLanding #tenantTable th,
-.mrcLanding #reqTable th,
-.mrcLanding #roomTable th,
-.mrcLanding #reportsTable th,
-.mrcLanding #feedTable th,
-.mrcLanding #appTable th {
-    font-size: 13px;
-}
+    .mrcLanding #tenantTable th,
+    .mrcLanding #reqTable th,
+    .mrcLanding #roomTable th,
+    .mrcLanding #reportsTable th,
+    .mrcLanding #invoiceTable th,
+    .mrcLanding #appTable th {
+        font-size: 13px;
+    }
 
 .mrcLanding #tenantTable th:nth-child(1),
 .mrcLanding #reqTable th:nth-child(1),
 .mrcLanding #roomTable th:nth-child(1),
 .mrcLanding #reportsTable th:nth-child(1),
-.mrcLanding #feedTable th:nth-child(1),
+.mrcLanding #invoiceTable th:nth-child(1),
 .mrcLanding #appTable th:nth-child(1),
 .mrcLanding #tenantTable th:nth-child(4),
 .mrcLanding #reqTable th:nth-child(4),
 .mrcLanding #roomTable th:nth-child(4),
 .mrcLanding #reportsTable th:nth-child(4),
-.mrcLanding #feedTable th:nth-child(4),
+.mrcLanding #invoiceTable th:nth-child(4),
 .mrcLanding #appTable th:nth-child(4) {
     width: 10%;
 }
@@ -491,13 +491,13 @@ a {
 .mrcLanding #reqTable th:nth-child(2),
 .mrcLanding #roomTable th:nth-child(2),
 .mrcLanding #reportsTable th:nth-child(2),
-.mrcLanding #feedTable th:nth-child(2),
+.mrcLanding #invoiceTable th:nth-child(2),
 .mrcLanding #appTable th:nth-child(2),
 .mrcLanding #tenantTable th:nth-child(3),
 .mrcLanding #reqTable th:nth-child(3),
 .mrcLanding #roomTable th:nth-child(3),
 .mrcLanding #reportsTable th:nth-child(3),
-.mrcLanding #feedTable th:nth-child(3),
+.mrcLanding #invoiceTable th:nth-child(3),
 .mrcLanding #appTable th:nth-child(3)  {
     width: 35%;
 }
@@ -517,14 +517,14 @@ a {
 .reqDisplay #reqTable td:nth-child(4),
 .tenantDisplay #tenantTable td:nth-child(4),
 .roomDisplay #roomTable td:nth-child(5),
-.feedDisplay #feedTable td:nth-child(4) {
+.invoiceDisplay #invoiceTable td:nth-child(4) {
     text-align: center;
 }
 
 .reqDisplay #reqTable td:nth-child(4) button,
 .tenantDisplay #tenantTable td:nth-child(4) button,
 .roomDisplay #roomTable td:nth-child(5) button,
-.feedDisplay #feedTable td:nth-child(4) button {
+.invoiceDisplay #invoiceTable td:nth-child(4) button {
     background-color: #503514;
     text-align: center;
     padding: 5px 10px;
@@ -537,7 +537,7 @@ a {
 .reqDisplay #reqTable td:nth-child(4) button:hover,
 .tenantDisplay #tenantTable td:nth-child(4) button:hover,
 .roomDisplay #tenantTable td:nth-child(5) button:hover,
-.feedDisplay #feedTable td:nth-child(4) button:hover {
+.invoiceDisplay #invoiceTable td:nth-child(4) button:hover {
     background-color: #77542a;
 }
 

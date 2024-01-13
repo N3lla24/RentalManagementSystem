@@ -76,171 +76,13 @@
 
 
     <section class="manageRentalContainer">
-        <div class="popUpModal" id="tenantPopUpModal">
-            <i class="fa-solid fa-circle-xmark" id="tenantX"></i>
-            <div class="pmCol2">
-                <div class="infoColumn">
-                    <p>Tenant: <span id="tenantNameSpan"></span></p>
-                    <p>Tenant Username: <span id="tenantUsernameSpan"></span></p>
-                    <p>Tenant Email: <span id="tenantEmailSpan"></span></p>
-                    <p>Tenant Phone Number: <span id="tenantPhoneSpan"></span></p>
-                    <p>Tenant Unit Number: <span id="tenantUnitNumberSpan"></span></p>
-                    <p>Tenant Room Number: <span id="tenantRoomNumberSpan"></span></p>
-                    <button id="editButton">Edit</button>
-                    <button id="closeButton">Close</button>
-                    <div id="editModal" style="display: none;">
-                        <input type="text" id="roomNumberInput" placeholder="Room Number">
-                        <button id="discardButton">Discard</button>
-                        <button id="updateButton">Update</button>
-                    </div>
-                </div>
-                <div class="historyColumn">
-                    @*<div class="scrollableDiv" id="paymentHistory">
-                        <p>PAYMENT HISTORY</p>
-                        <table id="paymentHistoryTable" class="table">
-                            <thead>
-                                <tr>
-                                    <th>Payment ID</th>
-                                    <th>Due Date</th>
-                                    <th>Rent</th>
-                                    <th>Utility</th>
-                                    <th>Garbage</th>
-                                    <th>Aircon</th>
-                                    <th>Internet</th>
-                                    <th>Refrigerator</th>
-                                    <th>Washing</th>
-                                    <th>Payed At</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var ph in Model.PaymentHistory)
-                                {
-                                    <tr>
-                                        <td>@ph.Pay_ID</td>
-                                        <td>@ph.Pay_DueDate</td>
-                                        <td>@ph.Pay_RentPrice</td>
-                                        <td>@ph.Pay_UtilityFee</td>
-                                        <td>@ph.Pay_GarbageFee</td>
-                                        <td>@ph.Pay_AirconFee</td>
-                                        <td>@ph.Pay_InternetFee</td>
-                                        <td>@ph.Pay_RefrigeratorFee</td>
-                                        <td>@ph.Pay_WashingFee</td>
-                                        <td>@ph.Pay_CreatedAt</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>*@
-                    <div class="scrollableDiv" id="requisitionHistory">
-                        <p>REQUISITION HISTORY</p>
-                        <table id="requisitionHistoryTable" class="table">
-                            <thead>
-                                <tr>
-                                    <th>Requisition ID</th>
-                                    <th>Type</th>
-                                    <th>Request Date</th>
-                                    <th>Status</th>
-                                    <th>Due Date</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var rh in Model.RequisitionHistory)
-                                {
-                                    <tr>
-                                        <td>@rh.RequisitionId</td>
-                                        <td>@rh.Requisition_Type</td>
-                                        <td>@rh.Requisition_CreatedAt</td>
-                                        <td>@rh.Requisition_Status</td>
-                                        <td>@rh.Requisition_DueDate</td>
-                                        <td>@rh.Requisition_Remarks</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div> 
-            </div>
-        </div>
-        <div class="popUpModal" id="reqPopUpModal">
-            <i class="fa-solid fa-circle-xmark" id="reqX"></i>
-            <div class="pmCol2">
-
-                <div class="reqInfor">
-                    <h3>Requisition Form - <span id="requisitionId"></span></h3>
-                    <p>Requester: <span id="requester"></span></p>
-                    <p>Request Type: <span id="requisitionType"></span></p>
-                    <p>Requested Date: <span id="requestedDate"></span></p>
-                </div>
-                <div class="infoColumn">
-                    <button id="reqApprove">Approve</button>
-                    <button id="reqReject">Reject</button>
-                </div>
-            </div>
-
-        </div>
-        <div class="popUpModal" id="popUpModal">
-            <div class="pmCol1">
-                <img id="roomImage" src="" alt="Room Image">
-            </div>
-            <div class="pmCol2">
-                <div class="infoColumn">
-                    <button id="editButton">Edit</button>
-                    <button id="closeButton">Close</button>
-                    <div id="editModal" style="display: none;">
-                        <!-- Editable fields -->
-                        <input type="file" id="roomImageInput" accept="image/*">
-                        <input type="text" id="roomNameInput" placeholder="Room Name">
-                        <input type="text" id="middleNameInput" placeholder="Middle Name">
-                        <input type="text" id="lastNameInput" placeholder="Last Name">
-                        <input type="text" id="phoneNumberInput" placeholder="Phone Number">
-                        <!-- Edit buttons -->
-                        <button id="discardButton">Discard</button>
-                        <button id="updateButton">Update</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="popUpModal" id="popUpModal">
-            <div class="pmCol2">
-                <div class="feedInfor">
-                    <h3>Tenant Feedback - </h3> <!--requisiton id-->
-                    <p>Sender: </p>
-                    <p>Requested Item or Service: </p>
-                    <p>Requested Date: </p>
-                    <p>Document: </p>
-                </div>
-                <div class="infoColumn">
-                    <button id="ackButton">Acknowledge</button>
-                </div>
-            </div>
-        </div>
-        <div class="popUpModal" id="popUpModal">
-            <div class="pmCol1">
-                <img id="appImage" src="" alt="Applicant Image">
-            </div>
-            <div class="pmCol2">
-                <div class="appInfor">
-                    <h3>Tenant Applicant - </h3> <!--requisiton id-->
-                    <p>Sender: </p>
-                    <p>Requested Item or Service: </p>
-                    <p>Requested Date: </p>
-                    <p>Document: </p>
-                </div>
-                <div class="infoColumn">
-                    <button id="approveButton">Approve</button>
-                    <button id="rejectButton">Reject</button>
-                </div>
-            </div>
-        </div>
-
         <div class="mrcLanding">
             <div class="mrButtonChoices">
                 <button class="displayButton" id="tenantButton" data-target="tenantDisplay">Tenant List</button>
                 <button class="displayButton" id="reqButton" data-target="reqDisplay">Requisition Forms</button>
                 <button class="displayButton" id="roomButton" data-target="roomDisplay">Rental Room Details</button>
                 <button class="displayButton" id="reportsButton" data-target="reportsDisplay">Reports & Analytics</button>
-                <button class="displayButton" id="feedbackButton" data-target="feedDisplay">Feedback & Suggestions</button>
+                <button class="displayButton" id="invoiceDisplay" data-target="invoiceDisplay">Invoices</button>
                 <button class="displayButton" id="appButton" data-target="appDisplay">Rental Applications</button>
             </div>
             <div class="tenantDisplay">
@@ -327,7 +169,7 @@
                                 <td>@room.Room_Status</td>
                                 <td>@room.Room_Capacity</td>
                                 <td>
-                                    <button class="roomActionButton" data-room-id="@room.RoomId">Details</button>
+                                    <a asp-action="DetailsRoom" asp-route-id="@room.RoomId" style="color: green">Details</a>
                                 </td>
                             </tr>
                         }
@@ -340,28 +182,28 @@
 
             </div>
 
-            <div class="feedDisplay">
-                <div class="feedSearch">
-                    <input type="search" placeholder="Search feedbacks and suggestions" /><i class="fas fa-search"></i>
+            <div class="invoiceDisplay">
+                <div class="invoiceSearch">
+                    <input type="search" placeholder="Search tenant invoices" /><i class="fas fa-search"></i>
                 </div>
-                <table id="feedTable" class="table">
+                <table id="invoiceTable" class="table">
                     <thead>
                         <tr>
-                            <th>Feedback ID</th>
-                            <th>Feedback Sender</th>
-                            <th>Feedback Type</th>
+                            <th>Invoice ID</th>
+                            <th>Created At</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody> 
-                        @foreach (var feedback in Model.Feedback)
+                        @foreach (var invoice in Model.Invoice)
                         {
                              <tr>
-                                 <td>@feedback.FeedbackId</td>
-                                 <td>@feedback.Feedback_Email</td>
-                                 <td>@feedback.Feedback_Content</td>
+                                <td>@invoice.Inv_ID</td>
+                                <td>@invoice.Inv_CreatedAt</td>
+                                <td>@invoice.Inv_Status</td>
                                  <td>
-                                     <button class="actionButton" data-req-id="@feedback.FeedbackId">Details</button>
+                                    <a asp-action="DetailsInvoice" asp-route-id="@invoice.Inv_ID" style="color: green">Details</a>
                                  </td>
                              </tr>
                         }

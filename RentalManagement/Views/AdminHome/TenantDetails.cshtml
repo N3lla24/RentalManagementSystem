@@ -68,7 +68,7 @@
                     @Html.DisplayFor(model => model.Tenant_UnitNumber)
                 </dd>
                 <dt class="col-sm-2">
-                    Applied At
+                    Accepted At
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Tenant_CreatedAt)
@@ -85,6 +85,12 @@
         <div>
             <a href="@Url.Action("ManageRental", "AdminHome")"><i class="fas fa-arrow-left" href="@Url.Action("ManageRental", "AdminHome")"></i> Back to Home</a>
             <a asp-action="TenantDelete" asp-route-id="@Model.TenantId" style="color: red;margin-left:71%">Remove Tenant</a>
+        </div>
+    </section>
+
+    <section id="paymentHistory">
+        <div>
+
         </div>
     </section>
 
