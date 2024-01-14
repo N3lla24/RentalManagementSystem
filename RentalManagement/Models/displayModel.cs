@@ -14,9 +14,12 @@ namespace RentalManagement.Models
         public List<PaymentDetail> PaymentHistory { get; set; }
         public List<Requisition> RequisitionHistory { get; set; }
 
-        
+        public Dictionary<string, int> InvoiceStatusCounts { get; set; }
 
-       
+
+
+
+
 
     }
 

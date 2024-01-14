@@ -1,4 +1,4 @@
-﻿@model RentalManagement.Models.Tenant
+﻿@model RentalManagement.Models.RentalViewModel
 
 @{
     ViewData["Title"] = "Tenant Details";
@@ -35,56 +35,128 @@
                     Tenant ID
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.TenantId) 
+                    @Html.DisplayFor(model => model.Tenant.First().TenantId)
                 </dd>
                 <dt class="col-sm-2">
                     Name
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Tenant_FirstName) @Html.DisplayFor(model => model.Tenant_MiddleName) @Html.DisplayFor(model => model.Tenant_LastName)
+                    @Html.DisplayFor(model => model.Tenant.First().Tenant_FirstName) @Html.DisplayFor(model => model.Tenant.First().Tenant_MiddleName) @Html.DisplayFor(model => model.Tenant.First().Tenant_LastName)
                 </dd>
                 <dt class="col-sm-2">
                     Email Address
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Tenant_Email)
+                    @Html.DisplayFor(model => model.Tenant.First().Tenant_Email)
                 </dd>
                 <dt class="col-sm-2">
                     Phone Number
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Tenant_PhoneNumber)
+                    @Html.DisplayFor(model => model.Tenant.First().Tenant_PhoneNumber)
                 </dd>
                 <dt class="col-sm-2">
                     Room
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Tenant_RoomNumber)
+                    @Html.DisplayFor(model => model.Tenant.First().Tenant_RoomNumber)
                 </dd>
                 <dt class="col-sm-2">
                     Unit ID Applied
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Tenant_UnitNumber)
+                    @Html.DisplayFor(model => model.Tenant.First().Tenant_UnitNumber)
                 </dd>
                 <dt class="col-sm-2">
                     Accepted At
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Tenant_CreatedAt)
+                    @Html.DisplayFor(model => model.Tenant.First().Tenant_CreatedAt)
                 </dd>
                 <dt class="col-sm-2">
                     Latest Updated
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Tenant_UpdatedAt)
+                    @Html.DisplayFor(model => model.Tenant.First().Tenant_UpdatedAt)
                 </dd>
             </dl>
         </div>
+        <hr />	
+        <p>Payment History</p>
+        <div class="paymentHistoryTenantContainer" style="max-width: 100%; height: 300px; overflow-x: scroll; overflow-y: scroll; border: solid white 1px;">
+            <table id="paymentTableTenant" class="table" style="background-color: aliceblue;">
+                <thead>
+                    <tr>
+                        <th style="background-color: aliceblue !important;">Pay ID</th>
+                        <th style="background-color: aliceblue !important;">Due Date</th>
+                        <th style="background-color: aliceblue !important;">Rent Fee</th>
+                        <th style="background-color: aliceblue !important;">Utility Fee</th>
+                        <th style="background-color: aliceblue !important;">Garbage Fee</th>
+                        <th style="background-color: aliceblue !important;">Aircon Fee</th>
+                        <th style="background-color: aliceblue !important;">Internet Fee</th>
+                        <th style="background-color: aliceblue !important;">Refrigerator Fee</th>
+                        <th style="background-color: aliceblue !important;">Washing Fee</th>
+                        <th style="background-color: aliceblue !important;">Created At</th>
+                        <th style="background-color: aliceblue !important;">Updated At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var payment in Model.PaymentHistory)
+                    {
+                        <tr>
+                            <td style="background-color: aliceblue !important;">@payment.Pay_ID</td>
+                            <td style="background-color: aliceblue !important;">@payment.Pay_DueDate</td>
+                            <td style="background-color: aliceblue !important;">@payment.Pay_RentPrice</td>
+                            <td style="background-color: aliceblue !important;">@payment.Pay_UtilityFee</td>
+                            <td style="background-color: aliceblue !important;">@payment.Pay_GarbageFee</td>
+                            <td style="background-color: aliceblue !important;">@payment.Pay_AirconFee</td>
+                            <td style="background-color: aliceblue !important;">@payment.Pay_InternetFee</td>
+                            <td style="background-color: aliceblue !important;">@payment.Pay_RefrigeratorFee</td>
+                            <td style="background-color: aliceblue !important;">@payment.Pay_WashingFee</td>
+                            <td style="background-color: aliceblue !important;">@payment.Pay_CreatedAt</td>
+                            <td style="background-color: aliceblue !important;">@payment.Pay_UpdatedAt</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+        <p>Requisition History</p>
+        <div class="requisitionHistoryTenantContainer" style=" max-width: 100%; height: 300px; overflow-x: scroll; overflow-y: scroll; border: solid white 1px;">
+            <table id="requisitionTableTenant" class="table" style="background-color: aliceblue;">
+                <thead>
+                    <tr>
+                        <th style="background-color: aliceblue !important;">Requisition ID</th>
+                        <th style="background-color: aliceblue !important;">Requisition Type</th>
+                        <th style="background-color: aliceblue !important;">Requisition Remarks</th>
+                        <th style="background-color: aliceblue !important;">Requisition Created At</th>
+                        <th style="background-color: aliceblue !important;">Requisition Due At</th>
+                        <th style="background-color: aliceblue !important;">Requisition Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var requisition in Model.RequisitionHistory)
+                    {
+                        <tr>
+                            <td style="background-color: aliceblue !important;">@requisition.RequisitionId</td>
+                            <td style="background-color: aliceblue !important;">@requisition.Requisition_Type</td>
+                            <td style="background-color: aliceblue !important;">@requisition.Requisition_Remarks</td>
+                            <td style="background-color: aliceblue !important;">@requisition.Requisition_CreatedAt</td>
+                            <td style="background-color: aliceblue !important;">@requisition.Requisition_DueDate</td>
+                            <td style="background-color: aliceblue !important;">@requisition.Requisition_Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
         <hr />
+
+
+
+
         <div>
             <a href="@Url.Action("ManageRental", "AdminHome")"><i class="fas fa-arrow-left" href="@Url.Action("ManageRental", "AdminHome")"></i> Back to Home</a>
-            <a asp-action="TenantDelete" asp-route-id="@Model.TenantId" style="color: red;margin-left:71%">Remove Tenant</a>
+            <a asp-action="TenantDelete" asp-route-id="@Model.Tenant.First().TenantId" style="color: red;margin-left:71%">Remove Tenant</a>
         </div>
     </section>
 

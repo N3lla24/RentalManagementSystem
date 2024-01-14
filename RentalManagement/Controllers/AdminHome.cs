@@ -38,6 +38,20 @@ namespace RentalManagement.Controllers
             return View();
         }
 
+        private Dictionary<string, int> GetInvoiceStatusCountsFromDatabase()
+        {
+            // Use your Entity Framework context to query the database
+            var invoiceStatusCounts = _context.Invoice
+                .GroupBy(i => i.Inv_Status)
+                .Select(g => new { Status = g.Key, Count = g.Count() })
+                .ToDictionary(x => x.Status, x => x.Count);
+
+            // If you want to include a count for 'Unknown' status
+            invoiceStatusCounts["Unknown"] = _context.Invoice.Count(i => string.IsNullOrEmpty(i.Inv_Status));
+
+            return invoiceStatusCounts;
+        }
+
         public async Task<IActionResult> ManageRental()
         {
             if (GetId() is null) { return RedirectToAction("Index", "Login"); }
@@ -67,8 +81,9 @@ namespace RentalManagement.Controllers
                     {
                         RequisitionId = requisition.RequisitionId,
                         Requisition_Type = requisition.Requisition_Type,
-                        Requistition_CreatedAt = requisition.Requisition_CreatedAt,
-                    
+                        Requisition_CreatedAt = requisition.Requisition_CreatedAt,
+                        Requisition_Status = requisition.Requisition_Status,
+                   
                     }).ToList();
 
                     var roomDisplayList = room.Select(room => new RoomDisplay
@@ -107,16 +122,7 @@ namespace RentalManagement.Controllers
                         Applicant_UpdatedAt = applicants.Applicant_UpdatedAt,
                     }).ToList();
 
-                    /*var monthlyTotals = payment
-                    .GroupBy(p => p.Pay_CreatedAt.ToString("yyyy-MM"))
-                    .Select(g => new ReportsDisplay
-                    {
-                        Month = g.Key, 
-                        TotalFees = g.Sum(p => p.Pay_RentPrice + p.Pay_UtilityFee + p.Pay_GarbageFee + p.Pay_AirconFee + p.Pay_InternetFee + p.Pay_RefrigeratorFee + p.Pay_WashingFee)
-                    })
-                    .ToList();*/
-
-                    /*var paymentHistoryList = ph.Select(ph => new PaymentDetail
+                    var paymentHistoryList = ph.Select(ph => new PaymentDetail
                     {
                         Pay_ID = ph.Pay_ID,
                         Pay_DueDate = ph.Pay_DueDate,
@@ -128,8 +134,9 @@ namespace RentalManagement.Controllers
                         Pay_RefrigeratorFee = ph.Pay_RefrigeratorFee,
                         Pay_WashingFee = ph.Pay_WashingFee,
                         Pay_UpdatedAt = ph.Pay_UpdatedAt,
+                        TenantId = ph.TenantId,
 
-                    }).ToList();*/
+                    }).ToList();
 
                     var requisitionHistoryList = rh.Select(rh => new Requisition
                     {
@@ -138,24 +145,24 @@ namespace RentalManagement.Controllers
                         Requisition_CreatedAt = rh.Requisition_CreatedAt,
                         Requisition_Status = rh.Requisition_Status,
                         Requisition_Remarks = rh.Requisition_Remarks,
-                        Requisition_DueDate = rh.Requisition_DueDate
+                        Requisition_DueDate = rh.Requisition_DueDate,
+                        TenantId = rh.TenantId,
 
                     }).ToList();
 
-
+                    var invoiceStatusCounts = GetInvoiceStatusCountsFromDatabase();
 
                     var viewModel = new RentalViewModel
                     {
                         Tenant = tenantDisplayList,
                         Requisition = requisitionDisplayList,
                         Room = roomDisplayList,
-                        /*Reports = monthlyTotals,
-                        PaymentHistory = paymentHistoryList,*/
+                        PaymentHistory = paymentHistoryList,
                         Invoice = invoiceDisplayList,
                         RequisitionHistory = requisitionHistoryList,
-                        Applicants = appDisplayList
+                        Applicants = appDisplayList,
+                        InvoiceStatusCounts = invoiceStatusCounts, // Add this line
                     };
-
 
                     return View(viewModel);
                 }
@@ -172,7 +179,6 @@ namespace RentalManagement.Controllers
             }
         }
 
-        //Get Tenant Details
         public async Task<IActionResult> TenantDetails(int? id)
         {
             if (GetId() is null) { return RedirectToAction("Index", "Login"); }
@@ -188,8 +194,38 @@ namespace RentalManagement.Controllers
                 return NotFound();
             }
 
-            return View(tenants);
+            var paymentHistory = _context.PaymentDetail
+                .Where(ph => ph.TenantId == id)
+                .ToList();
+
+            var reqHistory = _context.Requisition
+                .Where(rh => rh.TenantId == id)
+                .ToList();
+
+            var viewModel = new RentalViewModel
+            {
+                Tenant = new List<TenantDisplay>
+        {
+            new TenantDisplay
+            {
+                TenantId = tenants.TenantId,
+                Tenant_FirstName = tenants.Tenant_FirstName,
+                Tenant_MiddleName = tenants.Tenant_MiddleName,
+                Tenant_LastName = tenants.Tenant_LastName,
+                Tenant_Email = tenants.Tenant_Email,
+                Tenant_PhoneNumber = tenants.Tenant_PhoneNumber,
+                Tenant_RoomNumber = tenants.Tenant_RoomNumber,
+                Tenant_UnitNumber = tenants.Tenant_UnitNumber,
+                Tenant_UpdatedAt = tenants.Tenant_UpdatedAt,
+            }
+        },
+                PaymentHistory = paymentHistory,
+                RequisitionHistory = reqHistory,
+            };
+
+            return View(viewModel);
         }
+
 
         //Get Tenant Delete Details
         public async Task<IActionResult> TenantDelete(int? id)
@@ -633,5 +669,53 @@ namespace RentalManagement.Controllers
             if (id is not null) { return id; }
             return null;
         }
+
+        public async Task<IActionResult> DetailsRoom(int? id)
+        {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
+            if (id == null || _context.Room == null)
+            {
+                return NotFound();
+            }
+
+            var room = await _context.Room
+                .Include(m => m.Tenant)
+                .FirstOrDefaultAsync(m => m.RoomId == id);
+            if (room == null)
+            {
+                return NotFound();
+            }
+
+            return View(room);
+        }
+
+        public async Task<IActionResult> PaymentHistory(int? id)
+        {
+            if (GetId() is null) { return RedirectToAction("Index", "Login"); }
+            if (id == null || _context.Tenant == null)
+            {
+                return NotFound();
+            }
+
+            var tenant = await _context.Tenant
+                .FirstOrDefaultAsync(m => m.TenantId == id);
+
+            if (tenant == null)
+            {
+                return NotFound();
+            }
+
+            // Retrieve payment history for the current tenant
+            var paymentHistory = _context.PaymentDetail
+                .Where(ph => ph.TenantId == id)
+                .ToList();
+
+            
+
+            return View(paymentHistory);
+        }
+
+
+
     }
 }

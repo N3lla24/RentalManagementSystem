@@ -15,7 +15,8 @@
         <link rel="stylesheet" href="~/css/home.css">
         <link rel="stylesheet" href="~/css/mrDesign.css">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        
+
         
     </head>
 
@@ -85,6 +86,7 @@
                             <th>Requisition ID</th>
                             <th>Requisition Type</th>
                             <th>Requisition Created</th>
+                            <th>Requisition Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -95,7 +97,8 @@
                             <tr>
                                 <td>@requisition.RequisitionId</td>
                                 <td>@requisition.Requisition_Type</td>
-                                <td>@requisition.Requistition_CreatedAt.ToString("yyyy-MM-dd")</td>
+                                <td>@requisition.Requisition_CreatedAt.ToString("yyyy-MM-dd")</td>
+                                <td>@requisition.Requisition_Status</td>
                                 <td>
                                     <a asp-action="DetailsRequisition" asp-route-id="@requisition.RequisitionId" style="color: green">Details</a>
                                 </td>
@@ -137,7 +140,8 @@
             </div>  
             
             <div class="reportsDisplay">
-                <div id="plotly-chart"></div>
+                <canvas id="invoiceStatusChart"></canvas>
+
 
             </div>
 
@@ -273,31 +277,55 @@
     <script src="~/js/requisitionDisplay.js"></script>
     <script src="~/js/RequisitionApiDisplay.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
-        var reportsData = @Html.Raw(Json.Serialize(Model.Reports));
+        // Get the data from the server-side model
+        var invoiceStatusCounts = @Html.Raw(Json.Serialize(Model.InvoiceStatusCounts));
 
-        // Extract x (months) and y (total fees) values
-        var months = reportsData.map(item => item.Month);
-        var totalFees = reportsData.map(item => item.TotalFees);
+        // Extract labels and counts from the data
+        var labels = Object.keys(invoiceStatusCounts);
+        var data = Object.values(invoiceStatusCounts);
 
-        // Create the chart
-        var data = [{
-            x: months,
-            y: totalFees,
-            type: 'bar'
-        }];
-
-        // Specify the layout with x-axis type as category and set the title
-        var layout = {
-            xaxis: {
-                type: 'category'
+        // Create the pie chart
+        var ctx = document.getElementById('invoiceStatusChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: [
+                        'rgba(139, 69, 19, 0.7)', // Brown
+                        'rgba(160, 82, 45, 0.7)',
+                        'rgba(205, 133, 63, 0.7)',
+                        'rgba(244, 164, 96, 0.7)',
+                        'rgba(210, 105, 30, 0.7)',
+                        'rgba(139, 69, 19, 0.7)'
+                    ],
+                    borderWidth: 1
+                }]
             },
-            title: 'Monthly Total Fees'
-        };
+            options: {
+                title: {
+                    display: true,
+                    text: 'Invoice Payment Status'
+                },
+                legend: {
+                    display: true,
+                    position: 'right' // You can change the position to 'top', 'right', or 'left'
+                },
+                responsive: false, // Set to false to prevent resizing
+                width: 400, // Set your preferred width
+                height: 400 // Set your preferred height
+            }
+        });
 
-        Plotly.newPlot('plotly-chart', data, layout);
+        // Add box shadow
+        chart.canvas.parentNode.style.boxShadow = '2px 2px 5px rgba(0, 0, 0, 0.2)';
     </script>
+
+
+
+
     
 
 </body>

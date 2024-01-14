@@ -9,8 +9,6 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Kerwin's Apartment</title>
-    <link rel="icon" type="image/x-icon" href="images/logo2.svg">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/home.css">
@@ -19,107 +17,126 @@
 <body style="background-color: #FEEAD1">
     <section id="header">
         <div class="navbar">
-            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+            <a asp-action="Logout" style="margin-top:12px" id="Logout">Logout</a>
+            <div class="dropdown nbItem">
+                <a href="@Url.Action("Settings", "AdminHome")"><i class="fas fa-tools"></i></a>
+            </div>
         </div>
     </section>
+
     <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
         <h1>Details</h1>
-        <h4>Room</h4>
-        <hr />
-        <div style="padding-left: 30px">
 
+        <div>
+            <h4>Room</h4>
+            <hr />
             <dl class="row">
-                <dt class="col-sm-3">
-                    Room ID:
+                <dt class="col-sm-2">
+                    Room ID
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.RoomId) 
+                    @Html.DisplayFor(model => model.RoomId)
                 </dd>
-                <dt class="col-sm-3">
-                    Room Number:
+                <dt class="col-sm-2">
+                    Room Number
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Room_Num)
                 </dd>
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     Room Status
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Room_Status)
                 </dd>
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     Room Capacity
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Room_Capacity)
                 </dd>
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     Room Price
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Room_Price)
                 </dd>
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     Entry At
                 </dt>
-                <dd class="col-sm-20">
+                <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Room_CreatedAt)
                 </dd>
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     Last Update At
                 </dt>
-                <dd class="col-sm-20">
-                    @Html.DisplayFor(model => model.Room_UpdatedAt)
+                <dd class="col-sm-10">
+                    @{
+                        if (Model.TenantId != null)
+                        {
+                            @Html.DisplayFor(model => model.Room_UpdatedAt)
+                        }
+                        else
+                        {
+                            <p>Not updated so far</p>
+                        }
+                    }
                 </dd>
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     Room Color
                 </dt>
-                <dd class="col-sm-20">
+                <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Room_Color)
                 </dd>
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     Room Flooring
                 </dt>
-                <dd class="col-sm-20">
+                <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Room_Flooring)
                 </dd>
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     Appliances Availability
                 </dt>
-                <dd class="col-sm-20">
+                <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Room_Appliance)
                 </dd>
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     Room Furnished
                 </dt>
-                <dd class="col-sm-20">
+                <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Room_Furnish)
                 </dd>
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     WiFi Availability
                 </dt>
-                <dd class="col-sm-20">
+                <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Room_WiFi)
                 </dd>
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     Tenant ID Occupant
                 </dt>
-                <dd class="col-sm-20">
-                    @Html.DisplayFor(model => model.TenantId)
+                <dd class="col-sm-10">
+                    @{
+                        if (Model.TenantId != null)
+                        {
+                            @Html.DisplayFor(model => model.TenantId)
+                        }
+                        else
+                        {
+                            <p>Not set</p>
+                        }
+                    }
                 </dd>
-
-               
             </dl>
         </div>
         <hr />
         <div>
             <a href="@Url.Action("ManageRental", "AdminHome")"><i class="fas fa-arrow-left" href="@Url.Action("ManageRental", "AdminHome")"></i> Back to Home</a>
-            @* @if (Model.Requisition_Status == "Pending")
-            {
-                <a asp-action="AcceptRequest" asp-route-id="@Model?.RequisitionId" style="margin-left: 70%; color: lawngreen">Accept</a> <i>|</i>
-                <a asp-action="RejectRequest" asp-route-id="@Model?.RequisitionId" style="color: red">Reject</a>
-            } *@
+        </div>
+    </section>
 
+    <section id="paymentHistory">
+        <div>
         </div>
     </section>
 
@@ -186,4 +203,25 @@
         </div>
     </footer>
 </body>
+
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

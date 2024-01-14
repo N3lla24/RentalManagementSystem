@@ -799,3 +799,8 @@ a {
     border: solid red 1px;
 }
 
+.paymentHistoryTenantContainer {
+    max-width: 80%;
+    overflow-x: scroll;
+    border: solid white 1px;
+}

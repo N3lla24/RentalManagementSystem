@@ -11,7 +11,8 @@ namespace RentalManagement.Models
 
         public string Requisition_Type { get; set; }
 
-        public DateTime Requistition_CreatedAt { get; set; }
+        public DateTime Requisition_CreatedAt { get; set; }
+        public DateTime Requisition_UpdatedAt { get; set; }
 
         public string Requisition_Status { get; set; }
 
