@@ -24,7 +24,13 @@ namespace RentalManagement.Models
         [ForeignKey("Requisition")]
         public int? RequisitionId { get; set; }
 
+        [ForeignKey("Inventory")]
+        public int? InventoryId { get; set; }
+
+
         public virtual Requisition? Requisition { get; set; }
+        public virtual Inventory? Inventory { get; set; }
 
     }
+    
 }
