@@ -197,6 +197,9 @@ namespace RentalManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Inventory_Status")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("Inventory_UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -302,15 +305,13 @@ namespace RentalManagement.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseItem_Id"), 1L, 1);
 
                     b.Property<string>("PurchaseItem_Name")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("PurchaseItem_Quantity")
+                    b.Property<int?>("PurchaseItem_Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("PurchaseItem_Unit")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -352,20 +353,14 @@ namespace RentalManagement.Migrations
                     b.Property<int?>("RequisitionId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RequistitionId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("SuppliersId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SuppliersId1")
                         .HasColumnType("int");
 
                     b.HasKey("PurchaseOrderId");
 
                     b.HasIndex("RequisitionId");
 
-                    b.HasIndex("SuppliersId1");
+                    b.HasIndex("SuppliersId");
 
                     b.ToTable("PurchaseOrder");
                 });
@@ -382,7 +377,6 @@ namespace RentalManagement.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PurchaseServ_Name")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -439,18 +433,16 @@ namespace RentalManagement.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Requisition_Remarks")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Requisition_Status")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Requisition_Status_Remarks")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Requisition_Type")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TenantId")
                         .HasColumnType("int");
@@ -470,6 +462,9 @@ namespace RentalManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Req_Item_ID"), 1L, 1);
 
+                    b.Property<int?>("InventoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Req_Item_Name")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
@@ -485,6 +480,8 @@ namespace RentalManagement.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Req_Item_ID");
+
+                    b.HasIndex("InventoryId");
 
                     b.HasIndex("RequisitionId");
 
@@ -747,7 +744,7 @@ namespace RentalManagement.Migrations
             modelBuilder.Entity("RentalManagement.Models.PurchaseItem", b =>
                 {
                     b.HasOne("RentalManagement.Models.PurchaseOrder", "PurchaseOrder")
-                        .WithMany()
+                        .WithMany("PurchaseItems")
                         .HasForeignKey("PurchaseOrderId");
 
                     b.Navigation("PurchaseOrder");
@@ -761,7 +758,7 @@ namespace RentalManagement.Migrations
 
                     b.HasOne("RentalManagement.Models.Supplier", "Supplier")
                         .WithMany()
-                        .HasForeignKey("SuppliersId1");
+                        .HasForeignKey("SuppliersId");
 
                     b.Navigation("Requisition");
 
@@ -771,7 +768,7 @@ namespace RentalManagement.Migrations
             modelBuilder.Entity("RentalManagement.Models.PurchaseService", b =>
                 {
                     b.HasOne("RentalManagement.Models.PurchaseOrder", "PurchaseOrder")
-                        .WithMany()
+                        .WithMany("PurchaseServices")
                         .HasForeignKey("PurchaseOrderId");
 
                     b.Navigation("PurchaseOrder");
@@ -799,9 +796,15 @@ namespace RentalManagement.Migrations
 
             modelBuilder.Entity("RentalManagement.Models.RequisitionItem", b =>
                 {
+                    b.HasOne("RentalManagement.Models.Inventory", "Inventory")
+                        .WithMany()
+                        .HasForeignKey("InventoryId");
+
                     b.HasOne("RentalManagement.Models.Requisition", "Requisition")
                         .WithMany("RequisitionItems")
                         .HasForeignKey("RequisitionId");
+
+                    b.Navigation("Inventory");
 
                     b.Navigation("Requisition");
                 });
@@ -834,6 +837,13 @@ namespace RentalManagement.Migrations
                     b.Navigation("Tenant");
 
                     b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("RentalManagement.Models.PurchaseOrder", b =>
+                {
+                    b.Navigation("PurchaseItems");
+
+                    b.Navigation("PurchaseServices");
                 });
 
             modelBuilder.Entity("RentalManagement.Models.Requisition", b =>

@@ -16,7 +16,9 @@ namespace RentalManagement.Migrations
                     AdminId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Admin_UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Admin_Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Admin_Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Admin_Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Admin_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,6 +58,7 @@ namespace RentalManagement.Migrations
                     Inventory_ItemName = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Inventory_ItemQuantity = table.Column<int>(type: "int", nullable: false),
                     Inventory_ItemUnit = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Inventory_Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Inventory_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Inventory_UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -74,6 +77,7 @@ namespace RentalManagement.Migrations
                     Suppliers_Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Suppliers_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Suppliers_Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Suppliers_Deactivate = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Supplier_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Supplier_UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -198,12 +202,12 @@ namespace RentalManagement.Migrations
                 {
                     RequisitionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Requisition_Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Requisition_Remarks = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Requisition_Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Requisition_Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Requisition_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Requisition_DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Requisition_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Requisition_StatusRemarks = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    Requisition_Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Requisition_Status_Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TenantId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -253,6 +257,12 @@ namespace RentalManagement.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Room_Num = table.Column<int>(type: "int", nullable: false),
                     Room_Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Room_Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Room_Size = table.Column<int>(type: "int", nullable: true),
+                    Room_WiFi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Room_Flooring = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Room_Furnish = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Room_Appliance = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Room_Capacity = table.Column<int>(type: "int", nullable: false),
                     Room_Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Room_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -292,8 +302,6 @@ namespace RentalManagement.Migrations
                     PurchaseOrder_Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PurchaseOrder_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SuppliersId = table.Column<int>(type: "int", nullable: true),
-                    SuppliersId1 = table.Column<int>(type: "int", nullable: true),
-                    RequistitionId = table.Column<int>(type: "int", nullable: true),
                     RequisitionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -305,8 +313,8 @@ namespace RentalManagement.Migrations
                         principalTable: "Requisition",
                         principalColumn: "RequisitionId");
                     table.ForeignKey(
-                        name: "FK_PurchaseOrder_Supplier_SuppliersId1",
-                        column: x => x.SuppliersId1,
+                        name: "FK_PurchaseOrder_Supplier_SuppliersId",
+                        column: x => x.SuppliersId,
                         principalTable: "Supplier",
                         principalColumn: "SuppliersId");
                 });
@@ -320,11 +328,17 @@ namespace RentalManagement.Migrations
                     Req_Item_Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     Req_Item_Quantity = table.Column<int>(type: "int", nullable: true),
                     Req_Item_Units = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    RequisitionId = table.Column<int>(type: "int", nullable: true)
+                    RequisitionId = table.Column<int>(type: "int", nullable: true),
+                    InventoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RequisitionItem", x => x.Req_Item_ID);
+                    table.ForeignKey(
+                        name: "FK_RequisitionItem_Inventory_InventoryId",
+                        column: x => x.InventoryId,
+                        principalTable: "Inventory",
+                        principalColumn: "InventoryId");
                     table.ForeignKey(
                         name: "FK_RequisitionItem_Requisition_RequisitionId",
                         column: x => x.RequisitionId,
@@ -357,9 +371,9 @@ namespace RentalManagement.Migrations
                 {
                     PurchaseItem_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PurchaseItem_Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    PurchaseItem_Quantity = table.Column<int>(type: "int", nullable: false),
-                    PurchaseItem_Unit = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PurchaseItem_Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    PurchaseItem_Quantity = table.Column<int>(type: "int", nullable: true),
+                    PurchaseItem_Unit = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     PurchaseOrderId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -378,7 +392,7 @@ namespace RentalManagement.Migrations
                 {
                     PurchaseServ_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PurchaseServ_Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    PurchaseServ_Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     PurchaseOrderId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -448,9 +462,9 @@ namespace RentalManagement.Migrations
                 column: "RequisitionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PurchaseOrder_SuppliersId1",
+                name: "IX_PurchaseOrder_SuppliersId",
                 table: "PurchaseOrder",
-                column: "SuppliersId1");
+                column: "SuppliersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PurchaseService_PurchaseOrderId",
@@ -466,6 +480,11 @@ namespace RentalManagement.Migrations
                 name: "IX_Requisition_TenantId",
                 table: "Requisition",
                 column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RequisitionItem_InventoryId",
+                table: "RequisitionItem",
+                column: "InventoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RequisitionItem_RequisitionId",
@@ -505,9 +524,6 @@ namespace RentalManagement.Migrations
                 name: "Feedback");
 
             migrationBuilder.DropTable(
-                name: "Inventory");
-
-            migrationBuilder.DropTable(
                 name: "Invoice");
 
             migrationBuilder.DropTable(
@@ -533,6 +549,9 @@ namespace RentalManagement.Migrations
 
             migrationBuilder.DropTable(
                 name: "PurchaseOrder");
+
+            migrationBuilder.DropTable(
+                name: "Inventory");
 
             migrationBuilder.DropTable(
                 name: "PaymentDetail");

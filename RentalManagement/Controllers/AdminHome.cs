@@ -331,7 +331,7 @@ namespace RentalManagement.Controllers
             if (requisition != null)
             {
         
-                requisition.Requisition_Status = "Accept";
+                requisition.Requisition_Status = "Checking Request";
                 _context.Update(requisition);
                 await _context.SaveChangesAsync();
         
