@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentalManagement.Models
@@ -11,16 +11,14 @@ namespace RentalManagement.Models
 
         [RegularExpression(@"^[a-zA-Z0-9\s&',.-]+$", ErrorMessage = "Name must only contain: Alphabet letters, Numeric Numbers, (& ' , . -) Symbols")]
         [StringLength(300, MinimumLength = 2, ErrorMessage = "Username characters must be more than 2 and maximum of 300 characters.")]
-        [Required(ErrorMessage = "Purchase Item Name is required.")]
-        public string PurchaseItem_Name { get; set; }
+        public string? PurchaseItem_Name { get; set; }
 
 
-        [Required(ErrorMessage = "Purchase Item Quantity is required.")]
-        public int PurchaseItem_Quantity { get; set; }
+        public int? PurchaseItem_Quantity { get; set; }
+
 
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Requisition Description must be more than 2 characters")]
-        [Required(ErrorMessage = "Purchase Item Unit is required.")]
-        public string PurchaseItem_Unit { get; set; }
+        public string? PurchaseItem_Unit { get; set; }
 
 
 
@@ -29,5 +27,6 @@ namespace RentalManagement.Models
 
 
         public virtual PurchaseOrder? PurchaseOrder { get; set; }
+        
     }
 }
