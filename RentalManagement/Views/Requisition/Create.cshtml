@@ -1,4 +1,4 @@
-@model RentalManagement.Models.Requisition
+@model RentalManagement.ViewModel.ReqVM
 @{
     ViewData["Title"] = "Create";
     Layout = null;
@@ -12,12 +12,12 @@
     <link rel="icon" type="image/x-icon" href="images/logo2.svg">
     <title>Kerwin's Apartment'</title>
     <link rel="stylesheet" href="~/css/reqs.css">
-    <script src="~/js/req.js" type="module" ></script>
+    <script src="~/js/req.js" type="module"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 </head>
-<body id ="bodyCont">
+<body id="bodyCont">
     <section id="header">
         <div class="navbar">
             <a asp-action="Logout" style="margin-top:12px" id="Logout">Logout</a>
@@ -40,47 +40,90 @@
     <form action="@Url.Action("Create", "Requisition")" method="post" id="requisitionForm">
         @Html.AntiForgeryToken()
 
-        
 
-        <label for="Requisition_Type">Requisition Type:</label>
-        <select id="Requisition_Type" name="Requisition_Type" >
+
+        <label for="Requisition.Requisition_Type">Requisition Type:</label>
+        <select id="Requisition_Type" name="Requisition.Requisition_Type" class="requisition-type-dropdown">
             <option value="" disabled selected>Select a type</option>
             <option value="REQUEST_ITEM">REQUEST ITEM</option>
             <option value="REQUEST_SERVICE">REQUEST SERVICE</option>
         </select>
 
         <div id="itemSection" style="display:none;">
-            <label for="Req_Item_Name">Item Name:</label>
-            <input type="text" id="Req_Item_Name" name="RequisitionItems[0].Req_Item_Name" />
 
-            <label for="Req_Item_Quantity">Item Quantity:</label>
-            <input type="text" id="Req_Item_Quantity" name="RequisitionItems[0].Req_Item_Quantity"  />
+            @if (Model.Inventories != null && Model.Inventories.Any())
+            {
+                <table class="itemTable">
+                    <thead>
+                        <tr>
+                            <th>Inventory Name</th>
+                            <th>Item Quantity</th>
+                            <th>Item Unit/s</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < 1; i++)
+                        {
+                            <tr class="item-row">
+                                <td>
+                                    <select class="item-name" name="RequisitionItem[0].Req_Item_Name">
+                                        <option value="" disabled selected>Select an item</option>
+                                        @foreach (var inventory in Model.Inventories)
+                                        {
+                                            <option value="@inventory.Inventory_ItemName" data-id="@inventory.InventoryId" data-iname="@inventory.Inventory_ItemName" data-quantity="@inventory.Inventory_ItemQuantity" data-unit="@inventory.Inventory_ItemUnit">@inventory.Inventory_ItemName</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="item-quantity" name="RequisitionItem[0].Req_Item_Quantity" />
+                                </td>
+                                <td>
+                                    <input type="text" class="item-units" name="RequisitionItem[0].Req_Item_Units" />
+                                </td>
+                                <td>
+                                    <input class="inventory-id" type="hidden" name="RequisitionItem[0].InventoryId"/>
+                                    <a href="javascript:void(0);" class="addanotheritem" style="color: green;">Add Item</a>
+                                    <a href="javascript:void(0)" class="removeitem" style="color: red; display:none;">Remove</a>
+                                </td>
+                                
+                            </tr>
+                        }
 
-            <label for="Req_Item_Units">Item Unit/s:</label>
-            <input type="text" id="Req_Item_Units" name="RequisitionItems[0].Req_Item_Units" />
+                    </tbody>
+                </table>
 
-            <button type="button" class="addItemButton">Add Item</button>
+                
+            }
+            else
+            {
+                <p>No inventories available.</p>
+            }
+
+
+            
         </div>
 
         <div id="serviceSection" style="display:none;">
-            <label for="Req_Serv_Name">Service Name:</label>
-            <input type="text" id="Req_Serv_Name" name="RequisitionServices[0].Req_Serv_Name" />
-
-            <button type="button" class="addServiceButton">Add Service</button>
+            <label for="Requisition.Req_Serv_Name">Service Name:</label>
+            <input type="text" id="Req_Serv_Name" name="RequisitionService[0].Req_Serv_Name" />
+            <a href="javascript:void(0);" class="addServiceButton" style="color: green;">Add Item</a>
         </div>
 
-        <input type="hidden" id="Requisition_CreatedAt" name="Requisition_CreatedAt" />
-        <input type="hidden" id="Requisition_Status" name="Requisition_Status" value="Pending" />
+        <input type="hidden" id="Requisition_CreatedAt" name="Requisition.Requisition_CreatedAt" />
+        <input type="hidden" id="Requisition_Status" name="Requisition.Requisition_Status" value="Pending" />
+        </br>
+        </br>
+        <label for="Requisition.Requisition_DueDate">Due Date:</label>
+        <input type="date" id="Requisition_DueDate" name="Requisition.Requisition_DueDate" class="due-date-input" />
 
-        <label for="Requisition_DueDate">Due Date:</label>
-        <input type="date" id="Requisition_DueDate" name="Requisition_DueDate"/>
+        <label for="Requisition.Requisition_Remarks">Description of Request:</label>
+        <textarea id="Requisition_Remarks" name="Requisition.Requisition_Remarks" class="request-description-textarea"></textarea>
 
-        <label for="Requisition_Remarks">Description of Request:</label>
-        <input type="text" id="Requisition_Remarks" name="Requisition_Remarks" />
 
         <button type="submit">Submit</button>
     </form>
-    
+
     <script type="module" src="~/js/req.js"></script>
 
 
