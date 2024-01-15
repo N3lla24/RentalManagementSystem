@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentalManagement.Models
@@ -26,17 +26,17 @@ namespace RentalManagement.Models
 
 
 
-        [ForeignKey("Suppliers")]
+        [ForeignKey("Supplier")]
         public int? SuppliersId { get; set; }
 
+        [ForeignKey("Requisition")]
+        public int? RequisitionId { get; set; }
 
         public virtual Supplier? Supplier { get; set; }
 
-
-        [ForeignKey("Requsition")]
-        public int? RequistitionId { get; set; }
-
-
         public virtual Requisition? Requisition { get; set; }
+        public virtual ICollection<PurchaseItem>? PurchaseItems { get; set; }
+        public virtual ICollection<PurchaseService>? PurchaseServices { get; set; }
+        
     }
 }

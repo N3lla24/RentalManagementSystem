@@ -1,7 +1,7 @@
-@model RentalManagement.Models.Requisition
+﻿@model RentalManagement.Models.Requisition
 
 @{
-    ViewData["Title"] = "Application Details";
+    ViewData["Title"] = "CheckInventory";
     Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>Kerwin's Apartment</title>
-    <link rel="icon" type="image/x-icon" href="images/logo2.svg">
+    <link rel="icon" type="image/x-icon" href="~/images/logo2.svg">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/home.css">
@@ -23,8 +23,8 @@
         </div>
     </section>
     <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
-        <h1>Details</h1>
-        <h4>Requisitions</h4>
+        <h1 style="color: red">Request Item Checking</h1>
+        <h4>Request Item</h4>
         <hr />
         <div style="padding-left: 30px">
 
@@ -48,12 +48,6 @@
                     @Html.DisplayFor(model => model.Requisition_Status)
                 </dd>
                 <dt class="col-sm-3">
-                    Request Created
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Requisition_CreatedAt)
-                </dd>
-                <dt class="col-sm-3">
                     Request Due-Date:
                 </dt>
                 <dd class="col-sm-10">
@@ -65,57 +59,63 @@
                 <dd class="col-sm-20">
                     @Html.DisplayFor(model => model.Requisition_Remarks)
                 </dd>
-                @if (Model.Requisition_Type == "REQUEST_ITEM" && Model.RequisitionItems != null)
-                {
-                    <dt class="col-sm-5">
-                        Request Item Details
-                    </dt>
-                    <dd class="col-sm-10">
-                        @foreach (var item in Model.RequisitionItems)
-                        {
-                            <div>
-                                @item.Req_Item_Name - Quantity: @item.Req_Item_Quantity - Units: @item.Req_Item_Units
-                            </div>
-                        }
-                    </dd>
-                }
-                @if (Model.Requisition_Type == "REQUEST_SERVICE" && Model.RequisitionServices != null)
-                {
-                    <dt class="col-sm-5">
-                        Request Service Details
-                    </dt>
-                    <dd class="col-sm-10">
-                        @foreach (var service in Model.RequisitionServices)
-                        {
-                            <div>
-                                @service.Req_Serv_Name
-                            </div>
-                        }
-                    </dd>
-                    
-                }
+                
             </dl>
         </div>
         <hr />
+
+        <form id="checkinv" asp-action="CheckInventory">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>RequisitionId</th>
+                            <th>Item Name</th>
+                            <th>Request Item Quantity</th>
+                            <th>Inventory Quantity</th>
+                            <th>Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var requisitionItem in Model.RequisitionItems)
+                        {
+                            <tr>
+                                    <td>@requisitionItem.Req_Item_ID</td>
+                                <td>@requisitionItem.Req_Item_Name</td>
+                                <td>@requisitionItem.Req_Item_Quantity</td>
+                                <td>@requisitionItem.Inventory.Inventory_ItemQuantity</td>
+                                <td><label class="checkinventory"></label>
+                                    </td>
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            <div class="d-flex justify-content-end">
+                <button id="checkavailabilitybtn" type="button">Check Availability</button>
+            </div>
+
+            <div class="form-group" style="none;">
+                <input asp-for="RequisitionId" type="number" value="@Model.RequisitionId" hidden />
+                <label asp-for="Requisition_Status_Remarks" class="control-label">Request Reason or Remarks</label>
+                <textarea asp-for="Requisition_Status_Remarks" type="text" class="form-control" rows="2" style="height: 75px;"></textarea>
+                <span asp-validation-for="Requisition_Status_Remarks" class="text-danger"></span>
+            </div>
+
+            <button type="submit" id="SendItemButton" class="btn btn-secondary" name="submitType" value="SendItem">Send Item</button>
+
+
+        </form>
+        <hr />
+
+        
         <div>
             <a href="@Url.Action("ManageRental", "AdminHome")"><i class="fas fa-arrow-left" href="@Url.Action("ManageRental", "AdminHome")"></i> Back to Home</a>
-            @if (Model.Requisition_Status == "Pending")
-            {
-                <a asp-action="AcceptRequest" asp-route-id="@Model?.RequisitionId" style="margin-left: 70%; color: lawngreen">Accept</a> <i>|</i>
-                <a asp-action="RejectRequest" asp-route-id="@Model?.RequisitionId" style="color: red">Reject</a>
-            }
-            @if (Model.Requisition_Status == "Checking Request." && Model.Requisition_Type == "REQUEST_SERVICE")
-            {
-                <a asp-action="PurchaseRequest" asp-route-id="@Model?.RequisitionId" style="margin-left: 70%; color: lawngreen">Purchase Request</a> <i>|</i>
-            }
-            @if (Model.Requisition_Status == "Checking Request." && Model.Requisition_Type == "REQUEST_ITEM" && Model.RequisitionItems != null && Model.RequisitionItems.Any())
-            {
-                    <a asp-action="CheckInventory" asp-route-id="@Model.RequisitionId" style="margin-left: 10px; color: lawngreen">
-                        Check Inventory - Item @Model.RequisitionId
-                    </a>
-            }
+            <a asp-action="PurchaseRequest" id="PurchaseItemButton" asp-route-id="@Model?.RequisitionId" style="margin-left: 65%; color: lawngreen">Purchase Request</a> 
 
-        </div>
+        </div> 
+        
     </section>
 
     <section id="backTopCont">
@@ -129,7 +129,7 @@
     <footer>
         <div class="footer-columns">
             <div class="column" id="col">
-                <img src="images/logo.svg" alt="">
+                <img src="~/images/logo.svg" alt="">
                 <h2>Kerwin's Apartment</h2>
             </div>
             <div class="colBorder"></div>
@@ -181,4 +181,35 @@
         </div>
     </footer>
 </body>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var purchaseItemButton = $('#PurchaseItemButton');
+            var sendItemButton = $('#SendItemButton');
+
+            purchaseItemButton.hide();
+            sendItemButton.hide();
+
+            $('#checkavailabilitybtn').on('click', function () {
+                $('#checkinv tbody tr').each(function () {
+                    var reqQuantity = parseInt($(this).find('td:nth-child(3)').text());
+                    var inventoryQuantity = parseInt($(this).find('td:nth-child(4)').text());
+                    var checkInventoryLabel = $(this).find('.checkinventory');
+
+                    if (inventoryQuantity < reqQuantity) {
+                        checkInventoryLabel.text('Not Enough').css('color', 'red');
+                        purchaseItemButton.show();
+                        sendItemButton.hide();
+                    } else {
+                        checkInventoryLabel.text('Available').css('color', 'green');
+                        sendItemButton.show();
+                    }
+                });
+            });
+        });
+    </script>
+
+}
 </html>

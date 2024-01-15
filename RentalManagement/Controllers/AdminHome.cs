@@ -331,7 +331,7 @@ namespace RentalManagement.Controllers
             if (requisition != null)
             {
         
-                requisition.Requisition_Status = "Accept";
+                requisition.Requisition_Status = "Checking Request.";
                 _context.Update(requisition);
                 await _context.SaveChangesAsync();
         
@@ -418,7 +418,7 @@ namespace RentalManagement.Controllers
             if (requisition != null)
             {
         
-                requisition.Requisition_Status = "Reject";
+                requisition.Requisition_Status = "Reject: Cannot Accept Your Request.";
                 _context.Update(requisition);
                 await _context.SaveChangesAsync();
         
@@ -712,6 +712,184 @@ namespace RentalManagement.Controllers
 
             return View(paymentHistory);
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> PurchaseRequest(int? id)
+        {
+            if (GetId() == null || _context.Admin == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var requisition = await _context.Requisition
+                .Include(m => m.RequisitionItems)
+                .Include(m => m.RequisitionServices)
+                .FirstOrDefaultAsync(m => m.RequisitionId == id);
+
+            if (requisition == null)
+            {
+                return NotFound();
+            }
+
+            PurchaseVM obj = new PurchaseVM();
+            obj.Requisitions = await _context.Requisition
+                .FirstOrDefaultAsync(m => m.RequisitionId == id);
+            obj.Suppliers = await _context.Supplier.ToListAsync();         
+            obj.PurchaseOrder = new PurchaseOrder();
+            obj.PurchaseItems = _context.PurchaseItem.ToList();
+            obj.PurchaseServices = _context.PurchaseService.ToList();
+
+
+
+            return View(obj);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PurchaseRequest([Bind("PurchaseOrder, PurchaseItems, PurchaseServices, Supplier, Requisitions, supplierId")] PurchaseVM po)
+        {
+            if (GetId() == null || _context.Admin == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+                
+                return BadRequest(new { Errors = errors });
+            }
+            if (po == null)
+            {
+                return NotFound();
+            }
+
+            if (po.PurchaseOrder != null)
+            {
+                int suppliersId = po.supplierId;
+
+                if (!_context.Supplier.Any(s => s.SuppliersId == suppliersId))
+                {
+                    return BadRequest("Invalid Supplier ID");
+                }
+
+                PurchaseOrder pur = new PurchaseOrder
+                {
+                    PurchaseOrder_CreatedAt = DateTime.Now,
+                    PurchaseOrder_Type = po.PurchaseOrder?.PurchaseOrder_Type,
+                    PurchaseOrder_Status = po.PurchaseOrder?.PurchaseOrder_Status,
+                    SuppliersId = suppliersId,
+                    RequisitionId = po.Requisitions?.RequisitionId,
+                };
+
+                
+                _context.PurchaseOrder.Add(pur);
+                _context.SaveChanges();
+                if (po.PurchaseItems != null && po.PurchaseOrder != null && po.PurchaseOrder.PurchaseOrder_Type == "PURCHASE_ITEM")
+                {
+                    foreach (var item in po.PurchaseItems)
+                    {
+                        item.PurchaseOrderId = pur.PurchaseOrderId;
+                        _context.PurchaseItem.Add(item);
+                    }
+                    po.PurchaseServices = null;
+                    _context.SaveChanges();
+                }
+
+                else if (po.PurchaseServices != null && po.PurchaseOrder != null && po.PurchaseOrder.PurchaseOrder_Type == "PURCHASE_SERVICE")
+                {
+                    foreach (var service in po.PurchaseServices)
+                    {
+                        service.PurchaseOrderId = pur.PurchaseOrderId;
+                        _context.PurchaseService.Add(service);
+                    }
+                    po.PurchaseItems = null;
+                    _context.SaveChanges();
+                }
+
+
+                if (po.Requisitions != null)
+                {
+                    Requisition existingRequisition = _context.Requisition.Find(po.Requisitions.RequisitionId);
+                    if (existingRequisition != null)
+                    {
+                        existingRequisition.Requisition_Status = "Purchasing Your Request";
+                        existingRequisition.Requisition_Status_Remarks = po.Requisitions.Requisition_Status_Remarks;
+
+                        _context.Update(existingRequisition);
+                        _context.SaveChanges();
+                    }
+                    return RedirectToAction("Home", "AdminHome");
+                }
+
+            }
+
+            return BadRequest("PurchaseOrder cannot be null");
+
+        }
+
+
+        [HttpGet]
+        [HttpPost]
+        public async Task<IActionResult> CheckInventory(int id)
+        {
+            if (GetId() == null || _context.Admin == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            var ri = _context.Requisition
+                .Include(r => r.RequisitionItems)
+                .ThenInclude(ri => ri.Inventory)
+                .Include(r => r.Tenant)
+                .FirstOrDefault(r => r.RequisitionId == id);
+
+            if (ri == null)
+            {
+                return NotFound();
+            }
+
+            if (Request.Method == "POST")
+            {
+                var requisitionStatusRemarks = Request.Form["Requisition_Status_Remarks"];
+                var submitType = Request.Form["submitType"];
+
+                if (submitType == "SendItem")
+                {
+
+                    foreach (var requisitionItem in ri.RequisitionItems)
+                    {
+                        int remainingQuantity = requisitionItem.Inventory.Inventory_ItemQuantity - requisitionItem.Req_Item_Quantity.GetValueOrDefault();
+
+                        if (remainingQuantity >= 0)
+                        {
+                            requisitionItem.Inventory.Inventory_ItemQuantity = remainingQuantity;
+                            requisitionItem.Inventory.Inventory_Status = "Item Purchased";
+                        }
+                        else
+                        {
+                            requisitionItem.Inventory.Inventory_Status = "Item Need to Restock";
+                        }
+                    }
+                    ri.Requisition_Status = "Approve: Preparing Your Item.";
+                    ri.Requisition_Status_Remarks = requisitionStatusRemarks;
+
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction("ManageRental", "AdminHome");
+
+                }
+            }
+
+            return View(ri);
+        }
+
+
 
 
 

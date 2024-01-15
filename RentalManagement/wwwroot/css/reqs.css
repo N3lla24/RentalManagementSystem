@@ -152,6 +152,34 @@ body {
     #ssCont img {
         vertical-align: middle;
     }
+#serviceSection {
+    display: none;
+    margin-top: 20px;
+    border: 1px solid #8d6e3d;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+    #serviceSection label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    #serviceSection input {
+        width: 70%; 
+        padding: 8px;
+        box-sizing: border-box;
+        margin: 0 auto; 
+    }
+
+
+    #serviceSection .addServiceButton {
+        display: inline-block;
+        padding: 10px 15px;
+        color: lawngreen;
+        cursor: pointer;
+    }
+
 
 
 
@@ -177,16 +205,11 @@ body {
 .view-requests-link {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #65451F;
+    background-color: #8d6e3d;
     color: #fff;
-    text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s;
 }
 
-    .view-requests-link:hover {
-        background-color: #0056b3;
-    }
 
 .btn-go-to-home {
     display: inline-block;
@@ -256,14 +279,17 @@ dl.row {
 
 
 #requisitionForm {
-    max-width: 500px;
+    max-width: 900px;
     margin: 0 auto;
     font-family: 'Spartan', sans-serif;
-    background-color: #FEEAD1; 
-    padding: 20px; 
+    background-color: #c79657;
+    padding: 20px;
     margin-top: 10px;
-    border: 1px solid #ccc; 
-    border-radius: 10px; 
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 label {
@@ -273,83 +299,166 @@ label {
     color: #65451F; 
 }
 
-input,
-select,
-button {
+/*input,
+select
+{
     width: 100%;
-    padding: 12px; 
+    padding: 12px;
     margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+}*/
+
+button {
+    color: aliceblue;
+    cursor: pointer;
+    font-size: 18px;
+    margin: auto;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-button {
-    background-color: #765827; 
-    color: aliceblue;
-    cursor: pointer;
-    font-size: 18px;
-}
 
-    button:hover {
-        background-color: #8d6e3d; 
-    }
 
-#itemSection,
-#serviceSection {
-    margin-top: 20px;
+
+
+
+.requisition-type-dropdown {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
     border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 4px;
+    border-radius: 5px;
 }
-
-.addItemButton,
-.addServiceButton {
-    background-color: #008CBA;
-    color: white;
-    padding: 12px 15px; 
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-    .addItemButton:hover,
-    .addServiceButton:hover {
-        background-color: #00506b;
-    }
 
 #requisitionForm input[type="date"] {
     padding: 12px;
+    margin: auto;
 }
 
-#requisitionForm input[type="text"] {
-    width: 100%; 
-    padding: 12px; 
-    margin-bottom: 15px;
+
+#requisitionForm button[type="submit"] {
+    display: block;
+    background-color: #765827;
+    color: aliceblue;
+    cursor: pointer;
+    font-size: 18px;
+    margin: auto;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-
-#requisitionForm label[for="Req_Item_Remarks"] {
-    vertical-align: top;
-}
-
-#requisitionForm button[type="submit"] {
-    background-color: #765827;
-    color: aliceblue;
-    padding: 15px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
+    padding: 10px 100px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
 }
 
     #requisitionForm button[type="submit"]:hover {
         background-color: #8d6e3d;
     }
 
+/* Style for the item section container */
+#itemSection {
+    display: none;
+    margin-top: 20px;
+}
+
+/* Style for the item table */
+.itemTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+    /* Style for the table header */
+    .itemTable th {
+        background-color: burlywood;
+        text-align: center;
+        padding: 10px;
+        border: 2px solid #65451F;
+    }
+    .itemTable tbody {
+        background-color: #b08a5a;
+        text-align: center;
+        border: 2px solid #65451F;
+    }
+
+/* Style for the table rows */
+item-row {
+    background-color: #f9f9f9;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    border-left: 2px solid #765827; /* Remove left border */
+    border-right: 2px solid #765827; /* Remove right border */
+    border-radius: 5px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+/* Style for labels in each row */
+.item-row label {
+    margin: 10px;
+    background-color: #8d6e3d;
+    text-align: center;
+    border: 2px solid #65451F;
+}
+
+/* Style for input fields in each row */
+.item-row input,
+.item-row select {
+    width: calc(100% - 22px);
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 10px;
+    border: 1px solid #765827;
+    border-radius: 4px;
+    display: inline-block;
+    
+}
+/* Style for the "Add Item" button */
+.addanotheritem {
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    
+
+/* Style for the "Remove" button */
+.removeitem {
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.due-date-input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+
+.request-description-textarea {
+    width: 100%;
+    height: 100px; /* Adjust the height as needed */
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical; /* Allow vertical resizing */
+}
 
 footer {
     background-color: #65451F;

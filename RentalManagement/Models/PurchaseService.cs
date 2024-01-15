@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentalManagement.Models
@@ -11,8 +11,7 @@ namespace RentalManagement.Models
 
         [RegularExpression(@"^[a-zA-Z0-9\s&',.-]+$", ErrorMessage = "Name must only contain: Alphabet letters, Numeric Numbers, (& ' , . -) Symbols")]
         [StringLength(300, MinimumLength = 2, ErrorMessage = "Name characters must be more than 2 and maximum of 300 characters.")]
-        [Required(ErrorMessage = "Purchase Item Name is required.")]
-        public string PurchaseServ_Name { get; set; }
+        public string? PurchaseServ_Name { get; set; }
 
 
 

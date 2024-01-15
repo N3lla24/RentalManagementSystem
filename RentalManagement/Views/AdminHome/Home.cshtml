@@ -1,4 +1,4 @@
-﻿@model RentalManagement.Models.Admin;
+@model RentalManagement.Models.Admin;
 @{
     Layout = null;
 }
@@ -45,17 +45,13 @@
         <section id="adminHomeChoices">
             <div class="choiceCont">
                 <a href="@Url.Action("Index", "Inventories")">Manage Inventory</a>
-                <a href="@Url.Action("PurchaseItemService", "AdminHome")">Purchase Item or Service</a>
+                <a href="@Url.Action("Index", "Purchasing")">Purchased Item or Service</a>
             </div>
             <div class="choiceCont">
                 <a href="@Url.Action("ManageSupplier", "AdminHome")">Manage Supplier</a>
                 <a href="@Url.Action("ManageRental", "AdminHome")">Manage Rental Business</a>
             </div>
-        <div class="choiceCont">
-            <a href="@Url.Action("ManagePayment", "AdminHome")">Create Payments</a>
-        </div>
-
-    </section>
+        </section>
 
 
 

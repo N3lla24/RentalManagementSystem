@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace RentalManagement.Models
@@ -21,7 +21,7 @@ namespace RentalManagement.Models
         [Required(ErrorMessage = "Inventory Item Unit is required.")]
         public string Inventory_ItemUnit { get; set; }
 
-
+        public string? Inventory_Status { get; set; }
 
         public DateTime Inventory_CreatedAt { get; set; }
 
