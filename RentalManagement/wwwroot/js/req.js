@@ -12,30 +12,55 @@ $(document).ready(function () {
             $('#serviceSection').hide();
         }
     });
+
+    
+    function handleItemChange(selectElement) {
+        var selectedOption = selectElement.find('option:selected');
+        var id = selectedOption.data('id');
+        var name = selectedOption.data('iname');
+        var quantity = selectedOption.data('quantity');
+        var unit = selectedOption.data('unit');
+
+        var row = selectElement.closest('.item-row');
+        row.find('.item-name').val(name);
+        row.find('.item-quantity').val(quantity);
+        row.find('.item-units').val(unit);
+        row.find('.inventory-id').val(id);
+    }
+
+    $('.item-name').each(function () {
+        handleItemChange($(this));
+    });
+
+    $(document).on('change', '.item-name', function () {
+        handleItemChange($(this));
+    });
+
     var itemCount = 1;
-    $('.addItemButton').click(function () {
-        var newItemField = '<div class="itemField">' +
-            '<label for="Req_Item_Name_' + itemCount + '">Item Name:</label>' +
-            '<input type="text" id="Req_Item_Name_' + itemCount + '" name="RequisitionItems[' + itemCount + '].Req_Item_Name" />' +
 
-            '<label for="Req_Item_Quantity_' + itemCount + '">Item Quantity:</label>' +
-            '<input type="text" id="Req_Item_Quantity_' + itemCount + '" name="RequisitionItems[' + itemCount + '].Req_Item_Quantity" />' +
+    $(".addanotheritem").click(function () {
+        var newRow = $(".item-row:first").clone();
+        newRow.find('.item-name').attr('name', 'RequisitionItem[' + itemCount + '].Req_Item_Name');
+        newRow.find('.item-quantity').attr('name', 'RequisitionItem[' + itemCount + '].Req_Item_Quantity');
+        newRow.find('.item-units').attr('name', 'RequisitionItem[' + itemCount + '].Req_Item_Units');
+        newRow.find('.inventory-id').attr('name', 'RequisitionItem[' + itemCount + '].InventoryId');
 
-            '<label for="Req_Item_Units_' + itemCount + '">Item Unit/s:</label>' +
-            '<input type="text" id="Req_Item_Units_' + itemCount + '" name="RequisitionItems[' + itemCount + '].Req_Item_Units" />' +
+        newRow.find('.addanotheritem').hide();
+        newRow.find('.removeitem').show();
 
+        newRow.find('.item-name').val('');
+        newRow.find('.item-quantity').val('');
+        newRow.find('.item-units').val('');
+        newRow.find('.inventory-id').val('');
 
-            '<input type="hidden" name="RequisitionItems[' + itemCount + '].RequisitionId" value="' + $('#RequisitionId').val() + '" />' +
-            '<button type="button" class="removeItemButton" data-field-id="' + itemCount + '">Remove Item</button>' +
-            '</div>';
-
-        $('#itemSection').append(newItemField);
+        $(".itemTable tbody").append(newRow.show());
         itemCount++;
     });
-    $(document).on('click', '.removeItemButton', function () {
-        var fieldId = $(this).data('field-id');
-        $('#Req_Item_Name_' + fieldId).closest('.itemField').remove();
+
+    $(".itemTable").on("click", ".removeitem", function () {
+        $(this).closest(".item-row").remove();
     });
+
     var serviceCount = 1;
     $('.addServiceButton').click(function () {
         var newServiceField = '<div class="serviceField">' +
@@ -43,15 +68,14 @@ $(document).ready(function () {
             '<input type="text" id="Req_Serv_Name_' + serviceCount + '" name="RequisitionServices[' + serviceCount + '].Req_Serv_Name" />' +
 
             '<input type="hidden" name="RequisitionServices[' + serviceCount + '].RequisitionId" value="' + $('#RequisitionId').val() + '" />' +
-            '<button type="button" class="removeServiceButton" data-field-id="' + serviceCount + '">Remove Service</button>' +
+            '<a href="javascript:void(0);" class="removeServiceLink" style="color: red;" data-field-id="' + serviceCount + '">Remove Service</a>' +
             '</div>';
 
         $('#serviceSection').append(newServiceField);
         serviceCount++;
     });
-    
 
-    $(document).on('click', '.removeServiceButton', function () {
+    $(document).on('click', '.removeServiceLink', function () {
         var fieldId = $(this).data('field-id');
         $('#Req_Serv_Name_' + fieldId).closest('.serviceField').remove();
     });
