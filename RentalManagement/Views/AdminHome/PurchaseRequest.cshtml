@@ -1,0 +1,300 @@
+﻿@model RentalManagement.ViewModel.PurchaseVM
+
+@{
+    ViewData["Title"] = "Purchase Request";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Kerwin's Apartment</title>
+    <link rel="icon" type="image/x-icon" href="images/logo2.svg">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/po.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+</head>
+<body style="background-color: #FEEAD1">
+    <section id="header">
+        <div class="navbar">
+            <a href="@Url.Action("Index", "Home")" class="nbItem" id="homeOpt"><i class="fa-solid fa-house"></i></a>
+        </div>
+    </section>
+    <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
+        <h1 style="color: red">Purchase Order</h1>
+        <h4>Purchasing Request</h4>
+        <hr />
+        <div style="padding-left: 30px">
+
+            <dl class="row">
+                <dt class="col-sm-3">
+                    Request Type:
+                </dt>
+                <dd class="col-sm-10">
+                    @{
+                        var requisitionType = Model.Requisitions?.Requisition_Type;
+                    }
+                    @Html.DisplayFor(model => requisitionType)
+
+                </dd>
+                <dt class="col-sm-3">
+                    Request Status
+                </dt>
+                <dd class="col-sm-10">
+                    @{
+                        var requisitionstatus = Model.Requisitions?.Requisition_Status;
+                    }
+                    @Html.DisplayFor(model => requisitionstatus)
+                </dd>
+                
+                @if (Model.Requisitions != null && Model.Requisitions?.Requisition_Type == "REQUEST_ITEM" && Model.Requisitions?.RequisitionItems != null)
+                {
+                    <dt class="col-sm-5">
+                        Request Item Details
+                    </dt>
+                    <dd class="col-sm-10">
+                        @foreach (var item in Model.Requisitions.RequisitionItems?.Where(r => r.RequisitionId == Model.Requisitions.RequisitionId))
+                        {
+                            <div>
+                                @item.Req_Item_Name - Quantity: @item.Req_Item_Quantity - Units: @item.Req_Item_Units
+                            </div>
+                        }
+                    </dd>
+                }
+                else if (Model != null && Model.Requisitions.RequisitionServices != null && Model.Requisitions?.Requisition_Type == "REQUEST_SERVICE" && Model.Requisitions.RequisitionServices != null)
+                {
+                    <dt class="col-sm-5">
+                        Request Service Details
+                    </dt>
+                    <dd class="col-sm-10">
+                        @foreach (var service in Model.Requisitions.RequisitionServices?.Where(r => r.RequisitionId == Model.Requisitions.RequisitionId))
+                        {
+                            <div>
+                                @service.Req_Serv_Name
+                            </div>
+                        }
+                    </dd>
+                }
+
+            </dl>
+            
+            
+        </div>
+        <hr />
+        <form id="purchaseForm" asp-action="PurchaseRequest">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.AntiForgeryToken()
+                @if (Model != null && Model.Requisitions != null)
+                {
+                    <input asp-for="Requisitions.RequisitionId" type="number" value="@Model.Requisitions.RequisitionId" />
+                }
+
+                <div class="form-group">
+                    <label asp-for="supplierId">Select Supplier:</label>
+                    <select asp-for="supplierId" asp-items="new SelectList(Model.Suppliers, nameof(Supplier.SuppliersId), nameof(Supplier.Suppliers_Name))" class="form-control">
+                        <option value="">-- Select Supplier --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="PurchaseOrder.PurchaseOrder_Type">Purchase Type:</label>
+                    <select id="Purchase_Type" name="PurchaseOrder.PurchaseOrder_Type" class="purchase-type-dropdown">
+                        <option value="" disabled selected>Select a type</option>
+                        <option value="PURCHASE_ITEM">PURCHASE ITEM</option>
+                        <option value="PURCHASE_SERVICE">PURCHASE SERVICE</option>
+                    </select>
+                </div>
+
+                <div id="poiFields" class="form-group">
+                    <table class="itemTable">
+                    <thead>
+                        <tr>
+                            <th>Purchase Item Name</th>
+                            <th>Item Quantity</th>
+                            <th>Item Unit/s</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr class="item-row">
+                                <td>
+                                    <input type="text" class="item-name" name="PurchaseItems[0].PurchaseItem_Name" />
+                                </td>
+                                <td>
+                                    <input type="number" class="item-quantity" name="PurchaseItems[0].PurchaseItem_Quantity" />
+                                </td>
+                                <td>
+                                    <input type="text" class="item-units" name="PurchaseItems[0].PurchaseItem_Unit" />
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" class="addanotheritem" style="color: green;">Add Item</a>
+                                    <a href="javascript:void(0)" class="removeitem" style="color: red; display:none;">Remove</a>
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="posFields" class="form-group">
+                    <div class="purchase-service">
+                        <label for="PurchaseServ_Name">Service Name:</label>
+                        <input type="text" id="PurchaseServ_Name" name="PurchaseServices[0].PurchaseServ_Name" />
+                        <a href="javascript:void(0)" class="addPurchaseService" style="color: green;">Add Service</a>
+                        <a href="javascript:void(0)" class="removeservice" style="color: red; display:none;">Remove</a>
+                    </div>
+                </div>
+                <div class="form-group" style="none;">
+                    <label asp-for="Requisitions.Requisition_Status_Remarks" class="control-label">Request Reason or Remarks</label>
+                    <textarea name="Requisitions.Requisition_Status_Remarks"class="form-control" rows="2" style="height: 60px;"></textarea>
+                </div>
+                <input type="hidden" name="PurchaseOrder.PurchaseOrder_Status" value="PURCHASING REQUEST" />
+
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-primary" style="margin-top: 10px" />
+                </div>
+
+        </form>
+
+
+        <br />
+        <div>
+            <a href="@Url.Action("ManageRental", "AdminHome")"><i class="fas fa-arrow-left" href="@Url.Action("ManageRental", "AdminHome")"></i> Back to Home</a>
+        </div>
+
+    </section>
+
+    <section id="backTopCont">
+        <a href="#">
+            <div class="backTop">
+                <p>Back to Top&nbsp;&nbsp;<i class="fa-solid fa-arrow-up"></i></p>
+            </div>
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-columns">
+            <div class="column" id="col">
+                <img src="~/images/logo.svg" alt="">
+                <h2>Kerwin's Apartment</h2>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column">
+                <h4>About</h4>
+                <p>About us</p>
+                <p>Rental Information</p>
+                <p>Rent Rates and Policies</p>
+                <p>Terms and Condition</p>
+                <p>Community Information</p>
+            </div>
+            <div class="colBorder"></div>
+            <div class="column" id="col">
+                <h4>Contact us</h4>
+                <p>+63 9123456789</p>
+                <p>kerwin.rental@kerwin.com.ph</p>
+                <p>Paknaan, Mandaue City, Cebu 6014</p>
+                <p>Kerwin's Apartment</p><br>
+                <h4>Follow us</h4>
+                <a href="https://www.facebook.com/">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com/">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.pinterest.com/">
+                    <i class="fa-brands fa-pinterest"></i>
+                </a>
+                <a href="https://www.youtube.com/">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+
+
+    </footer>
+
+    <footer id="foot2">
+        <div class="footCont">
+            <div class="footCont2">
+                <div class="column2">
+                    <p>Web Application developed by <b>DPMS 2023</b></p>
+                    <p>Delig • Pila • Monares • Salas</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+@section scripts {
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                toggleFields($("#Purchase_Type").val());
+
+                $("#Purchase_Type").change(function () {
+                    toggleFields($(this).val());
+                });
+
+                function toggleFields(purchaseType) {
+                    $("#poiFields").hide();
+                    $("#posFields").hide();
+
+                    if (purchaseType === "PURCHASE_ITEM") {
+                        $("#poiFields").show();
+                    } else if (purchaseType === "PURCHASE_SERVICE") {
+                        $("#posFields").show();
+                    }
+                }
+                var itemCount = 1;
+
+                $(".addanotheritem").click(function () {
+                    var newRow = $(".item-row:first").clone();
+                    newRow.find('.item-name').attr('name', 'PurchaseItems[' + itemCount + '].PurchaseItem_Name');
+                    newRow.find('.item-quantity').attr('name', 'PurchaseItems[' + itemCount + '].PurchaseItem_Quantity');
+                    newRow.find('.item-units').attr('name', 'PurchaseItems[' + itemCount + '].PurchaseItem_Unit');
+
+                    newRow.find('.addanotheritem').hide();
+                    newRow.find('.removeitem').show();
+
+                    newRow.find('.item-name').val('');
+                    newRow.find('.item-quantity').val('');
+                    newRow.find('.item-units').val('');
+
+                    $(".itemTable tbody").append(newRow.show());
+                    itemCount++;
+                });
+
+                $(".itemTable").on("click", ".removeitem", function () {
+                    $(this).closest(".item-row").remove();
+                });
+
+                var serviceCount = 1;
+
+                function toggleRemoveLink() {
+                $(".removeservice").toggle(serviceCount > 1);
+                }
+            var serviceCount = 1;
+            $(".addPurchaseService").click(function () {
+                var newService = $(".purchase-service:first").clone();
+                newService.find('#PurchaseServ_Name').attr('name', 'PurchaseServices[' + serviceCount + '].PurchaseServ_Name');
+                newService.find('.addPurchaseService').hide();
+                newService.find('.removeservice').show();
+                newService.find('#PurchaseServ_Name').val('');
+                $("#posFields").append(newService.show());
+                serviceCount++;
+            });
+
+                $("#posFields").on("click", ".removeservice", function () {
+                    $(this).closest(".purchase-service").remove();
+                });
+            });
+        </script>
+}
+
+</html>
