@@ -331,7 +331,7 @@ namespace RentalManagement.Controllers
             if (requisition != null)
             {
         
-                requisition.Requisition_Status = "Checking Request";
+                requisition.Requisition_Status = "Checking Request.";
                 _context.Update(requisition);
                 await _context.SaveChangesAsync();
         
@@ -418,7 +418,7 @@ namespace RentalManagement.Controllers
             if (requisition != null)
             {
         
-                requisition.Requisition_Status = "Reject";
+                requisition.Requisition_Status = "Reject: Cannot Accept Your Request.";
                 _context.Update(requisition);
                 await _context.SaveChangesAsync();
         
