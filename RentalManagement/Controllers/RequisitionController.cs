@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentalManagement.Data;
 using RentalManagement.Models;
+using RentalManagement.ViewModel;
 using System.Diagnostics;
 
 
@@ -18,7 +19,7 @@ namespace RentalManagement.Controllers
         {
             return View();
         }
-        
+
         private int? GetId()
         {
             var id = HttpContext.Session.GetInt32("accountid");
@@ -28,24 +29,24 @@ namespace RentalManagement.Controllers
         public IActionResult Details()
         {
             int? tenantId = GetId();
-        
+
             if (!tenantId.HasValue)
             {
-                return NotFound(); 
+                return NotFound();
             }
-        
+
             var requisitions = _context.Requisition
                 .Include(r => r.Tenant)
                 .Include(r => r.RequisitionItems)
                 .Include(r => r.RequisitionServices)
                 .Where(r => r.TenantId == tenantId.Value)
                 .ToList();
-        
-        
+
+
             return View(requisitions);
         }
-        
-        public async Task<IActionResult> Create()
+        //GET:Create
+        public IActionResult Create()
         {
             var loggedInTenantId = GetId();
 
@@ -54,60 +55,70 @@ namespace RentalManagement.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            var requisition = new RentalManagement.Models.Requisition();
+            ReqVM vm = new ReqVM
+            {
+                Requisition = new Requisition(),
+                RequisitionItem = new List<RequisitionItem>(),
+                RequisitionService = new List<RequisitionService>(),
+                Inventories = _context.Inventory.ToList()
+            };
 
-            
-            return View(requisition);
+            return View(vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Requisition requisition)
+        public ActionResult Create(ReqVM r)
         {
-            try
+
+            int? tenantId = GetId();
+
+            if (tenantId == null)
             {
+                Debug.WriteLine("TenantId is null. Redirecting to Index action of Login controller.");
+                return RedirectToAction("Index", "Login");
+            }
 
-                int? tenantId = GetId();
+            
 
-                if (tenantId == null)
+            Requisition req = new Requisition
+            {
+                Requisition_CreatedAt = DateTime.Now,
+                Requisition_Remarks = r.Requisition.Requisition_Remarks,
+                Requisition_DueDate = r.Requisition.Requisition_DueDate,
+                Requisition_Status = "Pending",
+                Requisition_Type = r.Requisition.Requisition_Type,
+                TenantId = tenantId.Value
+            };
+
+            _context.Requisition.Add(req);
+            _context.SaveChanges();
+
+
+            if (r.Requisition.Requisition_Type == "REQUEST_ITEM")
+            {
+                foreach (var item in r.RequisitionItem)
                 {
-                    Debug.WriteLine("TenantId is null. Redirecting to Index action of Login controller.");
-                    return RedirectToAction("Index", "Login");
+                    item.RequisitionId = req.RequisitionId;
+                    _context.RequisitionItem.Add(item);
                 }
-
-                requisition.Requisition_CreatedAt = DateTime.Now;
-                requisition.TenantId = tenantId.Value;
-
-                if (requisition.Requisition_Type == "REQUEST_ITEM")
-                {
-                    foreach (var item in requisition.RequisitionItems)
-                    {
-                        item.RequisitionId = requisition.RequisitionId;
-                        _context.RequisitionItem.Add(item);
-                    }
-                    requisition.RequisitionServices = null;
-
-                }
-                else if (requisition.Requisition_Type == "REQUEST_SERVICE")
-                {
-                    foreach (var service in requisition.RequisitionServices)
-                    {
-                        service.RequisitionId = requisition.RequisitionId;
-                        _context.RequisitionService.Add(service);
-                    }
-                    requisition.RequisitionItems = null;
-                }
-                _context.Requisition.Add(requisition);
+                r.RequisitionService = null;
                 _context.SaveChanges();
 
-                return RedirectToAction("Index","TenantHome");
+            }
+            else if (r.Requisition.Requisition_Type == "REQUEST_SERVICE")
+            {
+                foreach (var service in r.RequisitionService)
+                {
+                    service.RequisitionId = req.RequisitionId;
+                    _context.RequisitionService.Add(service);
+                }
+                r.RequisitionItem = null;
+                _context.SaveChanges();
 
             }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError(string.Empty, "Error processing the request: " + ex.Message);
-                return View("Index", requisition);
-            }
+
+            return RedirectToAction("Index", "TenantHome");
 
         }
 
