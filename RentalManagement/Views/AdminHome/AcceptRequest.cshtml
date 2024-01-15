@@ -1,4 +1,4 @@
-﻿@model RentalManagement.Models.Requisition
+@model RentalManagement.Models.Requisition
 
 @{
     ViewData["Title"] = "Accept Request";
@@ -23,8 +23,8 @@
         </div>
     </section>
     <section id="detailsCont" style="margin-top: 30px;background-color: #422c10; border-radius: 10px; padding: 20px">
-        <h1 style="color: red">Accept Applicant</h1>
-        <h4>Applicant</h4>
+        <h1 style="color: red">Accept Request</h1>
+        <h4>Requisitions</h4>
         <hr />
         <div style="padding-left: 30px">
 
@@ -102,7 +102,7 @@
             <fieldset style="margin-left:50px; width:85%">
                 <div class="form-group">
                     <input asp-for="RequisitionId" type="number" value="@Model.RequisitionId" hidden />
-                    <input asp-for="Requisition_Status" type="hidden" value="Accept" />
+                    <input asp-for="Requisition_Status" type="hidden" value="Checking Request." />
                     <span asp-validation-for="Requisition_Status" class="text-danger"></span>
                 </div>
                 <div class="form-group">
