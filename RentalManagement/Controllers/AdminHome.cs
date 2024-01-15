@@ -46,11 +46,11 @@ namespace RentalManagement.Controllers
                 .Select(g => new { Status = g.Key, Count = g.Count() })
                 .ToDictionary(x => x.Status, x => x.Count);
 
-            // If you want to include a count for 'Unknown' status
             invoiceStatusCounts["Unknown"] = _context.Invoice.Count(i => string.IsNullOrEmpty(i.Inv_Status));
 
             return invoiceStatusCounts;
         }
+
 
         public async Task<IActionResult> ManageRental()
         {
@@ -161,7 +161,7 @@ namespace RentalManagement.Controllers
                         Invoice = invoiceDisplayList,
                         RequisitionHistory = requisitionHistoryList,
                         Applicants = appDisplayList,
-                        InvoiceStatusCounts = invoiceStatusCounts, // Add this line
+                        InvoiceStatusCounts = invoiceStatusCounts,
                     };
 
                     return View(viewModel);
@@ -710,10 +710,9 @@ namespace RentalManagement.Controllers
                 .Where(ph => ph.TenantId == id)
                 .ToList();
 
-            
-
             return View(paymentHistory);
         }
+
 
 
 

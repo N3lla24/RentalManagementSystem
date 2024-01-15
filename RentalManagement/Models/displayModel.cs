@@ -16,7 +16,7 @@ namespace RentalManagement.Models
 
         public Dictionary<string, int> InvoiceStatusCounts { get; set; }
 
-
+        public Dictionary<int, int> RoomSizeCounts { get; set; }
 
 
 
