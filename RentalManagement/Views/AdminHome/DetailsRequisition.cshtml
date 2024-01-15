@@ -1,4 +1,4 @@
-﻿@model RentalManagement.Models.Requisition
+@model RentalManagement.Models.Requisition
 
 @{
     ViewData["Title"] = "Application Details";
@@ -103,6 +103,16 @@
             {
                 <a asp-action="AcceptRequest" asp-route-id="@Model?.RequisitionId" style="margin-left: 70%; color: lawngreen">Accept</a> <i>|</i>
                 <a asp-action="RejectRequest" asp-route-id="@Model?.RequisitionId" style="color: red">Reject</a>
+            }
+            @if (Model.Requisition_Status == "Checking Request." && Model.Requisition_Type == "REQUEST_SERVICE")
+            {
+                <a asp-action="PurchaseRequest" asp-route-id="@Model?.RequisitionId" style="margin-left: 70%; color: lawngreen">Purchase Request</a> <i>|</i>
+            }
+            @if (Model.Requisition_Status == "Checking Request." && Model.Requisition_Type == "REQUEST_ITEM" && Model.RequisitionItems != null && Model.RequisitionItems.Any())
+            {
+                    <a asp-action="CheckInventory" asp-route-id="@Model.RequisitionId" style="margin-left: 10px; color: lawngreen">
+                        Check Inventory - Item @Model.RequisitionId
+                    </a>
             }
 
         </div>
