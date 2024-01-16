@@ -91,7 +91,7 @@
             @Html.AntiForgeryToken()
                 @if (Model != null && Model.Requisitions != null)
                 {
-                    <input asp-for="Requisitions.RequisitionId" type="number" value="@Model.Requisitions.RequisitionId" />
+                    <input asp-for="Requisitions.RequisitionId" type="hidden" value="@Model.Requisitions.RequisitionId" />
                 }
 
                 <div class="form-group">
