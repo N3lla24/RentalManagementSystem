@@ -33,7 +33,7 @@
             <hr />
 
             <form id="checkinv" asp-action="ReceivingMemo">
-                <input type="number" name="@Model.PurchaseOrderId" value="@Model.PurchaseOrderId" />
+                <input type="hidden" name="@Model.PurchaseOrderId" value="@Model.PurchaseOrderId" />
                 <table>
                     <thead>
                         <tr>
