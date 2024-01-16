@@ -179,13 +179,22 @@ namespace RentalManagement.Controllers
                 }
                 ViewBag.Roomnum = roomnum.Room_Num;
                 ViewBag.Unitnum = unitid.Unit_Num;
+
+                var viewModel = new ApplicationViewModel
+                {
+                    Applicants = new Applicants(),
+                    ExistingApplicantMessage = null,
+                    SuccessfulMessage = null
+                };
+
+                return View(viewModel);
             }
             catch (Exception ex) 
             {
                 // Log and handle the exception
                 return Content("An unexpected error occurred. Please try again later.");
             }
-            return View();           
+            //return View();           
         }
 
         // POST: Applicants/Create
@@ -193,33 +202,37 @@ namespace RentalManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ApplicationId,Applicants_FirstName,Applicants_MiddleName,Applicants_LastName,Applicants_Email,Applicants_PhoneNumber,Applicants_Address, Application_RoomNumber, Application_UnitNumber, Applicant_CreatedAt,Applicant_UpdatedAt")] Applicants applicants)
+        public async Task<IActionResult> Create(ApplicationViewModel viewModel)
         {
             try
             {
-                Applicants existingApplication = await _context.Applicants.FirstOrDefaultAsync(q => q.Applicants_Email == applicants.Applicants_Email 
-                && q.Applicants_PhoneNumber == applicants.Applicants_PhoneNumber 
-                && q.Application_RoomNumber == applicants.Application_RoomNumber
-                && q.Application_UnitNumber == applicants.Application_UnitNumber);
+                Applicants existingApplication = await _context.Applicants.FirstOrDefaultAsync(q => q.Applicants_Email == viewModel.Applicants.Applicants_Email
+                && q.Applicants_PhoneNumber == viewModel.Applicants.Applicants_PhoneNumber
+                && q.Application_RoomNumber == viewModel.Applicants.Application_RoomNumber
+                && q.Application_UnitNumber == viewModel.Applicants.Application_UnitNumber);
+
                 if (existingApplication == null)
                 {
-                    applicants.Application_Status = "Pending";
+                    viewModel.Applicants.Application_Status = "Pending";
                     ViewData["ExistingApplicant"] = null;
                     ViewData["Successful"] = "Success";
-                    _context.Add(applicants);
+                    _context.Add(viewModel.Applicants);
                     await _context.SaveChangesAsync();
-                    return View();
+                    return View(viewModel);
                 }
+
+                // Alert the user with JavaScript
                 ViewData["Successful"] = null;
-                ViewData["ExistingApplicant"] = "Applicant Existing";
-                return View(applicants);
+                ViewData["ExistingApplicant"] = "Email Address is already in used. Try a different one.";
+                return View(viewModel);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // Log and handle the exception
                 return Content("An unexpected error occurred. Please try again later.");
             }
         }
+
 
         // GET: Applicants/Edit/5
         public async Task<IActionResult> Edit(int? id)

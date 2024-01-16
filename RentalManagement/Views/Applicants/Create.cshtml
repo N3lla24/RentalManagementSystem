@@ -1,5 +1,4 @@
-﻿@model RentalManagement.Models.ApplicationViewModel;
-
+﻿@model RentalManagement.Models.ApplicationViewModel
 
 @{
     ViewData["Title"] = "Application Create";
@@ -165,6 +164,13 @@
             </div>
         </div>
     </footer>
+    <script>
+        // Display alert if ExistingApplicant is not null
+        var existingApplicantMessage = '@ViewData["ExistingApplicant"]';
+        if (existingApplicantMessage !== '') {
+            alert(existingApplicantMessage);
+        }
+    </script>
 </body>
 </html>
 @section Scripts {

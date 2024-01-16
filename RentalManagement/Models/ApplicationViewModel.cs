@@ -11,6 +11,8 @@
         public Room Room { get; set; }
 
         public Applicants Applicants { get; set; }
+        public string ExistingApplicantMessage { get; set; }
+        public string SuccessfulMessage { get; set; }
 
         public Dictionary<Room, int>? RecommendRoom = new Dictionary<Room, int>();
 
