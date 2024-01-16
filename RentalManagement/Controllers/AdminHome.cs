@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using RentalManagement.Data;
 using RentalManagement.Models;
+using RentalManagement.ViewModel;
 using System.Threading.Tasks;
 using RentalManagement.Services;
 using System.Text;
