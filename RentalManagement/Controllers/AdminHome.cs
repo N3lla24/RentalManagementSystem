@@ -118,15 +118,6 @@ namespace RentalManagement.Controllers
             }
         }
 
-
-
-
-
-
-
-
-
-
         public async Task<IActionResult> ManageRental()
         {
             if (GetId() is null) { return RedirectToAction("Index", "Login"); }
@@ -259,21 +250,6 @@ namespace RentalManagement.Controllers
                 return Content("An unexpected error occurred. Please try again later.");
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         public async Task<IActionResult> TenantDetails(int? id)
         {

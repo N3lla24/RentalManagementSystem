@@ -20,8 +20,12 @@ namespace RentalManagement.Controllers
         public IActionResult Index()
         {
             ClearRejected();
-            return View();
+            List<Room> rooms = _context.Room.ToList();
+
+            // Pass the room data to the view
+            return View(rooms);
         }
+
 
         public IActionResult Privacy()
         {

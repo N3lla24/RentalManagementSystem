@@ -1,4 +1,5 @@
-﻿﻿
+﻿@model List<RentalManagement.Models.Room>
+﻿
 @{
     ViewData["Title"] = "HomePage";
     Layout = null;
@@ -80,12 +81,62 @@
 
     </section>
 
+    <section id="buttonCont">
+        <button id="openModalBtn">Room Details</button>
+    </section>
+
+    <div id="myModal">
+        <div class="modal-content">
+            <center><p style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Room Details</p></center>
+            <table id="roomTable" class="table">
+                <thead>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Room Status</th>
+                        <th>Room Color</th>
+                        <th>Room Size</th>
+                        <th>Room Flooring</th>
+                        <th>WiFi Availability</th>
+                        <th>Room Furnished</th>
+                        <th>Appliances Available</th>
+                        <th>Room Capacity</th>
+                        <th>Room Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var room in Model)
+                    {
+                        <tr>
+                            <td>@room.Room_Num</td>
+                            <td>@room.Room_Status</td>
+                            <td>@room.Room_Color</td>
+                            <td>@room.Room_Size</td>
+                            <td>@room.Room_Flooring</td>
+                            <td>@room.Room_WiFi</td>
+                            <td>@room.Room_Furnish</td>
+                            <td>@room.Room_Appliance</td>
+                            <td>@room.Room_Capacity</td>
+                            <td>@room.Room_Price</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+            <br />
+            <br />
+            <button id="closeModalBtn" style="margin-top: 15px; padding: 10px; background-color: #765827; color: aliceblue; font-weight: 500; font-size: 15px; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+        </div>
+    </div>
+
+
     <section id="detailsCont">
-        <p>Lorem ipsum dolor sit amet. Ut aliquid quibusdam et consequatur fugit aut maiores aliquid ut galisum iste a assumenda officiis vel excepturi excepturi. A facere galisum qui voluptates quasi non neque optio aut totam cumque aut voluptatem reiciendis. Est saepe sunt est architecto voluptatem et dignissimos omnis in autem corporis et itaque voluptatum ut enim dolorum. Qui voluptatem ullam a natus adipisci et galisum dolore. Quo quidem facilis ut animi cupiditate ut accusamus corrupti ut impedit ullam. </p>
+        <p>Kerwin's Rental Services is a distinguished establishment founded and led by Kerwin, a seasoned Mechanical Systems Lead Engineer with a passion for providing top-notch rental solutions. Located in the heart of Paknaan, Mandaue City, Cebu, Philippines, this thriving business has become synonymous with excellence in the realm of rental rooms.</p>
         <br>
-        <p>Est dolores recusandae qui harum mollitia vel dolore placeat cum animi odio qui repellat tenetur non laborum sunt et illo maiores. Vel officiis consequuntur ea explicabo facilis rem nisi optio. Sit consequatur quasi sed laudantium numquam vel error explicabo qui nostrum quae. Quo exercitationem dolores et fuga autem et autem harum. Et neque magnam qui vitae voluptatem qui facilis doloremque. Et veritatis ipsum aut corporis Quis est laborum error non veritatis animi qui autem repudiandae. Aut alias mollitia qui dolor quis eos perspiciatis nulla. Et nihil enim eum incidunt nemo aut beatae magnam qui exercitationem quaerat. Eos mollitia quia ad illum dolores ab nisi magni et neque quia in voluptates quis est placeat dolor et consectetur quaerat. </p>
+        <p>With a keen eye for detail and a commitment to customer satisfaction, Kerwin's Rental Services offers a diverse range of meticulously maintained rooms tailored to meet the unique needs of its clientele. From cozy single rooms to spacious suites, each accommodation exudes a blend of comfort and functionality, making it an ideal choice for both short-term and long-term stays.</p>
         <br>
-        <p>Et fugit deserunt ab vero dolor qui porro provident qui repellat placeat aut commodi cupiditate ab minus repellendus. Et ipsa minima non rerum iure et ullam commodi hic architecto iste aut vero accusantium et dolore temporibus aut quam velit. Ad adipisci minus eos ipsam praesentium ut magni amet est omnis natus ut molestiae omnis quo alias quaerat qui quisquam odio. Aut enim aliquid in perspiciatis voluptate non impedit sunt. Est repellat vitae et rerum voluptatibus sit dolorum eveniet. Quo voluptatem fuga et quia iure sed voluptatem recusandae et porro iusto est veniam dolor vel consequatur exercitationem. Qui quaerat quae qui dolorem nihil sed harum ratione sed adipisci autem sit quasi nobis ab repellat similique et provident impedit! </p>
+        <p>At the core of Kerwin's Rental Services is a dedication to creating a home away from home for every guest. The business prioritizes convenience and accessibility, ensuring that each room is equipped with modern amenities and adorned with thoughtful touches. The welcoming ambiance and personalized service set Kerwin's Rental Services apart as a preferred choice for individuals seeking a comfortable and hassle-free living experience.</p>
+        <br />
+        <p>Beyond providing exceptional accommodations, Kerwin's Rental Services is deeply rooted in the local community, contributing positively to the economic landscape of Paknaan and fostering a sense of belonging among its residents. With a visionary leader at the helm, the business continues to evolve, setting new standards in the rental industry and affirming its commitment to quality, integrity, and the well-being of its patrons.</p>
     </section>
 
     <section id="mapCont">
@@ -100,11 +151,7 @@
         </iframe>
     </section>
 
-    <section id="buttonCont">
-        <button>Apartment Details</button>
-        <button>Tenant Feedbacks</button>
-        <button>Frequently Asked Questions</button>
-    </section>
+ 
 
     <section id="backTopCont">
         <a href="#">
@@ -168,6 +215,31 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Get references to modal and buttons
+        var modal = document.getElementById("myModal");
+        var openModalBtn = document.getElementById("openModalBtn");
+        var closeModalBtn = document.getElementById("closeModalBtn");
+
+        // Show the modal when the button is clicked
+        openModalBtn.onclick = function () {
+            modal.style.display = "flex";
+        }
+
+        // Close the modal when the close button is clicked
+        closeModalBtn.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // Close the modal if the user clicks outside the modal content
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
 
     <script>
         let slideIndex = 1;

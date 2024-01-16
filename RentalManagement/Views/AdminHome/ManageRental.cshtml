@@ -43,7 +43,7 @@
                 <button class="displayButton" id="tenantButton" data-target="tenantDisplay">Tenant List</button>
                 <button class="displayButton" id="reqButton" data-target="reqDisplay">Requisition Forms</button>
                 <button class="displayButton" id="roomButton" data-target="roomDisplay">Rental Room Details</button>
-                <button class="displayButton" id="reportsButton" data-target="reportsDisplay">Reports & Analytics</button>
+                <button class="displayButton" id="reportsButton" data-target="reportsDisplay">Rental Reports</button>
                 <button class="displayButton" id="invoiceDisplay" data-target="invoiceDisplay">Invoices</button>
                 <button class="displayButton" id="appButton" data-target="appDisplay">Rental Applications History</button>
             </div>
@@ -148,10 +148,15 @@
                 </div>
                 <div class="containerReport" style="max-width: 48%; max-height: 100%;">
                     <div>
+                        <br />
+                        <br />
+                        <p>Select a table to generate a report</p><br />
                         @using (Html.BeginForm("DownloadTable", "AdminHome", FormMethod.Post))
                         {
-                            @Html.DropDownListFor(model => model.SelectedTable, new SelectList(Model.TableNames), "Select a table")
-                            <button type="submit">Download Report</button>
+                            @Html.DropDownListFor(model => model.SelectedTable, new SelectList(Model.TableNames), "Select a table", new { @class = "custom-dropdown" })
+                            <button style="border: none !important; padding: 10px !important; background-color: #65451F !important; color: aliceblue !important;" type="submit">
+                                Download Report
+                            </button>
                         }
                     </div>
                 </div>

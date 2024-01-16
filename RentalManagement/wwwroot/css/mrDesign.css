@@ -818,3 +818,13 @@ a {
     justify-content: center;
     flex-direction: row;
 }
+
+.custom-dropdown {
+    /* Add your custom styling here */
+    width: 200px; /* Example: set the width */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    color: #333;
+}
