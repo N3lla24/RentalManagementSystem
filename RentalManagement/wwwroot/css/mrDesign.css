@@ -804,3 +804,17 @@ a {
     overflow-x: scroll;
     border: solid white 1px;
 }
+
+/*.containerReport {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: row;
+}*/
+
+.reportsDisplay {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: row;
+}

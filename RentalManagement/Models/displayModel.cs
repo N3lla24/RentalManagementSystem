@@ -18,7 +18,9 @@ namespace RentalManagement.Models
 
         public Dictionary<int, int> RoomSizeCounts { get; set; }
 
+        public List<string> TableNames { get; set; }
 
+        public string SelectedTable { get; set; }
 
 
     }
